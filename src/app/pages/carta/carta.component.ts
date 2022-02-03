@@ -4,12 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import { Carta } from './carta';
 import { CartaService } from './carta.service';
 import Swal from 'sweetalert2';
-import { AlbumesService } from 'src/app/albumes/albumes.service';
+import { ColeccionService } from 'src/app/pages/coleccion/coleccion.service';
 import { UsuarioService } from 'src/app/usuarios/usuario.service';
-import { AlbumService } from '../albumes/album/album.service';
+import { AlbumService } from '../album/album.service';
 import { EdicionService } from './ediciones/edicion.service';
 import { Edicion } from './ediciones/edicion';
-import { Album } from '../albumes/album/album';
+import { Album } from '../album/album';
 
 @Component({
   selector: 'app-carta',
@@ -29,7 +29,7 @@ export class CartaComponent implements OnInit {
 
   constructor(
     private cartaService: CartaService,
-    private albumesService: AlbumesService,
+    private albumesService: ColeccionService,
     private albumService: AlbumService,
     private usuarioService: UsuarioService,
     private simboloService: EdicionService,

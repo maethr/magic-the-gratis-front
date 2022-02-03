@@ -5,7 +5,7 @@ import { Md5 } from 'ts-md5';
 
 import { Album } from '../album/album';
 import { AlbumService } from '../album/album.service';
-import { AlbumesService } from '../albumes.service';
+import { ColeccionService } from '../coleccion/coleccion.service';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class OpcionesAlbumComponent implements OnInit {
 
   constructor(
     private albumService: AlbumService,
-    private albumesService: AlbumesService,
+    private albumesService: ColeccionService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {

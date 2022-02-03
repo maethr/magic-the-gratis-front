@@ -21,16 +21,16 @@ import { EditarPerfilComponent } from './usuarios/editar-perfil/editar-perfil.co
 import { LoginComponent } from './usuarios/login/login.component';
 import { BuscadorComponent } from './buscador/buscador.component';
 import { BuscadorUsuariosComponent } from './usuarios/buscador/buscador-usuarios/buscador-usuarios.component';
-import { CartaComponent } from './cartas/carta.component';
-import { AlbumesComponent } from './albumes/albumes.component';
-import { OpcionesAlbumComponent } from './albumes/opciones-album/opciones-album.component';
+import { CartaComponent } from './pages/carta/carta.component';
+import { ColeccionComponent } from './pages/coleccion/coleccion.component';
+import { OpcionesAlbumComponent } from './pages/opciones-album/opciones-album.component';
 
 import { UsuarioService } from './usuarios/usuario.service';
-import { AlbumesService } from './albumes/albumes.service';
-import { AlbumComponent } from './albumes/album/album.component';
-import { AlbumService } from './albumes/album/album.service';
-import { CartaService } from './cartas/carta.service';
-import { EdicionService } from './cartas/ediciones/edicion.service';
+import { ColeccionService } from './pages/coleccion/coleccion.service';
+import { AlbumComponent } from './pages/album/album.component';
+import { AlbumService } from './pages/album/album.service';
+import { CartaService } from './pages/carta/carta.service';
+import { EdicionService } from './pages/carta/ediciones/edicion.service';
 
 import { PaginadorAlbumesComponent } from './paginador/paginador-albumes/paginador-albumes.component';
 import { PaginadorAlbumComponent } from './paginador/paginador-album/paginador-album.component';
@@ -50,8 +50,8 @@ const routes: Routes = [
   { path: 'usuarios/form/:id', component: CrearPerfilComponent },
   { path: 'login', component: LoginComponent },
   { path: 'perfil', component: UsuarioDetalleComponent},
-  { path: 'albumes', component: AlbumesComponent },
-  { path: 'albumes/:page', component: AlbumesComponent },
+  { path: 'coleccion', component: ColeccionComponent },
+  { path: 'coleccion/:page', component: ColeccionComponent },
   { path: 'album/:id', component: AlbumComponent },
   { path: 'album/:id/page/:page', component: AlbumComponent },
   { path: 'album/:id/config', component: OpcionesAlbumComponent },
@@ -77,7 +77,7 @@ const routes: Routes = [
     EditarPerfilComponent,
     CrearPerfilComponent,
     LoginComponent,
-    AlbumesComponent,
+    ColeccionComponent,
     AlbumComponent,
     BuscadorComponent,
     OpcionesAlbumComponent,
@@ -101,7 +101,7 @@ const routes: Routes = [
   ],
   providers: [
     UsuarioService,
-    AlbumesService,
+    ColeccionService,
     AlbumService,
     CartaService,
     EdicionService,

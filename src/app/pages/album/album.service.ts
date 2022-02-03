@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Carta } from '../../cartas/carta';
+import { Carta } from '../carta/carta';
 import { Album } from './album';
 
 @Injectable()
@@ -54,6 +54,6 @@ export class AlbumService {
 
 
   delete(){
-
+    
   }
 }

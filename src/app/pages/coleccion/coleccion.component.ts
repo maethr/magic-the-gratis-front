@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Album } from './album/album';
-import { AlbumesService } from './albumes.service';
-import { Usuario } from '../usuarios/usuario';
-import { UsuarioService } from '../usuarios/usuario.service';
+import { Album } from '../album/album';
+import { ColeccionService } from './coleccion.service';
+import { Usuario } from '../../usuarios/usuario';
+import { UsuarioService } from '../../usuarios/usuario.service';
 import Swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-albumes',
-  templateUrl: './albumes.component.html',
-  styleUrls: ['./albumes.component.css']
+  selector: 'app-coleccion',
+  templateUrl: './coleccion.component.html',
+  styleUrls: ['./coleccion.component.css']
 })
-export class AlbumesComponent implements OnInit {
+export class ColeccionComponent implements OnInit {
 
   id: string;
   usuario: Usuario;
@@ -21,7 +21,7 @@ export class AlbumesComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private albumesService: AlbumesService,
+    private coleccionService: ColeccionService,
     private usuarioService: UsuarioService,
     private router: Router
   ) {
@@ -40,7 +40,7 @@ export class AlbumesComponent implements OnInit {
   }
 
   obtenerAlbumes(pagina: number) {
-    this.albumesService.getAlbumes(this.usuario.username, pagina.toString()).subscribe(
+    this.coleccionService.getAlbumes(this.usuario.username, pagina.toString()).subscribe(
       response => {
         this.albums = response.content as Album[];
         this.paginador = response;
@@ -65,7 +65,7 @@ export class AlbumesComponent implements OnInit {
       }
   }).then((result) => {
       if (result.isConfirmed) {
-        this.albumesService.createAlbum(result.value, this.usuario.username).subscribe(
+        this.coleccionService.createAlbum(result.value, this.usuario.username).subscribe(
           (response) => {
             this.router.navigate(['album', response.id]);
             Swal.fire('Album creado', `El album ${result.value} ha sido creado`, 'success');

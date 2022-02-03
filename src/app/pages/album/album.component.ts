@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
-import { AlbumesService } from '../albumes.service';
+import { ColeccionService } from '../coleccion/coleccion.service';
 import { AlbumService } from './album.service';
-import { Carta } from '../../cartas/carta';
-import { CartaService } from '../../cartas/carta.service';
+import { Carta } from '../carta/carta';
+import { CartaService } from '../carta/carta.service';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
@@ -26,7 +26,7 @@ export class AlbumComponent implements OnInit {
   constructor(
     private cartaService: CartaService,
     private albumService: AlbumService,
-    private albumesService: AlbumesService,
+    private albumesService: ColeccionService,
     private activatedRoute: ActivatedRoute,
     private ref: ChangeDetectorRef,
     private router: Router

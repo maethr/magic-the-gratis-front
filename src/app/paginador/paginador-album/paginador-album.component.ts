@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Album } from 'src/app/albumes/album/album';
+import { Album } from 'src/app/pages/album/album';
 
 @Component({
   selector: 'app-paginador-album',

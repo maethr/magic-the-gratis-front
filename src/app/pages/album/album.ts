@@ -1,3 +1,4 @@
+import { Carta } from "src/app/pages/carta/carta";
 import { Usuario } from "../../usuarios/usuario";
 
 export class Album {
@@ -6,5 +7,7 @@ export class Album {
   username: Usuario;
   nombre: string;
   juego: string;
+
+  cartas?: Carta[];
 
 }
