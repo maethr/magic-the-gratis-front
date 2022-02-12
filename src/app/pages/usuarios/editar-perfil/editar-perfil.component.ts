@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Md5 } from 'ts-md5';
-import { Usuario } from '../usuario';
-import { UsuarioService } from '../usuario.service';
+import { Usuario } from '../../../types/usuario';
+import { UsuarioService } from '../../../services/data/usuario.service';
 
 
 @Component({

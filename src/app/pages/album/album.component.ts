@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
-import { ColeccionService } from '../coleccion/coleccion.service';
+import { ColeccionService } from '../../services/data/coleccion.service';
 import { AlbumService } from './album.service';
 import { Carta } from '../carta/carta';
 import { CartaService } from '../carta/carta.service';

@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from '../album/album';
-import { ColeccionService } from './coleccion.service';
-import { Usuario } from '../../usuarios/usuario';
-import { UsuarioService } from '../../usuarios/usuario.service';
+import { ColeccionService } from '../../services/data/coleccion.service';
+import { Usuario } from '../../types/usuario';
+import { UsuarioService } from '../../services/data/usuario.service';
 import Swal from 'sweetalert2';
+import { ScryfallService } from 'src/app/services/scryfall/scryfall.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class ColeccionComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private coleccionService: ColeccionService,
     private usuarioService: UsuarioService,
+    private scryfallService: ScryfallService,
     private router: Router
   ) {
     this.usuario = this.usuarioService.usuario
@@ -36,7 +38,10 @@ export class ColeccionComponent implements OnInit {
       }
 
       this.obtenerAlbumes(pagina);
-    })
+    });
+      this.scryfallService.search("color>=uw -c:red").subscribe( (response) => {
+        console.log(response);
+      });
   }
 
   obtenerAlbumes(pagina: number) {

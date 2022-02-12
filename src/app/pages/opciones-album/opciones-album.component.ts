@@ -5,7 +5,7 @@ import { Md5 } from 'ts-md5';
 
 import { Album } from '../album/album';
 import { AlbumService } from '../album/album.service';
-import { ColeccionService } from '../coleccion/coleccion.service';
+import { ColeccionService } from '../../services/data/coleccion.service';
 
 
 @Component({

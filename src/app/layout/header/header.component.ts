@@ -1,9 +1,9 @@
 import { DoCheck } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsuarioService } from 'src/app/services/data/usuario.service';
 import Swal from 'sweetalert2';
-import { Usuario } from '../usuarios/usuario';
-import { UsuarioService } from '../usuarios/usuario.service';
+
 
 @Component({
   selector: 'app-header',

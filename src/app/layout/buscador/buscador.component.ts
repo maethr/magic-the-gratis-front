@@ -1,8 +1,8 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Carta } from '../pages/carta/carta';
-import { CartaService } from '../pages/carta/carta.service';
+import { Carta } from '../../pages/carta/carta';
+import { CartaService } from '../../services/data/carta.service';
 
 @Component({
   selector: 'app-buscador',
