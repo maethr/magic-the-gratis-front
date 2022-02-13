@@ -14,12 +14,12 @@ export class ScryfallService {
     private http: HttpClient
   ) { }
 
-  public search(search_text: string, search_params?: SearchParams): Observable<Card[]> {
+  public search(search_text: string, search_params?: SearchParams): Observable<any> {
     let url = this.url + "cards/search?q=" + encodeURIComponent(search_text);
     if (search_params) {
       url += "&" + this.serialize(search_params);
     }
-    return this.http.get(url) as Observable<Card[]>;
+    return this.http.get(url) as Observable<any>;
   }
 
   private serialize(obj: any): string {
@@ -47,4 +47,8 @@ export class ScryfallService {
     return this.http.get(url);
   }
 
+  public getSymbols(): Observable<any> {
+    let url = this.url + "symbology";
+    return this.http.get(url);
+  }
 }

@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Carta } from '../../pages/carta/carta';
 import { CartaService } from '../../core/services/data/carta.service';
+import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
+import { Card } from 'src/app/core/models/carta';
+import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 
 @Component({
   selector: 'app-buscador',
@@ -11,7 +14,7 @@ import { CartaService } from '../../core/services/data/carta.service';
 })
 export class BuscadorComponent implements OnInit {
 
-  cartasBusqueda: Carta[] = [];
+  cartasBusqueda: Card[] = [];
   textoBuscado: string;
   tipoBusqueda: string;
   paginador: any;
@@ -25,7 +28,8 @@ export class BuscadorComponent implements OnInit {
     private cartaService: CartaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private scryfallService: ScryfallService,
   ) { }
 
   ngOnInit(): void {
@@ -37,12 +41,12 @@ export class BuscadorComponent implements OnInit {
 
       this.tipoBusqueda = params.get('tipo')
       if (!this.tipoBusqueda) {
-        this.tipoBusqueda = "oracle";
+        this.tipoBusqueda = "cards";
       }
 
       this.textoBuscado = params.get('txt');
       if (this.textoBuscado) {
-        this.getCartas();
+        this.getCartasS();
       }
     });
     if (localStorage.getItem('tam_fila') != null) {
@@ -64,10 +68,10 @@ export class BuscadorComponent implements OnInit {
     if (num > 0 && this.paginador.last) {
       this.router.navigate(['buscar', this.tipoBusqueda, this.textoBuscado, this.pagina])
     }
-    this.getCartas();
+    this.getCartasS();
   }
 
-  getCartas() {
+ /* getCartas() {
     this.cargando = true;
     if (this.tipoBusqueda == "oracle") {
       this.getByNombreGroupByOracle();
@@ -76,17 +80,28 @@ export class BuscadorComponent implements OnInit {
     } else if (this.tipoBusqueda == "all") {
       this.getByNombreGroupById();
     }
+  }*/
+
+  getCartasS () {
+    let params: SearchParams = {
+      unique: this.tipoBusqueda
+    }
+    this.scryfallService.search(this.textoBuscado, params).subscribe(
+      response => {
+        this.cartasBusqueda = response.data as Card[];
+        //this.getImagenes();
+      });
   }
 
-  getImagenes () {
+/*   getImagenes () {
     this.cartasBusqueda.forEach(carta => {
       this.cartaService.getImagenesCarta(carta).subscribe( () => {
         this.cargando = false;
       });
     });
-  }
+  } */
 
-  getByNombreGroupByOracle () {
+ /* getByNombreGroupByOracle () {
     this.cartaService.getByNombreGroupByOracle(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
       response => {
         this.cartasBusqueda = response.content as Carta[];
@@ -114,5 +129,5 @@ export class BuscadorComponent implements OnInit {
         this.getImagenes();
       }
     );
-  }
+  }*/
 }
