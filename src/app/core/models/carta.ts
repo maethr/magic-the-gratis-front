@@ -37,6 +37,14 @@ export class Card extends CardFace {
   layout?: string;
   card_faces?: CardFace[];
   all_parts?: Card[];
+
+  /* 
+  public get images(): ImageURIs {
+    if (this.card_faces != null) {
+      return this.card_faces[0].image_uris;
+    }
+    return this.image_uris;
+  } */
 }
 
 export class ImageURIs {
