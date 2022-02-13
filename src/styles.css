@@ -10,8 +10,10 @@ body {
     margin-bottom: 60px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: white;
-    background-image: url(./assets/images/bg/3.jpg);
-    background-size: cover;
+    /* background-image: url(./assets/images/bg/3.jpg);
+    background-size: cover; */
+    background: rgb(249, 249, 249);
+    background: linear-gradient(90deg, rgba(226, 250, 255, 0.8) 0%, rgba(247, 247, 247, 1) 50%, rgba(255, 241, 253, 0.8) 100%);
     color: black;
 }
 
