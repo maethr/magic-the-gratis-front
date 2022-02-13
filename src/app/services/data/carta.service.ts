@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Carta } from './carta';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Carta } from 'src/app/pages/carta/carta';
 
 @Injectable()
 export class CartaService {

@@ -4,8 +4,9 @@ import Swal from 'sweetalert2';
 import { Md5 } from 'ts-md5';
 
 import { Album } from '../album/album';
-import { AlbumService } from '../album/album.service';
+
 import { ColeccionService } from '../../services/data/coleccion.service';
+import { AlbumService } from 'src/app/services/data/album.service';
 
 
 @Component({

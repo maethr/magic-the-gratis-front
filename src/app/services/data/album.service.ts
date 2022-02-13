@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Album } from './album';
-import { Carta } from '../carta/carta';
+import { Carta } from 'src/app/pages/carta/carta';
+import { Album } from 'src/app/pages/album/album';
+
 
 @Injectable()
 export class AlbumService {

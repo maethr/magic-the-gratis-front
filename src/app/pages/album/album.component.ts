@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
 import { ColeccionService } from '../../services/data/coleccion.service';
-import { AlbumService } from './album.service';
+
 import { Carta } from '../carta/carta';
-import { CartaService } from '../carta/carta.service';
+
 import { ChangeDetectorRef } from '@angular/core';
+import { CartaService } from 'src/app/services/data/carta.service';
+import { AlbumService } from 'src/app/services/data/album.service';
 
 @Component({
   selector: 'app-album',
