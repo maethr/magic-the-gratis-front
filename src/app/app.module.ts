@@ -36,6 +36,7 @@ import { PaginadorAlbumesComponent } from './layout/paginator/paginador-albumes/
 import { PaginadorAlbumComponent } from './layout/paginator/paginador-album/paginador-album.component';
 import { PaginadorBuscadorComponent } from './layout/paginator/paginador-buscador/paginador-buscador.component';
 import { PaginadorUsuariosComponent } from './layout/paginator/paginador-usuarios/paginador-usuarios.component';
+import { ManaPipe } from './core/pipes/mana/mana.pipe';
 
 
 registerLocaleData(localeES, 'es');
@@ -87,7 +88,8 @@ const routes: Routes = [
     PaginadorBuscadorComponent,
     PaginadorUsuariosComponent,
     BuscadorUsuariosComponent,
-    CartaComponent
+    CartaComponent,
+    ManaPipe
   ],
   imports: [
     BrowserModule,
