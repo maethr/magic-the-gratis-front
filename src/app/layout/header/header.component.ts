@@ -1,7 +1,7 @@
 import { DoCheck } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/services/data/usuario.service';
+import { UsuarioService } from 'src/app/core/services/data/usuario.service';
 import Swal from 'sweetalert2';
 
 

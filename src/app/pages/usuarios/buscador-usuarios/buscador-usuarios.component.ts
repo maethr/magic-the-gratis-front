@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from "../../../types/usuario";
-import { UsuarioService } from '../../../services/data/usuario.service';
+import { Usuario } from "../../../core/models/usuario";
+import { UsuarioService } from '../../../core/services/data/usuario.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 

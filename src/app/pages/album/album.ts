@@ -1,5 +1,5 @@
 import { Carta } from "src/app/pages/carta/carta";
-import { Usuario } from "../../types/usuario";
+import { Usuario } from "../../core/models/usuario";
 
 export class Album {
 

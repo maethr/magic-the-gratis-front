@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from '../album/album';
-import { ColeccionService } from '../../services/data/coleccion.service';
-import { Usuario } from '../../types/usuario';
-import { UsuarioService } from '../../services/data/usuario.service';
+import { ColeccionService } from '../../core/services/data/coleccion.service';
+import { Usuario } from '../../core/models/usuario';
+import { UsuarioService } from '../../core/services/data/usuario.service';
 import Swal from 'sweetalert2';
-import { ScryfallService } from 'src/app/services/scryfall/scryfall.service';
+import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 
 
 @Component({

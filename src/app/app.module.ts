@@ -10,7 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import localeES from '@angular/common/locales/es';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './layout/app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { InicioComponent } from './pages/home/inicio.component';
@@ -25,11 +25,11 @@ import { CartaComponent } from './pages/carta/carta.component';
 import { ColeccionComponent } from './pages/coleccion/coleccion.component';
 import { OpcionesAlbumComponent } from './pages/opciones-album/opciones-album.component';
 
-import { UsuarioService } from './services/data/usuario.service';
-import { ColeccionService } from './services/data/coleccion.service';
+import { UsuarioService } from './core/services/data/usuario.service';
+import { ColeccionService } from './core/services/data/coleccion.service';
 import { AlbumComponent } from './pages/album/album.component';
-import { AlbumService } from './services/data/album.service';
-import { CartaService } from './services/data/carta.service';
+import { AlbumService } from './core/services/data/album.service';
+import { CartaService } from './core/services/data/carta.service';
 import { EdicionService } from './pages/carta/ediciones/edicion.service';
 
 import { PaginadorAlbumesComponent } from './layout/paginator/paginador-albumes/paginador-albumes.component';
