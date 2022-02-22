@@ -1,10 +1,9 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Carta } from '../../pages/carta/carta';
 import { CartaService } from '../../core/services/data/carta.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
-import { Card } from 'src/app/core/models/carta';
+import { Carta } from 'src/app/core/models/carta';
 import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 
 @Component({
@@ -14,7 +13,7 @@ import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 })
 export class BuscadorComponent implements OnInit {
 
-  cartasBusqueda: Card[] = [];
+  cartasBusqueda: Carta[] = [];
   textoBuscado: string;
   tipoBusqueda: string;
   paginador: any;
@@ -88,7 +87,7 @@ export class BuscadorComponent implements OnInit {
     }
     this.scryfallService.search(this.textoBuscado, params).subscribe(
       response => {
-        this.cartasBusqueda = response.data as Card[];
+        this.cartasBusqueda = response.data as Carta[];
         //this.getImagenes();
       });
   }

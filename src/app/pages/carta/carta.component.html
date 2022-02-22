@@ -17,8 +17,9 @@
                             <div class="col-6">
                                 <div>
 
-                                    <a class="link-carta" routerLink="/carta/{{carta.scryfallId}}">
-                                        <img src="{{carta.imagenesCarta.normal}}" class="carta" width="100%" height="100%">
+                                    <a class="link-carta" routerLink="/carta/{{carta.id}}">
+                                        <img *ngIf="carta.image_uris" src="{{carta.image_uris.normal}}" class="carta" width="100%" height="100%">
+                                        <img *ngIf="carta.card_faces" src="{{carta.card_faces[0].image_uris.normal}}" class="carta" width="100%" height="100%">
                                     </a>
                                 </div>
                             </div>
@@ -28,7 +29,7 @@
                                 <div class="card datos-carta">
                                     <div class="card-header">
                                         <h2 class="card-title mb-0">{{carta.name}}
-                                            <div class="text-right">{{carta.manaCost}}</div>
+                                            <div class="text-right">{{carta.mana_cost}}</div>
                                         </h2>
 
                                     </div>
@@ -38,7 +39,7 @@
                                                 <img width="28" height="28" class="ml-auto" src="{{simbolo_carta.icon_svg_uri}}">
                                             </li>
                                         </ul>
-                                        <p class="card-text">{{carta.text}}
+                                        <p class="card-text">{{carta.printed_text}}
                                         </p>
                                         <button class="btn btn-primary w-50" role="button" (click)="guardarCarta()">
                                             Guardar

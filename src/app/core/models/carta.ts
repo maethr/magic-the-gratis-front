@@ -20,10 +20,13 @@ export class CardFace {
   image_uris?: ImageURIs;
 }
 
-export class Card extends CardFace {
+export class Carta extends CardFace {
+
+  // Propiedades del usuario
+  local_id?: number;
 
   // Propiedades de la impresión
-  id: number;
+  id: string;
   lang: string;
   uri: string;
   image_status: string;
@@ -36,10 +39,9 @@ export class Card extends CardFace {
   // Propiedades de la carta
   layout?: string;
   card_faces?: CardFace[];
-  all_parts?: Card[];
+  all_parts?: Carta[];
 
-  /* 
-  public get images(): ImageURIs {
+  /*public get images(): ImageURIs {
     if (this.card_faces != null) {
       return this.card_faces[0].image_uris;
     }

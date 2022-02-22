@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Carta } from 'src/app/pages/carta/carta';
+import { Carta } from 'src/app/core/models/carta';
 import { Album } from 'src/app/pages/album/album';
+import { ScryfallService } from '../scryfall/scryfall.service';
 
 
 @Injectable()
@@ -11,7 +12,8 @@ export class AlbumService {
 
   private url: string = "http://localhost:8080/collector";
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private scryfallService: ScryfallService
   ) { }
 
   getPaginaAlbum(id:number, page: number, size:number): Observable<any>{
@@ -20,7 +22,15 @@ export class AlbumService {
 
     return this.http.get(`${url}/${id}/${page}`,{params:params}).pipe(
       map((response: any) => {
-        (response.content as Carta[]).map(carta => {
+        (response.content as any[]).map(carta => {
+          let scryfall_id = carta.scryfallId;
+          carta.local_id = carta.id;
+          carta.id = scryfall_id;
+          this.scryfallService.getCard(scryfall_id).subscribe(carta_scryfall => {
+            for (let key in carta_scryfall) {
+              carta[key] = carta_scryfall[key];
+            }
+          });
           return carta;
         });
         return response;
@@ -29,16 +39,16 @@ export class AlbumService {
     );
   }
 
-  putCartaInAlbum (carta: Carta, id_album: number): Observable<any> {
+  putCartaInAlbum (scryfall_id: string, album_id: number): Observable<any> {
     let url = this.url +  "/album";
-    let params = new HttpParams().set("carta", carta.scryfallId);
-    return this.http.put(`${url}/${id_album}`, params);
+    let params = new HttpParams().set("carta", scryfall_id);
+    return this.http.put(`${url}/${album_id}`, params);
   }
 
-  deleteCarta (carta: Carta): Observable<any> {
+  deleteCarta (id: number): Observable<any> {
     let url = this.url +  "/album";
     alert("A");
-    let params = new HttpParams().set("carta", carta.id.toString());
+    let params = new HttpParams().set("carta", id.toString());
     return this.http.delete(`${url}`, { params });
   }
 
