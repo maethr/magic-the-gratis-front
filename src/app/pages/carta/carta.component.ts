@@ -30,6 +30,8 @@ export class CartaComponent implements OnInit {
   simbolo_carta: Edicion;
   albumes: Map<string, string> = new Map<string, string>();
 
+  cargando: boolean = true;
+
   constructor(
     private cartaService: CartaService,
     private albumesService: ColeccionService,
@@ -56,13 +58,17 @@ export class CartaComponent implements OnInit {
     this.scryfallService.getCard(this.scryfall_id).subscribe(response => {
       this.carta = response as Carta;
       this.obtenerSimbolo();
+      // this.cargando = false;
     });
   }
 
   obtenerSimbolo(): void {
     this.simboloService.getEdicion(this.carta.set).subscribe(response => {
       this.simbolo_carta = response as Edicion;
-    })
+      this.cargando = false;
+    }, error => {
+      this.cargando = false;
+    });
   }
 
   obtenerAlbumes() {
