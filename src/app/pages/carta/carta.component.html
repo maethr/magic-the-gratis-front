@@ -44,12 +44,17 @@
                                     </div>
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush datos-carta">
-                                            <li class="list-group-item d-flex align-items-center">Edición: {{simbolo_carta.name}}
-                                                <img width="28" height="28" class="ml-auto" src="{{simbolo_carta.icon_svg_uri}}">
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <em class="m-1">{{simbolo_carta.name}}</em>
+                                                <img width="28" height="28" class="ml-auto" src="{{carta.set | edicion | async}}" title="{{carta.set | uppercase }}">
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <div class="m-1">{{carta.oracle_text}}</div>
+                                            </li>
+                                            <li *ngIf="carta.flavor_text" class="list-group-item d-flex align-items-center">
+                                                <em class="m-1">{{carta.flavor_text}}</em>
                                             </li>
                                         </ul>
-                                        <p class="card-text">{{carta.printed_text}}
-                                        </p>
                                         <button class="btn btn-primary w-50" role="button" (click)="guardarCarta()">
                                             Guardar
                                         </button>

@@ -1,7 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartaService } from '../../core/services/data/carta.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import { Carta } from 'src/app/core/models/carta';
 import { SearchParams } from 'src/app/core/services/scryfall/search-params';
@@ -24,7 +23,6 @@ export class BuscadorComponent implements OnInit {
   cargando: boolean = false;
 
   constructor(
-    private cartaService: CartaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private ref: ChangeDetectorRef,

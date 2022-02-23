@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Carta } from 'src/app/core/models/carta';
@@ -8,9 +7,7 @@ import { ColeccionService } from 'src/app/core/services/data/coleccion.service';
 import { UsuarioService } from 'src/app/core/services/data/usuario.service';
 
 import { EdicionService } from './ediciones/edicion.service';
-import { Edicion } from './ediciones/edicion';
-import { Album } from '../album/album';
-import { CartaService } from 'src/app/core/services/data/carta.service';
+import { Edicion } from '../../core/models/edicion';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 
@@ -33,7 +30,6 @@ export class CartaComponent implements OnInit {
   cargando: boolean = true;
 
   constructor(
-    private cartaService: CartaService,
     private albumesService: ColeccionService,
     private albumService: AlbumService,
     private usuarioService: UsuarioService,
@@ -57,6 +53,7 @@ export class CartaComponent implements OnInit {
   obtenerCarta(): void {
     this.scryfallService.getCard(this.scryfall_id).subscribe(response => {
       this.carta = response as Carta;
+      console.log("carta", this.carta);
       this.obtenerSimbolo();
       // this.cargando = false;
     });

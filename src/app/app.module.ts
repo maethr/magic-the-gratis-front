@@ -10,7 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import localeES from '@angular/common/locales/es';
 
-import { AppComponent } from './layout/app.component';
+import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { InicioComponent } from './pages/home/inicio.component';
@@ -19,7 +19,7 @@ import { UsuarioDetalleComponent } from './pages/usuarios/perfil/usuario-detalle
 import { CrearPerfilComponent } from './pages/usuarios/crear-perfil/crear-perfil.component';
 import { EditarPerfilComponent } from './pages/usuarios/editar-perfil/editar-perfil.component';
 import { LoginComponent } from './pages/login/login.component';
-import { BuscadorComponent } from './layout/buscador/buscador.component';
+import { BuscadorComponent } from './pages/buscador/buscador.component';
 import { BuscadorUsuariosComponent } from './pages/usuarios/buscador-usuarios/buscador-usuarios.component';
 import { CartaComponent } from './pages/carta/carta.component';
 import { ColeccionComponent } from './pages/coleccion/coleccion.component';
@@ -29,13 +29,14 @@ import { UsuarioService } from './core/services/data/usuario.service';
 import { ColeccionService } from './core/services/data/coleccion.service';
 import { AlbumComponent } from './pages/album/album.component';
 import { AlbumService } from './core/services/data/album.service';
-import { CartaService } from './core/services/data/carta.service';
 import { EdicionService } from './pages/carta/ediciones/edicion.service';
 
 import { PaginadorAlbumesComponent } from './layout/paginator/paginador-albumes/paginador-albumes.component';
 import { PaginadorAlbumComponent } from './layout/paginator/paginador-album/paginador-album.component';
 import { PaginadorBuscadorComponent } from './layout/paginator/paginador-buscador/paginador-buscador.component';
 import { PaginadorUsuariosComponent } from './layout/paginator/paginador-usuarios/paginador-usuarios.component';
+import { ScryfallService } from './core/services/scryfall/scryfall.service';
+import { EdicionPipe } from './core/pipes/edicion/edicion.pipe';
 
 
 registerLocaleData(localeES, 'es');
@@ -87,7 +88,8 @@ const routes: Routes = [
     PaginadorBuscadorComponent,
     PaginadorUsuariosComponent,
     BuscadorUsuariosComponent,
-    CartaComponent
+    CartaComponent,
+    EdicionPipe
   ],
   imports: [
     BrowserModule,
@@ -103,8 +105,8 @@ const routes: Routes = [
     UsuarioService,
     ColeccionService,
     AlbumService,
-    CartaService,
     EdicionService,
+    ScryfallService,
 
     CrearPerfilComponent,
     UsuarioDetalleComponent,

@@ -6,8 +6,8 @@ import { ColeccionService } from '../../core/services/data/coleccion.service';
 import { Carta } from 'src/app/core/models/carta';
 
 import { ChangeDetectorRef } from '@angular/core';
-import { CartaService } from 'src/app/core/services/data/carta.service';
 import { AlbumService } from 'src/app/core/services/data/album.service';
+import { EdicionService } from '../carta/ediciones/edicion.service';
 
 @Component({
   selector: 'app-album',
@@ -30,7 +30,8 @@ export class AlbumComponent implements OnInit {
     private albumesService: ColeccionService,
     private activatedRoute: ActivatedRoute,
     private ref: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private simboloService: EdicionService
   ) { }
 
   ngOnInit(): void {
