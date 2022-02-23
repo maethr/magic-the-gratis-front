@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EdicionService } from 'src/app/pages/carta/ediciones/edicion.service';
+import { EdicionService } from 'src/app/core/services/scryfall/edicion.service';
 
 @Pipe({
   name: 'edicion'

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Edicion } from '../../../core/models/edicion';
+import { Edicion } from '../../models/edicion';
 
 @Injectable()
 export class EdicionService {

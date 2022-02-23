@@ -29,7 +29,7 @@ import { UsuarioService } from './core/services/data/usuario.service';
 import { ColeccionService } from './core/services/data/coleccion.service';
 import { AlbumComponent } from './pages/album/album.component';
 import { AlbumService } from './core/services/data/album.service';
-import { EdicionService } from './pages/carta/ediciones/edicion.service';
+import { EdicionService } from './core/services/scryfall/edicion.service';
 
 import { PaginadorAlbumesComponent } from './layout/paginator/paginador-albumes/paginador-albumes.component';
 import { PaginadorAlbumComponent } from './layout/paginator/paginador-album/paginador-album.component';

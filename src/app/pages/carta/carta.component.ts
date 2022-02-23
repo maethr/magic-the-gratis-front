@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { ColeccionService } from 'src/app/core/services/data/coleccion.service';
 import { UsuarioService } from 'src/app/core/services/data/usuario.service';
 
-import { EdicionService } from './ediciones/edicion.service';
+import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { Edicion } from '../../core/models/edicion';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
@@ -53,6 +53,7 @@ export class CartaComponent implements OnInit {
   obtenerCarta(): void {
     this.scryfallService.getCard(this.scryfall_id).subscribe(response => {
       this.carta = response as Carta;
+      // this.carta.oracle_text = this.carta.oracle_text.replace(/\n/g, '<br>');
       console.log("carta", this.carta);
       this.obtenerSimbolo();
       // this.cargando = false;

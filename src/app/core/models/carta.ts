@@ -14,6 +14,7 @@ export class CardFace {
 
   // Propiedades de la tirada
   printed_text?: string;
+  oracle_text?: string;
   flavor_text?: string;
   illustration_id?: string;
   artist?: string;

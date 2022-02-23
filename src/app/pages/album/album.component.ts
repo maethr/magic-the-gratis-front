@@ -7,7 +7,7 @@ import { Carta } from 'src/app/core/models/carta';
 
 import { ChangeDetectorRef } from '@angular/core';
 import { AlbumService } from 'src/app/core/services/data/album.service';
-import { EdicionService } from '../carta/ediciones/edicion.service';
+import { EdicionService } from '../../core/services/scryfall/edicion.service';
 
 @Component({
   selector: 'app-album',
