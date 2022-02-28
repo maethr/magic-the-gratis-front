@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,6 +38,7 @@ import { PaginadorUsuariosComponent } from './layout/paginator/paginador-usuario
 import { ScryfallService } from './core/services/scryfall/scryfall.service';
 import { EdicionPipe } from './core/pipes/edicion.pipe';
 import { SimbolosPipe } from './core/pipes/simbolos.pipe';
+import { SimbolosService } from './core/services/scryfall/simbolos.service';
 
 
 registerLocaleData(localeES, 'es');
@@ -51,13 +52,13 @@ const routes: Routes = [
   { path: 'usuarios/page/:page', component: UsuariosComponent },
   { path: 'usuarios/form/:id', component: CrearPerfilComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'perfil', component: UsuarioDetalleComponent},
+  { path: 'perfil', component: UsuarioDetalleComponent },
   { path: 'coleccion', component: ColeccionComponent },
   { path: 'coleccion/:page', component: ColeccionComponent },
   { path: 'album/:id', component: AlbumComponent },
   { path: 'album/:id/page/:page', component: AlbumComponent },
   { path: 'album/:id/config', component: OpcionesAlbumComponent },
-  { path: 'editarPerfil', component: EditarPerfilComponent},
+  { path: 'editarPerfil', component: EditarPerfilComponent },
   { path: 'buscar', component: BuscadorComponent },
   { path: 'buscar/:tipo/:txt', component: BuscadorComponent },
   { path: 'buscar/:tipo/:txt/:page', component: BuscadorComponent },
@@ -66,6 +67,17 @@ const routes: Routes = [
   { path: 'carta/:scid', component: CartaComponent }
 
 ]
+
+/**
+ * Función que se ejecuta al inicio de la aplicación.
+ * @params Servicios que se inicializan en el inicio de la aplicación.
+ * @returns Función que devuelve una promesa. Esta promesa se resulve al inicio de la
+ *  aplicación. Por ahora solo hace falta inicializar el servicio de simbolos.
+ */
+export function initializeApp(simbolosService: SimbolosService): Function {
+  console.log('initializeApp');
+  return () => simbolosService._initialize();
+}
 
 @NgModule({
   declarations: [
@@ -113,6 +125,16 @@ const routes: Routes = [
     CrearPerfilComponent,
     UsuarioDetalleComponent,
     EditarPerfilComponent,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [SimbolosService],
+      multi: true,
+      /* Esto hace que el inicio de la app demore hasta que se ejecute todo lo que hay
+         la función initializaApp, que tiene que devolver una función que devuelva una promesa
+         Esto demora el inicio de la app, pero permite que desde el principio esté cargada
+         la información de la simbología. */
+    },
     { provide: LOCALE_ID, useValue: 'es' }
   ],
   bootstrap: [AppComponent]

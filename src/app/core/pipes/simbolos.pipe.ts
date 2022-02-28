@@ -12,10 +12,8 @@ export class SimbolosPipe implements PipeTransform {
     private simbolosService: SimbolosService
   ) { }
 
-  transform(value: string, ...args: unknown[]): Observable<any> {
-    return this.simbolosService.data.pipe(
-      map(response => {
-        let simbologia = response.data;
+  transform(value: string, ...args: unknown[]): string {
+    
         let ocurrencias = value.match(/\{(.*?)\}/g);
         let display_mana_cost = value.replace(/[{}]/g, '');
         let html: string = `<span title="${display_mana_cost}">`;
@@ -31,11 +29,7 @@ export class SimbolosPipe implements PipeTransform {
             let simbolo_enc: any;
             let cod_simbolo = ocurrencias[i];
 
-            simbologia.forEach((simbolo: any) => {
-              if (simbolo.symbol === cod_simbolo) {
-                simbolo_enc = simbolo;
-              }
-            });
+            simbolo_enc = this.simbolosService.getSimbolo(cod_simbolo);
 
             if (simbolo_enc) {
               console.log(simbolo_enc);
@@ -48,7 +42,5 @@ export class SimbolosPipe implements PipeTransform {
 
         html += '</span>'
         return html;
-      })
-    );
   }
 }

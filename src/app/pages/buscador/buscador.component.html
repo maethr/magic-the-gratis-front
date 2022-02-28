@@ -58,7 +58,7 @@
                                             <img *ngIf="carta.card_faces" src="{{carta.card_faces[0].image_uris.normal}}" class="carta" width="100%" height="100%">
                                             <div class="datos-carta">
                                                 {{carta.name}}<br> Coste de maná:
-                                                <span class="ml-3" [innerHTML]="carta.mana_cost | simbolos:'20px' | async"></span>
+                                                <span class="ml-3" [innerHTML]="carta.mana_cost | simbolos:'20px'"></span>
                                                 <br> Edición:
                                                 <span class="ml-3" [innerHTML]="carta.set | edicion:'26px' | async"></span>
                                             </div>
