@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SimbolosService } from './core/services/scryfall/simbolos.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,13 @@ import { Component } from '@angular/core';
     </div>
     <app-footer></app-footer>`
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(
+    private simbolosService: SimbolosService
+  ) { }
+
+  ngOnInit() {
+    //this.simbolosService.getSimbolosAsync();
+  }
 }

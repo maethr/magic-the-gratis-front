@@ -36,7 +36,8 @@ import { PaginadorAlbumComponent } from './layout/paginator/paginador-album/pagi
 import { PaginadorBuscadorComponent } from './layout/paginator/paginador-buscador/paginador-buscador.component';
 import { PaginadorUsuariosComponent } from './layout/paginator/paginador-usuarios/paginador-usuarios.component';
 import { ScryfallService } from './core/services/scryfall/scryfall.service';
-import { EdicionPipe } from './core/pipes/edicion/edicion.pipe';
+import { EdicionPipe } from './core/pipes/edicion.pipe';
+import { SimbolosPipe } from './core/pipes/simbolos.pipe';
 
 
 registerLocaleData(localeES, 'es');
@@ -89,7 +90,8 @@ const routes: Routes = [
     PaginadorUsuariosComponent,
     BuscadorUsuariosComponent,
     CartaComponent,
-    EdicionPipe
+    EdicionPipe,
+    SimbolosPipe
   ],
   imports: [
     BrowserModule,

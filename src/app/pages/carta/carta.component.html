@@ -46,7 +46,7 @@
                                         <ul class="list-group list-group-flush datos-carta">
                                             <li class="list-group-item d-flex align-items-center">
                                                 <em class="m-1">{{simbolo_carta.name}}</em>
-                                                <img width="28" height="28" class="ml-auto" src="{{carta.set | edicion | async}}" title="{{carta.set | uppercase }}">
+                                                <span class="ml-auto" [innerHTML]="carta.set | edicion:'26px' | async"></span>
                                             </li>
                                             <li class="list-group-item d-flex align-items-center">
                                                 <div class="m-1 texto-carta">{{carta.oracle_text}}</div>
