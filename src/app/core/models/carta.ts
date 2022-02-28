@@ -42,12 +42,13 @@ export class Carta extends CardFace {
   card_faces?: CardFace[];
   all_parts?: Carta[];
 
-  /*public get images(): ImageURIs {
+  /* TODO:
+    public get images(): ImageURIs {
     if (this.card_faces != null) {
       return this.card_faces[0].image_uris;
     }
     return this.image_uris;
-  } */
+    } */
 }
 
 export class ImageURIs {
