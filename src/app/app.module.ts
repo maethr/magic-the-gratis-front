@@ -76,7 +76,7 @@ const routes: Routes = [
  */
 export function initializeApp(simbolosService: SimbolosService): Function {
   console.log('initializeApp');
-  return () => simbolosService._initialize();
+  return () => simbolosService.initialize();
 }
 
 @NgModule({
