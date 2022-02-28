@@ -1,15 +1,15 @@
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Carta } from './carta';
-import { CartaService } from './carta.service';
+import { Carta } from 'src/app/core/models/carta';
+
 import Swal from 'sweetalert2';
-import { ColeccionService } from 'src/app/pages/coleccion/coleccion.service';
-import { UsuarioService } from 'src/app/usuarios/usuario.service';
-import { AlbumService } from '../album/album.service';
-import { EdicionService } from './ediciones/edicion.service';
-import { Edicion } from './ediciones/edicion';
-import { Album } from '../album/album';
+import { ColeccionService } from 'src/app/core/services/data/coleccion.service';
+import { UsuarioService } from 'src/app/core/services/data/usuario.service';
+
+import { EdicionService } from '../../core/services/scryfall/edicion.service';
+import { Edicion } from '../../core/models/edicion';
+import { AlbumService } from 'src/app/core/services/data/album.service';
+import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 
 @Component({
   selector: 'app-carta',
@@ -27,13 +27,15 @@ export class CartaComponent implements OnInit {
   simbolo_carta: Edicion;
   albumes: Map<string, string> = new Map<string, string>();
 
+  cargando: boolean = true;
+
   constructor(
-    private cartaService: CartaService,
     private albumesService: ColeccionService,
     private albumService: AlbumService,
     private usuarioService: UsuarioService,
     private simboloService: EdicionService,
     private activatedRoute: ActivatedRoute,
+    private scryfallService: ScryfallService
 
   ) {
   }
@@ -49,18 +51,22 @@ export class CartaComponent implements OnInit {
   }
 
   obtenerCarta(): void {
-    this.carta = new Carta();
-    this.carta.scryfallId = this.scryfall_id;
-    this.cartaService.getCarta(this.carta).subscribe(() => {
+    this.scryfallService.getCard(this.scryfall_id).subscribe(response => {
+      this.carta = response as Carta;
+      // this.carta.oracle_text = this.carta.oracle_text.replace(/\n/g, '<br>');
+      console.log("carta", this.carta);
       this.obtenerSimbolo();
+      // this.cargando = false;
     });
-    this.cartaService.getImagenesCarta(this.carta).subscribe();
   }
 
   obtenerSimbolo(): void {
-    this.simboloService.getEdicion(this.carta.setCode).subscribe(response => {
+    this.simboloService.getEdicion(this.carta.set).subscribe(response => {
       this.simbolo_carta = response as Edicion;
-    })
+      this.cargando = false;
+    }, error => {
+      this.cargando = false;
+    });
   }
 
   obtenerAlbumes() {
@@ -91,7 +97,7 @@ export class CartaComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        this.albumService.putCartaInAlbum(this.carta, result.value).subscribe(() => {
+        this.albumService.putCartaInAlbum(this.carta.id, result.value).subscribe(() => {
           Swal.fire('Carta añadida', `La carta ${this.carta.name} ha sido añadida al album seleccionado correctamente`, 'success');
         });
       }
@@ -111,7 +117,7 @@ export class CartaComponent implements OnInit {
       alert("s")
       if (result.isConfirmed) {
         alert("b")
-        this.albumService.deleteCarta(this.carta).subscribe(() => {
+        this.albumService.deleteCarta(this.carta.local_id).subscribe(() => {
           Swal.fire('Carta añadida', `La carta ${this.carta.name} ha sido añadida al album seleccionado correctamente`, 'success');
         });
       }

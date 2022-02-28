@@ -32,3 +32,9 @@ ul {
     margin-top: 35px;
     margin-bottom: 200px;
 }
+
+.texto-carta {
+    white-space: pre-line;
+    width: 100%;
+    max-width: 100%;
+}

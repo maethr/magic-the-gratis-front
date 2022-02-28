@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
-import { ColeccionService } from '../coleccion/coleccion.service';
-import { AlbumService } from './album.service';
-import { Carta } from '../carta/carta';
-import { CartaService } from '../carta/carta.service';
+import { ColeccionService } from '../../core/services/data/coleccion.service';
+
+import { Carta } from 'src/app/core/models/carta';
+
 import { ChangeDetectorRef } from '@angular/core';
+import { AlbumService } from 'src/app/core/services/data/album.service';
+import { EdicionService } from '../../core/services/scryfall/edicion.service';
 
 @Component({
   selector: 'app-album',
@@ -24,12 +26,12 @@ export class AlbumComponent implements OnInit {
   cargando: boolean = true;
 
   constructor(
-    private cartaService: CartaService,
     private albumService: AlbumService,
     private albumesService: ColeccionService,
     private activatedRoute: ActivatedRoute,
     private ref: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private simboloService: EdicionService
   ) { }
 
   ngOnInit(): void {
@@ -53,12 +55,6 @@ export class AlbumComponent implements OnInit {
     })
   }
 
-  getImagenes(carta: Carta) {
-    this.cartaService.getImagenesCarta(carta).subscribe( () => {
-      this.cargando = false;
-    });
-  }
-
   recargar (num: number) {
     this.tam_fila = this.tam_fila + num;
     this.pagina = 0;
@@ -73,15 +69,8 @@ export class AlbumComponent implements OnInit {
   obtenerCartas(pagina: number): void {
     this.albumService.getPaginaAlbum(this.id_album, pagina, this.tam_fila ** 2).subscribe(response => {
       this.cartas = response.content as Carta[];
-      this.cartas.forEach(carta => {
-        this.cartaService.getCarta(carta).subscribe(() => {
-          // Primero todos los textos y luego las imagenes:
-          // getImagenes(carta)
-        });
-        // Primero imagenes y luego textos:
-        this.getImagenes(carta);
-      })
       this.paginador = response;
+      this.cargando = false;
     })
   }
 

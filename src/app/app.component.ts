@@ -1,10 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SimbolosService } from './core/services/scryfall/simbolos.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <app-header></app-header>
+    <div class="container-fluid mt-4 my-3 wrap">
+        <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>`
 })
-export class AppComponent {
-  myimage:string="assets/images/Uber.png";
+export class AppComponent implements OnInit {
+
+  constructor(
+    private simbolosService: SimbolosService
+  ) { }
+
+  ngOnInit() {
+    //this.simbolosService.getSimbolosAsync();
+  }
 }
