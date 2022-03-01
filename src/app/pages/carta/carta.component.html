@@ -26,14 +26,14 @@
                             <div class="col-6">
                                 <div>
 
-                                    <!--a [lightbox]="0">
+                                    <a [lightbox]="0">
                                         <img *ngIf="carta.image_uris" src="{{carta.image_uris.normal}}" class="carta" width="100%" height="100%">
                                         <img *ngIf="carta.card_faces" src="{{carta.card_faces[0].image_uris.normal}}" class="carta" width="100%" height="100%">
-                                    </a-->
-
-                                    <a [lightbox]="0">
-                                        <img src="{{(carta | cartaDisplay).normal_image }}" class="carta" width="100%" height="100%">
                                     </a>
+
+                                    <!--a [lightbox]="0">
+                                        <img src="{{(carta | cartaDisplay).normal_image }}" class="carta" width="100%" height="100%">
+                                    </a-->
                                 </div>
                             </div>
                             <!--Datos carta-->

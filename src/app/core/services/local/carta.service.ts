@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CartaDisplay } from '../../models/carta-display';
 import { CardFace, Carta, ImageURIs } from '../../models/carta';
 
 @Injectable({

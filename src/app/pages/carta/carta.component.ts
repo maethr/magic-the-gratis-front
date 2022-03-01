@@ -10,10 +10,9 @@ import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { Edicion } from '../../core/models/edicion';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
-import { Gallery, GalleryItem, ImageItem, ImageSize, ThumbnailsPosition } from 'ng-gallery';
+import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { CartaService } from 'src/app/core/services/local/carta.service';
-import { CartaPipe } from 'src/app/core/pipes/carta.pipe';
 
 @Component({
   selector: 'app-carta',
