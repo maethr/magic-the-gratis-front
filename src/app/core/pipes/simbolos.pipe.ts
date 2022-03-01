@@ -43,6 +43,7 @@ export class SimbolosPipe implements PipeTransform {
           // let simbolo_naked = cod_simbolo.replace(/[{}]/g, '');
           let simbolo_text = simbolo_enc.english.charAt(0).toUpperCase() + simbolo_enc.english.slice(1);
           value = value.replace(cod_simbolo, `<img width="${size}" height="${size}"
+                        style="display: inline-block;"
                         src="${simbolo_enc.svg_uri}"
                         alt="${simbolo_enc.english}"
                         title="${simbolo_text}"
