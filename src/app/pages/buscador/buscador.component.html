@@ -54,11 +54,15 @@
                                 <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasBusqueda">
                                     <li routerLinkActive="active">
                                         <a class="link-carta" routerLink="/carta/{{carta.id}}">
+
                                             <img *ngIf="carta.image_uris" src="{{carta.image_uris.normal}}" class="carta" width="100%" height="100%">
                                             <img *ngIf="carta.card_faces" src="{{carta.card_faces[0].image_uris.normal}}" class="carta" width="100%" height="100%">
+
                                             <div class="datos-carta">
                                                 {{carta.name}}<br> Coste de maná:
-                                                <span class="ml-3" [innerHTML]="carta.mana_cost | simbolos:'20px'"></span>
+                                                <span *ngIf="carta.mana_cost" class="ml-3" [innerHTML]="carta.mana_cost | simbolos:'20px'"></span>
+                                                <span *ngIf="carta.card_faces" class="ml-3" [innerHTML]="carta.card_faces[0].mana_cost | simbolos:'20px'"></span>
+
                                                 <br> Edición:
                                                 <span class="ml-3" [innerHTML]="carta.set | edicion:'26px' | async"></span>
                                             </div>

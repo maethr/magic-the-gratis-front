@@ -28,7 +28,7 @@
 
                                     <a [lightbox]="0">
                                         <img *ngIf="carta.image_uris" src="{{carta.image_uris.normal}}" class="carta" width="100%" height="100%">
-                                        <img *ngIf="carta.card_faces" src="{{carta.card_faces[0].image_uris.normal}}" class="carta" width="100%" height="100%">
+                                        <img *ngIf="!carta.image_uris && carta.card_faces" src="{{carta.card_faces[0].image_uris.normal}}" class="carta" width="100%" height="100%">
                                     </a>
 
                                     <!--a [lightbox]="0">
@@ -54,11 +54,26 @@
                                                 <em class="m-1">{{simbolo_carta.name}}</em>
                                                 <span class="ml-auto" [innerHTML]="carta.set | edicion:'26px' | async"></span>
                                             </li>
-                                            <li class="list-group-item d-flex align-items-center">
+
+                                            <li *ngIf="carta.oracle_text" class="list-group-item d-flex align-items-center">
                                                 <div class="m-1 texto-carta">
                                                     <span [innerHTML]="carta.oracle_text | simbolos:'18px'"></span>
                                                 </div>
                                             </li>
+
+                                            <div *ngIf="!carta.oracle_text && carta.card_faces">
+                                                <li class="list-group-item d-flex align-items-center">
+                                                    <div class="m-1 texto-carta">
+                                                        <span [innerHTML]="carta.card_faces[0].oracle_text | simbolos:'18px'"></span>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item d-flex align-items-center">
+                                                    <div class="m-1 texto-carta">
+                                                        <span [innerHTML]="carta.card_faces[1].oracle_text | simbolos:'18px'"></span>
+                                                    </div>
+                                                </li>
+                                            </div>
+
                                             <li *ngIf="carta.flavor_text" class="list-group-item d-flex align-items-center">
                                                 <em class="m-1">{{carta.flavor_text}}</em>
                                             </li>
