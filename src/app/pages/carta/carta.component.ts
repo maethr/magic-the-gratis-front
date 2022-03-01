@@ -12,6 +12,8 @@ import { AlbumService } from 'src/app/core/services/data/album.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import { Gallery, GalleryItem, ImageItem, ImageSize, ThumbnailsPosition } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
+import { CartaService } from 'src/app/core/services/local/carta.service';
+import { CartaPipe } from 'src/app/core/pipes/carta.pipe';
 
 @Component({
   selector: 'app-carta',
@@ -39,9 +41,10 @@ export class CartaComponent implements OnInit {
     private simboloService: EdicionService,
     private activatedRoute: ActivatedRoute,
     private scryfallService: ScryfallService,
-    public gallery: Gallery,
-    public lightbox: Lightbox
-  ) {}
+    private cartaService: CartaService,
+    public _gallery: Gallery,
+    public _lightbox: Lightbox
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -51,14 +54,14 @@ export class CartaComponent implements OnInit {
       this.obtenerCarta();
       this.obtenerAlbumes();
     });
-    this.lightbox.setConfig({
+    this._lightbox.setConfig({
       panelClass: 'fullscreen',
       keyboardShortcuts: false
     });
-    this.gallery.ref().setConfig({
+    this._gallery.ref().setConfig({
       thumb: false
     });
-    this.gallery.ref().load(this.galeria);
+    this._gallery.ref().load(this.galeria);
   }
 
   obtenerCarta(): void {
@@ -68,12 +71,89 @@ export class CartaComponent implements OnInit {
       console.log("carta", this.carta);
       this.obtenerSimbolo();
       // this.cargando = false;
-      this.galeria.push(new ImageItem({
-        src: this.carta.image_uris.large,
-        thumb: this.carta.image_uris.small,
-      }));
+
+      this.rellenarArrayGaleria(this.carta);
 
     });
+  }
+
+  rellenarArrayGaleria(carta: Carta) {
+    let image_uri_arr = this.cartaService.getAllImageUris(carta);
+    for (let image_uri of image_uri_arr) {
+      this.galeria.push(new ImageItem({
+        src: this.cartaService.getBestImage(image_uri),
+        thumb: this.cartaService.getWorstImage(image_uri),
+      }));
+    }
+    if (this.galeria.length > 1) {
+      this._gallery.ref().setConfig({
+        thumb: true
+      });
+    }
+  }
+
+  __rellenarArrayGaleria(carta: Carta) {
+    if (carta.image_uris) {
+      this.galeria.push(new ImageItem({
+        src: this.cartaService.getBestImage(carta.image_uris),
+        thumb: this.cartaService.getWorstImage(carta.image_uris),
+      }));
+    }
+    if (carta.card_faces) {
+      for (let face of carta.card_faces) {
+        if (face.image_uris) {
+          this.galeria.push(new ImageItem({
+            src: this.cartaService.getBestImage(face.image_uris),
+            thumb: this.cartaService.getWorstImage(face.image_uris),
+          }));
+        }
+      }
+    }
+    if (this.galeria.length > 1) {
+      this._gallery.ref().setConfig({
+        thumb: true
+      });
+    }
+  }
+
+
+
+  _rellenarArrayGaleria(carta: Carta) {
+    if (carta.image_uris) {
+      if (carta.image_uris.large && this.carta.image_uris.small) {
+        this.galeria.push(new ImageItem({
+          src: carta.image_uris.large,
+          thumb: carta.image_uris.small,
+        }));
+      } else if (carta.image_uris.normal) {
+        this.galeria.push(new ImageItem({
+          src: carta.image_uris.normal,
+          thumb: carta.image_uris.normal,
+        }));
+      }
+    }
+    if (carta.card_faces) {
+      for (let face of carta.card_faces) {
+        if (face.image_uris) {
+          if (face.image_uris.large && face.image_uris.small) {
+            this.galeria.push(new ImageItem({
+              src: face.image_uris.normal,
+              thumb: face.image_uris.normal,
+            }));
+          } else if (face.image_uris.normal) {
+            this.galeria.push(new ImageItem({
+              src: face.image_uris.normal,
+              thumb: face.image_uris.normal,
+            }));
+          }
+        }
+      }
+    }
+    if (this.galeria.length > 1) {
+      this._gallery.ref().setConfig({
+        thumb: true
+      });
+    }
   }
 
   obtenerSimbolo(): void {
