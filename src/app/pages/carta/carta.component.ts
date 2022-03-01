@@ -10,6 +10,8 @@ import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { Edicion } from '../../core/models/edicion';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
+import { Gallery, GalleryItem, ImageItem, ImageSize, ThumbnailsPosition } from 'ng-gallery';
+import { Lightbox } from 'ng-gallery/lightbox';
 
 @Component({
   selector: 'app-carta',
@@ -28,6 +30,7 @@ export class CartaComponent implements OnInit {
   albumes: Map<string, string> = new Map<string, string>();
 
   cargando: boolean = true;
+  galeria: GalleryItem[] = [];
 
   constructor(
     private albumesService: ColeccionService,
@@ -35,10 +38,10 @@ export class CartaComponent implements OnInit {
     private usuarioService: UsuarioService,
     private simboloService: EdicionService,
     private activatedRoute: ActivatedRoute,
-    private scryfallService: ScryfallService
-
-  ) {
-  }
+    private scryfallService: ScryfallService,
+    public gallery: Gallery,
+    public lightbox: Lightbox
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -47,7 +50,15 @@ export class CartaComponent implements OnInit {
       this.carta_en_album = this.id_carta ? true : false;
       this.obtenerCarta();
       this.obtenerAlbumes();
-    })
+    });
+    this.lightbox.setConfig({
+      panelClass: 'fullscreen',
+      keyboardShortcuts: false
+    });
+    this.gallery.ref().setConfig({
+      thumb: false
+    });
+    this.gallery.ref().load(this.galeria);
   }
 
   obtenerCarta(): void {
@@ -57,6 +68,11 @@ export class CartaComponent implements OnInit {
       console.log("carta", this.carta);
       this.obtenerSimbolo();
       // this.cargando = false;
+      this.galeria.push(new ImageItem({
+        src: this.carta.image_uris.large,
+        thumb: this.carta.image_uris.small,
+      }));
+
     });
   }
 

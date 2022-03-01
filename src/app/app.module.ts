@@ -39,6 +39,8 @@ import { ScryfallService } from './core/services/scryfall/scryfall.service';
 import { EdicionPipe } from './core/pipes/edicion.pipe';
 import { SimbolosPipe } from './core/pipes/simbolos.pipe';
 import { SimbolosService } from './core/services/scryfall/simbolos.service';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 
 registerLocaleData(localeES, 'es');
@@ -113,7 +115,10 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+
+    GalleryModule,
+    LightboxModule
   ],
   providers: [
     UsuarioService,
