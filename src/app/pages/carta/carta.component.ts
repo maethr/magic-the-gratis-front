@@ -70,9 +70,7 @@ export class CartaComponent implements OnInit {
       console.log("carta", this.carta);
       this.obtenerSimbolo();
       // this.cargando = false;
-
       this.rellenarArrayGaleria(this.carta);
-
     });
   }
 
@@ -83,70 +81,6 @@ export class CartaComponent implements OnInit {
         src: this.cartaService.getBestImage(image_uri),
         thumb: this.cartaService.getWorstImage(image_uri),
       }));
-    }
-    if (this.galeria.length > 1) {
-      this._gallery.ref().setConfig({
-        thumb: true
-      });
-    }
-  }
-
-  __rellenarArrayGaleria(carta: Carta) {
-    if (carta.image_uris) {
-      this.galeria.push(new ImageItem({
-        src: this.cartaService.getBestImage(carta.image_uris),
-        thumb: this.cartaService.getWorstImage(carta.image_uris),
-      }));
-    }
-    if (carta.card_faces) {
-      for (let face of carta.card_faces) {
-        if (face.image_uris) {
-          this.galeria.push(new ImageItem({
-            src: this.cartaService.getBestImage(face.image_uris),
-            thumb: this.cartaService.getWorstImage(face.image_uris),
-          }));
-        }
-      }
-    }
-    if (this.galeria.length > 1) {
-      this._gallery.ref().setConfig({
-        thumb: true
-      });
-    }
-  }
-
-
-
-  _rellenarArrayGaleria(carta: Carta) {
-    if (carta.image_uris) {
-      if (carta.image_uris.large && this.carta.image_uris.small) {
-        this.galeria.push(new ImageItem({
-          src: carta.image_uris.large,
-          thumb: carta.image_uris.small,
-        }));
-      } else if (carta.image_uris.normal) {
-        this.galeria.push(new ImageItem({
-          src: carta.image_uris.normal,
-          thumb: carta.image_uris.normal,
-        }));
-      }
-    }
-    if (carta.card_faces) {
-      for (let face of carta.card_faces) {
-        if (face.image_uris) {
-          if (face.image_uris.large && face.image_uris.small) {
-            this.galeria.push(new ImageItem({
-              src: face.image_uris.normal,
-              thumb: face.image_uris.normal,
-            }));
-          } else if (face.image_uris.normal) {
-            this.galeria.push(new ImageItem({
-              src: face.image_uris.normal,
-              thumb: face.image_uris.normal,
-            }));
-          }
-        }
-      }
     }
     if (this.galeria.length > 1) {
       this._gallery.ref().setConfig({

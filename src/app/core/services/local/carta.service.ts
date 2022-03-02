@@ -39,7 +39,7 @@ export class CartaService {
       return this.getWorstImage(def_image_uris);
     }
   }
-  
+
   public getAllImageUris(carta: Carta): ImageURIs[] {
     let image_uri_arr: ImageURIs[] = [];
     if (carta.image_uris) {
