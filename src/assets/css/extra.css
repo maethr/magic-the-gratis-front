@@ -17,7 +17,7 @@
     border-radius: 10px;
     padding: 10px 10px;
     color: gray;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 3px;
 }
 
@@ -28,7 +28,8 @@
 .datos-carta .titulo:hover {
     font-size: 1.1em;
     overflow: auto;
-    transition: font-size .1s;
+    text-overflow: clip !important;
+    transition: font-size 0.1s;
 }
 
 .datos-carta .coste-mana {

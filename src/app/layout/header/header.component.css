@@ -24,9 +24,12 @@ img {
     padding-right: 0px;
 }
 
-#eco {
-    margin-top: 23px;
+#magic-the-gratis {
+    margin-top: 16px;
     margin-right: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 2em;
+    /* text-shadow: 1px 1px 1px #fff, 2px 2px 2px #111; */
 }
 
 h4 {
@@ -50,9 +53,4 @@ h4:hover {
 
 #user:hover {
     transform: scale(125%);
-}
-
-.icon {
-    margin-left: 15px;
-    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.50));
 }
