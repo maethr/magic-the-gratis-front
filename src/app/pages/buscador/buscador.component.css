@@ -4,26 +4,6 @@ ul {
     width: 100%;
 }
 
-.carta {
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.35));
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
-
-.col-4 .carta {
-    border-radius: 15px;
-}
-
-.carta:hover {
-    transform: scale(1.02);
-    transition: transform .2s;
-}
-
-.link-carta {
-    color: royalblue;
-    text-decoration: none;
-}
-
 select {
     padding-top: 5px;
     padding-bottom: 5px;

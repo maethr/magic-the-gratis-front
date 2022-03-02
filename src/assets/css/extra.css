@@ -8,36 +8,3 @@
 .simbolo-mana {
     filter: drop-shadow(1px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white) drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
 }
-
-
-/* CAJA DE DATOS DE UNA CARTA */
-
-.datos-carta {
-    background-color: rgba(255, 255, 255, 0.65);
-    border-radius: 10px;
-    padding: 10px 10px;
-    color: gray;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 3px;
-}
-
-.datos-carta .titulo {
-    color: #0066A1;
-}
-
-.datos-carta .titulo:hover {
-    font-size: 1.1em;
-    overflow: auto;
-    text-overflow: clip !important;
-    transition: font-size 0.1s;
-}
-
-.datos-carta .coste-mana {
-    white-space: nowrap;
-    overflow: hidden;
-    margin-left: 10px;
-}
-
-.datos-carta .coste-mana:hover {
-    overflow: auto;
-}
