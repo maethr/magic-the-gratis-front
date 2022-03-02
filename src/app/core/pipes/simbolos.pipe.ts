@@ -30,6 +30,9 @@ export class SimbolosPipe implements PipeTransform {
     // Tamaño por defecto 20px, si se pasa un argumento se usa ese
 
     if (ocurrencias) {
+      value = value.replace(' // ', '<span class="mx-1">|</span>');
+      // Reemplaza los separadores de coste de maná
+
       for (let i = 0; i < ocurrencias.length; i++) {
         // Recorremos el array de ocurrencias
 
@@ -52,6 +55,7 @@ export class SimbolosPipe implements PipeTransform {
         }
       }
     }
+    
     return value;
     // Devolvemos el texto original con los simbolos reemplazados
   }
