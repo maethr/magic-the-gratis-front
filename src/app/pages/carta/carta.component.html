@@ -39,7 +39,7 @@
                             <!--Datos carta-->
                             <div class="col-6">
 
-                                <div class="card datos-carta">
+                                <div class="card datos-carta m-2 p-0">
                                     <div class="card-header">
                                         <h2 class="card-title mb-0">{{carta.name}}
                                             <div class="text-right">
@@ -78,12 +78,14 @@
                                                 <em class="m-1">{{carta.flavor_text}}</em>
                                             </li>
                                         </ul>
-                                        <button class="btn btn-primary w-50" role="button" (click)="guardarCarta()">
+                                        <div class="row justify-content-between mx-3 mt-4 mb-2">
+                                            <button class="btn btn-primary col-5" role="button" (click)="guardarCarta()">
                                             Guardar
-                                        </button>
-                                        <button class="btn btn-secondary w-50" role="button" *ngIf="carta_en_album" (click)="borrarCarta()">
+                                            </button>
+                                            <button class="btn btn-secondary col-5" role="button" *ngIf="carta_en_album" (click)="borrarCarta()">
                                             Eliminar
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
