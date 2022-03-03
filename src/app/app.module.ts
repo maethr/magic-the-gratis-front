@@ -43,6 +43,8 @@ import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
 
+import { PaginatorModule } from 'primeng/paginator'; 
+
 
 registerLocaleData(localeES, 'es');
 
@@ -120,7 +122,9 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     MatProgressBarModule,
 
     GalleryModule,
-    LightboxModule
+    LightboxModule,
+    
+    PaginatorModule
   ],
   providers: [
     UsuarioService,

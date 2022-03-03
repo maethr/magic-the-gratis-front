@@ -90,6 +90,28 @@ export class BuscadorComponent implements OnInit {
       });
   }
 
+  paginate(event) {
+    //event.first = Index of the first record
+    //event.rows = Number of rows to display in new page
+    //event.page = Index of the new page
+    //event.pageCount = Total number of pages
+    this.getCartasPaginado(event.page);
+  }
+
+  getCartasPaginado (page_num: number){
+    let params: SearchParams = {
+      unique: this.tipoBusqueda,
+      page: page_num
+    }
+    this.cargando = true;
+    this.scryfallService.search(this.textoBuscado, params).subscribe(
+      response => {
+        this.cartasBusqueda = response.data as Carta[];
+        this.cargando = false;
+        //this.getImagenes();
+      });
+  }
+
 /*   getImagenes () {
     this.cartasBusqueda.forEach(carta => {
       this.cartaService.getImagenesCarta(carta).subscribe( () => {
