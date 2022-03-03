@@ -76,6 +76,6 @@
         </div>
     </div>
 
-    <p-paginator *ngIf="cartasBusqueda.length > 0" styleClass="paginator" rows="10" totalRecords="100" (onPageChange)="paginate($event)"></p-paginator>
+    <p-paginator *ngIf="cartasBusqueda.length > 0" styleClass="paginator" [rows]="tam_pag" [totalRecords]="total_cartas_busqueda" (onPageChange)="paginate($event)"></p-paginator>
 
 </div>

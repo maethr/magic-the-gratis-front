@@ -20,6 +20,9 @@ export class BuscadorComponent implements OnInit {
 
   tam_fila: number = 3;
 
+  tam_pag: number = 175;
+  total_cartas_busqueda: number;
+
   cargando: boolean = false;
 
   constructor(
@@ -85,7 +88,9 @@ export class BuscadorComponent implements OnInit {
     }
     this.scryfallService.search(this.textoBuscado, params).subscribe(
       response => {
+        this.total_cartas_busqueda = response.total_cards;
         this.cartasBusqueda = response.data as Carta[];
+        
         //this.getImagenes();
       });
   }
@@ -95,7 +100,7 @@ export class BuscadorComponent implements OnInit {
     //event.rows = Number of rows to display in new page
     //event.page = Index of the new page
     //event.pageCount = Total number of pages
-    this.getCartasPaginado(event.page);
+    this.getCartasPaginado(event.page + 1);
   }
 
   getCartasPaginado (page_num: number){
@@ -106,8 +111,10 @@ export class BuscadorComponent implements OnInit {
     this.cargando = true;
     this.scryfallService.search(this.textoBuscado, params).subscribe(
       response => {
+        this.total_cartas_busqueda = response.total_cards;
         this.cartasBusqueda = response.data as Carta[];
         this.cargando = false;
+        
         //this.getImagenes();
       });
   }
