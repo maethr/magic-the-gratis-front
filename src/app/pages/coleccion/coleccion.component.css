@@ -6,7 +6,7 @@ ul {
 
 .album {
     filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.75));
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .album:hover {
@@ -15,9 +15,11 @@ ul {
 }
 
 .datos-album {
-    background-color: rgba(255, 255, 255, 0.65);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 33%, rgba(255, 255, 255, 1) 67%, rgba(255, 255, 255, 0) 100%);
+    /* background-color: rgba(255, 255, 255, 0.65); */
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 10px;
+    filter: drop-shadow( 0px 1px 6px rgba(0, 0, 0, 0.2));
     margin-bottom: 10px;
 }
 

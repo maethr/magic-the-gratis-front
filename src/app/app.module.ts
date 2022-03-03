@@ -41,6 +41,7 @@ import { SimbolosPipe } from './core/pipes/simbolos.pipe';
 import { SimbolosService } from './core/services/scryfall/simbolos.service';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
 
 
 registerLocaleData(localeES, 'es');
@@ -105,7 +106,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     BuscadorUsuariosComponent,
     CartaComponent,
     EdicionPipe,
-    SimbolosPipe
+    SimbolosPipe,
+    CartaMiniComponent
   ],
   imports: [
     BrowserModule,
