@@ -27,6 +27,8 @@
         "@angular/router": "~13.2.4",
         "moment": "^2.29.1",
         "ng-gallery": "^6.0.1",
+        "primeicons": "^5.0.0",
+        "primeng": "^13.2.1",
         "rxjs": "~6.6.0",
         "sweetalert2": "^10.12.5",
         "ts-md5": "^1.2.8",
