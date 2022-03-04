@@ -13,6 +13,8 @@ import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 export class BuscadorComponent implements OnInit {
 
   cartasBusqueda: Carta[] = [];
+  cartasPagina: Carta[] = [];
+
   textoBuscado: string;
   tipoBusqueda: string;
   paginador: any;
@@ -20,7 +22,7 @@ export class BuscadorComponent implements OnInit {
 
   tam_fila: number = 3;
 
-  tam_pag: number = 175;
+  tam_pag: number = 24;
   total_cartas_busqueda: number;
 
   cargando: boolean = false;
@@ -60,7 +62,7 @@ export class BuscadorComponent implements OnInit {
     }
   }
 
-  recargar (num: number) {
+  recargar(num: number) {
     this.tam_fila = this.tam_fila + num;
     this.pagina = 0;
     localStorage.setItem('tam_fila', this.tam_fila.toString());
@@ -71,89 +73,100 @@ export class BuscadorComponent implements OnInit {
     this.getCartasS();
   }
 
- /* getCartas() {
-    this.cargando = true;
-    if (this.tipoBusqueda == "oracle") {
-      this.getByNombreGroupByOracle();
-    } else if (this.tipoBusqueda == "ilust") {
-      this.getByNombreGroupByIlust();
-    } else if (this.tipoBusqueda == "all") {
-      this.getByNombreGroupById();
-    }
-  }*/
+  /* getCartas() {
+     this.cargando = true;
+     if (this.tipoBusqueda == "oracle") {
+       this.getByNombreGroupByOracle();
+     } else if (this.tipoBusqueda == "ilust") {
+       this.getByNombreGroupByIlust();
+     } else if (this.tipoBusqueda == "all") {
+       this.getByNombreGroupById();
+     }
+   }*/
 
-  getCartasS () {
-    let params: SearchParams = {
-      unique: this.tipoBusqueda
-    }
-    this.scryfallService.search(this.textoBuscado, params).subscribe(
-      response => {
-        this.total_cartas_busqueda = response.total_cards;
-        this.cartasBusqueda = response.data as Carta[];
-        
-        //this.getImagenes();
-      });
-  }
-
-  paginate(event) {
+  _paginate(event) {
     //event.first = Index of the first record
     //event.rows = Number of rows to display in new page
     //event.page = Index of the new page
     //event.pageCount = Total number of pages
-    this.getCartasPaginado(event.page + 1);
+    this.getCartasS(event.page + 1);
   }
 
-  getCartasPaginado (page_num: number){
+  page_scryfall = 1;
+  index = 0;
+
+  paginate(event) {
+    this.tam_pag = event.rows;
+    console.log("EVENT: ", event);
+    this.index = ((event.page) * event.rows) % 175;
+    console.log("-index: ", this.index)
+    let new_p_sc = Math.floor(event.first / 175) + 1;
+    console.log("-newpsc: ", new_p_sc)
+    if (new_p_sc == this.page_scryfall) {
+      this.cartasPagina = this.cartasBusqueda.slice(this.index, this.index + event.rows);
+      console.log(this.cartasPagina);
+    } else {
+      this.getCartasS(new_p_sc);
+      this.page_scryfall = new_p_sc;
+    }
+
+  }
+
+  getCartasS(page_num?: number) {
     let params: SearchParams = {
       unique: this.tipoBusqueda,
-      page: page_num
+      page: page_num ? page_num : 1
     }
     this.cargando = true;
     this.scryfallService.search(this.textoBuscado, params).subscribe(
       response => {
         this.total_cartas_busqueda = response.total_cards;
+        console.log(this.total_cartas_busqueda)
         this.cartasBusqueda = response.data as Carta[];
+        console.log("CartasBusqueda: ", this.cartasBusqueda)
+        this.cartasPagina = this.cartasBusqueda.slice(this.index, this.index + this.tam_pag);
+        console.log("Cartas Pagina: ", this.cartasPagina);
         this.cargando = false;
-        
+
         //this.getImagenes();
       });
   }
 
-/*   getImagenes () {
-    this.cartasBusqueda.forEach(carta => {
-      this.cartaService.getImagenesCarta(carta).subscribe( () => {
-        this.cargando = false;
+  /*   getImagenes () {
+      this.cartasBusqueda.forEach(carta => {
+        this.cartaService.getImagenesCarta(carta).subscribe( () => {
+          this.cargando = false;
+        });
       });
-    });
-  } */
+    } */
 
- /* getByNombreGroupByOracle () {
-    this.cartaService.getByNombreGroupByOracle(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
-      response => {
-        this.cartasBusqueda = response.content as Carta[];
-        this.paginador = response;
-        this.getImagenes();
-      }
-    );
-  }
-
-  getByNombreGroupByIlust () {
-    this.cartaService.getByNombreGroupByIlust(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
-      response => {
-        this.cartasBusqueda = response.content as Carta[];
-        this.paginador = response;
-        this.getImagenes();
-      }
-    );
-  }
-
-  getByNombreGroupById () {
-    this.cartaService.getByNombreGroupById(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
-      response => {
-        this.cartasBusqueda = response.content as Carta[];
-        this.paginador = response;
-        this.getImagenes();
-      }
-    );
-  }*/
+  /* getByNombreGroupByOracle () {
+     this.cartaService.getByNombreGroupByOracle(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
+       response => {
+         this.cartasBusqueda = response.content as Carta[];
+         this.paginador = response;
+         this.getImagenes();
+       }
+     );
+   }
+ 
+   getByNombreGroupByIlust () {
+     this.cartaService.getByNombreGroupByIlust(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
+       response => {
+         this.cartasBusqueda = response.content as Carta[];
+         this.paginador = response;
+         this.getImagenes();
+       }
+     );
+   }
+ 
+   getByNombreGroupById () {
+     this.cartaService.getByNombreGroupById(this.textoBuscado, this.pagina, this.tam_fila ** 2).subscribe(
+       response => {
+         this.cartasBusqueda = response.content as Carta[];
+         this.paginador = response;
+         this.getImagenes();
+       }
+     );
+   }*/
 }

@@ -60,7 +60,7 @@
                     <ul class="listaCartas" *ngIf="!cargando">
                         <div class="container">
                             <div class="row">
-                                <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasBusqueda">
+                                <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
                                     <li routerLinkActive="active">
                                         <app-carta-mini [carta]="carta"></app-carta-mini>
                                     </li>
@@ -76,6 +76,6 @@
         </div>
     </div>
 
-    <p-paginator *ngIf="cartasBusqueda.length > 0" styleClass="paginator" [rows]="tam_pag" [totalRecords]="total_cartas_busqueda" (onPageChange)="paginate($event)"></p-paginator>
+    <p-paginator *ngIf="cartasBusqueda.length > 12" styleClass="paginator" [rows]="24" [totalRecords]="total_cartas_busqueda" [rowsPerPageOptions]="[12,24,48,175]" (onPageChange)="paginate($event)"></p-paginator>
 
 </div>
