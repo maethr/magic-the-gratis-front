@@ -24,8 +24,7 @@ export class BuscadorComponent implements OnInit {
 
   tam_fila: number = 3;
 
-  tam_pag: number = 24;
-  total_cartas_busqueda: number;
+
 
   cargando: boolean = false;
 
@@ -98,59 +97,88 @@ export class BuscadorComponent implements OnInit {
     this.getCartasS(event.page + 1);
   }
 
-  pag_scry = 1;
-  indice_pag_scry = 0;
+  private tam_pag: number = 24;
+  private readonly tam_pag_scry = 175;
+  private pag_scry = 1;
+  private indice_pag_scry = 0;
+  private total_cartas_busqueda: number;
+  
+  
 
-  paginate(event) {
+  paginate(event: any) {
     this.tam_pag = event.rows;
-    this.indice_pag_scry = ((event.page) * event.rows) % 175;
-    let nueva_pag_scry = Math.floor(event.first / 175) + 1;
+    
+    this.indice_pag_scry = ((event.page) * event.rows) % this.tam_pag_scry;
+    let nueva_pag_scry = Math.floor(event.first / this.tam_pag_scry) + 1;
     console.log("PAGINACIÓN: ", event);
     console.log("-to pagina: ", event.page + 1)
     console.log("-pagina scryfall: ", this.pag_scry)
     console.log("-indice pagina scryfall: ", this.indice_pag_scry)
     console.log("-nueva pagina scryfall: ", nueva_pag_scry)
-    console.log("-total paginas scryfall: ", Math.floor(this.total_cartas_busqueda / 175) + 1)
+    console.log("-total paginas scryfall: ", Math.floor(this.total_cartas_busqueda / this.tam_pag_scry) + 1)
     console.log("-total paginas: ", event.pageCount)
     console.log("-total cartas busqueda: ", this.total_cartas_busqueda)
-    
-
 
     if (nueva_pag_scry == this.pag_scry) {
-      console.log("-iguales")
+      // Si la página de scryfall de la que vamos a leer es la misma que la que tenemos en memoria 
+      console.log("-iguales");
       this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry + event.rows);
       console.log("-mostrando", this.cartasPagina.length, "cartas");
       console.log(this.cartasPagina);
-      if (this.indice_pag_scry + event.rows > 175) {
+      
+      if (this.indice_pag_scry + event.rows > this.tam_pag_scry) {
+        // Si el indice de la pagina de scryfall es mayor que 175, es que hemos llegado al final de la pagina
         nueva_pag_scry = nueva_pag_scry + 1;
-        console.log("-peticion pagina: ", nueva_pag_scry);
-        this.getCartasS(nueva_pag_scry).subscribe(() => {
-          if (this.cartasPagina.length < event.rows) {
-            this.cartasPagina = this.cartasPagina.concat(
-              this.cartasBusqueda.slice(0, event.rows - this.cartasPagina.length)
-            );
-            console.log("mostrando", this.cartasPagina.length, "cartas");
-            console.log(this.cartasPagina);
-          }
-        });
       }
-    } else {
-      console.log("-distintas")
-      if (this.indice_pag_scry > 0 && nueva_pag_scry == this.pag_scry + 1) {
-        this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry += event.rows);
-        console.log("mostrando", this.cartasPagina.length, "cartas");
-        console.log(this.cartasPagina);
-      } else {
-        console.log("-peticion pagina: ", nueva_pag_scry);
-        this.getCartasS(nueva_pag_scry).subscribe(() => {
-          this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry + this.tam_pag);
+    }
+
+    if (nueva_pag_scry != this.pag_scry) {
+      // Si la página de scryfall que necesitamos leer es diferente que la que tenemos en memoria
+      console.log("-peticion pagina: ", nueva_pag_scry);
+      this.getCartasS(nueva_pag_scry).subscribe(() => {
+        if (this.cartasPagina.length < event.rows) {
+          // En caso de que hayamos llegado al final de la pagina y no haya suficientes cartas para mostrar
+          this.cartasPagina = this.cartasPagina.concat(this.cartasBusqueda.slice(0, event.rows - this.cartasPagina.length));
           console.log("mostrando", this.cartasPagina.length, "cartas");
           console.log(this.cartasPagina);
-        });
-      }
+
+        } else {
+          // En caso de que estemos pidiendo una página totalmente nueva
+          this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry + event.rows);
+          console.log("mostrando", this.cartasPagina.length, "cartas");
+          console.log(this.cartasPagina);
+
+          if (this.cartasPagina.length < event.rows) {
+            // En caso de que, de dicha página nueva, estemos leyendo el final, y no haya suficientes cartas para mostrar
+            // Esto solo puede pasar cuando se salta a otra página no contigua
+            console.log("-peticion pagina: ", nueva_pag_scry + 1);
+            this.getCartasS(nueva_pag_scry + 1).subscribe(() => {
+              this.cartasPagina = this.cartasPagina.concat(this.cartasBusqueda.slice(0, event.rows - this.cartasPagina.length));
+              console.log("mostrando", this.cartasPagina.length, "cartas");
+              console.log(this.cartasPagina);
+            });
+          }
+          
+        }
+      });
     }
     this.pag_scry = nueva_pag_scry;
   }
+  /*} else {
+    console.log("-distintas")
+    if (this.indice_pag_scry > 0 && nueva_pag_scry == this.pag_scry + 1) {
+      this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry += event.rows);
+      console.log("mostrando", this.cartasPagina.length, "cartas");
+      console.log(this.cartasPagina);
+    } else {
+      console.log("-peticion pagina: ", nueva_pag_scry);
+      this.getCartasS(nueva_pag_scry).subscribe(() => {
+        this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry + this.tam_pag);
+        console.log("mostrando", this.cartasPagina.length, "cartas");
+        console.log(this.cartasPagina);
+      });
+    }
+  }*/
 
   getCartasS(page_num?: number): Observable<any> {
     let params: SearchParams = {
