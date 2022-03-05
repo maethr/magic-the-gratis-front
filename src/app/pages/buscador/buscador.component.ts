@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import { Carta } from 'src/app/core/models/carta';
 import { SearchParams } from 'src/app/core/services/scryfall/search-params';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-buscador',
@@ -48,7 +50,10 @@ export class BuscadorComponent implements OnInit {
 
       this.textoBuscado = params.get('txt');
       if (this.textoBuscado) {
-        this.getCartasS();
+        this.getCartasS().subscribe(
+          () => {
+            this.cartasPagina = this.cartasBusqueda.slice(0, this.tam_pag);
+          });
       }
     });
     if (localStorage.getItem('tam_fila') != null) {
@@ -59,6 +64,7 @@ export class BuscadorComponent implements OnInit {
   buscar() {
     if (this.textoBuscado) {
       this.router.navigate(['buscar', this.tipoBusqueda, this.textoBuscado]);
+      this.pag_scry = 1;
     }
   }
 
@@ -92,44 +98,76 @@ export class BuscadorComponent implements OnInit {
     this.getCartasS(event.page + 1);
   }
 
-  page_scryfall = 1;
-  index = 0;
+  pag_scry = 1;
+  indice_pag_scry = 0;
 
   paginate(event) {
     this.tam_pag = event.rows;
-    console.log("EVENT: ", event);
-    this.index = ((event.page) * event.rows) % 175;
-    console.log("-index: ", this.index)
-    let new_p_sc = Math.floor(event.first / 175) + 1;
-    console.log("-newpsc: ", new_p_sc)
-    if (new_p_sc == this.page_scryfall) {
-      this.cartasPagina = this.cartasBusqueda.slice(this.index, this.index + event.rows);
-      console.log(this.cartasPagina);
-    } else {
-      this.getCartasS(new_p_sc);
-      this.page_scryfall = new_p_sc;
-    }
+    this.indice_pag_scry = ((event.page) * event.rows) % 175;
+    let nueva_pag_scry = Math.floor(event.first / 175) + 1;
+    console.log("PAGINACIÓN: ", event);
+    console.log("-to pagina: ", event.page + 1)
+    console.log("-pagina scryfall: ", this.pag_scry)
+    console.log("-indice pagina scryfall: ", this.indice_pag_scry)
+    console.log("-nueva pagina scryfall: ", nueva_pag_scry)
+    console.log("-total paginas scryfall: ", Math.floor(this.total_cartas_busqueda / 175) + 1)
+    console.log("-total paginas: ", event.pageCount)
+    console.log("-total cartas busqueda: ", this.total_cartas_busqueda)
+    
 
+
+    if (nueva_pag_scry == this.pag_scry) {
+      console.log("-iguales")
+      this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry + event.rows);
+      console.log("-mostrando", this.cartasPagina.length, "cartas");
+      console.log(this.cartasPagina);
+      if (this.indice_pag_scry + event.rows > 175) {
+        nueva_pag_scry = nueva_pag_scry + 1;
+        console.log("-peticion pagina: ", nueva_pag_scry);
+        this.getCartasS(nueva_pag_scry).subscribe(() => {
+          if (this.cartasPagina.length < event.rows) {
+            this.cartasPagina = this.cartasPagina.concat(
+              this.cartasBusqueda.slice(0, event.rows - this.cartasPagina.length)
+            );
+            console.log("mostrando", this.cartasPagina.length, "cartas");
+            console.log(this.cartasPagina);
+          }
+        });
+      }
+    } else {
+      console.log("-distintas")
+      if (this.indice_pag_scry > 0 && nueva_pag_scry == this.pag_scry + 1) {
+        this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry += event.rows);
+        console.log("mostrando", this.cartasPagina.length, "cartas");
+        console.log(this.cartasPagina);
+      } else {
+        console.log("-peticion pagina: ", nueva_pag_scry);
+        this.getCartasS(nueva_pag_scry).subscribe(() => {
+          this.cartasPagina = this.cartasBusqueda.slice(this.indice_pag_scry, this.indice_pag_scry + this.tam_pag);
+          console.log("mostrando", this.cartasPagina.length, "cartas");
+          console.log(this.cartasPagina);
+        });
+      }
+    }
+    this.pag_scry = nueva_pag_scry;
   }
 
-  getCartasS(page_num?: number) {
+  getCartasS(page_num?: number): Observable<any> {
     let params: SearchParams = {
       unique: this.tipoBusqueda,
       page: page_num ? page_num : 1
     }
     this.cargando = true;
-    this.scryfallService.search(this.textoBuscado, params).subscribe(
+    return this.scryfallService.search(this.textoBuscado, params).pipe(map(
       response => {
+        console.log("RESPUESTA SCRYFALL: ", response);
         this.total_cartas_busqueda = response.total_cards;
         console.log(this.total_cartas_busqueda)
         this.cartasBusqueda = response.data as Carta[];
-        console.log("CartasBusqueda: ", this.cartasBusqueda)
-        this.cartasPagina = this.cartasBusqueda.slice(this.index, this.index + this.tam_pag);
-        console.log("Cartas Pagina: ", this.cartasPagina);
+        console.log("Cartas Busqueda: ", this.cartasBusqueda)
         this.cargando = false;
-
         //this.getImagenes();
-      });
+      }));
   }
 
   /*   getImagenes () {
