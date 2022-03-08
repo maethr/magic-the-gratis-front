@@ -1,4 +1,4 @@
-/* background-image: url("../assets/images/fondo.jpg"); */
+/* background-image: url("../assets/images/fondo.jpg");
 
 #app-form {
     background-color: black;
@@ -11,13 +11,6 @@
 .card {
     color: black;
     border-radius: 10px;
-}
-
-.btn {
-    width: 55%;
-    background-color: #0066A1;
-    border-radius: 10px;
-    color: white;
 }
 
 #resaltarAzul {
@@ -52,7 +45,7 @@
     border-bottom: 1px solid #0066A1;
     outline: none;
     background: transparent;
-    /*hace trasparente el hueco del formulario */
+    hace trasparente el hueco del formulario 
 }
 
 .box .inputBox label {
@@ -82,4 +75,77 @@
 
 .margenAbajo {
     margin-bottom: 1em;
+} */
+
+
+/* .card {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, 0) 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 20px 12%;
+    filter: drop-shadow( 0px 1px 6px rgba(0, 0, 0, 0.2));
+    margin-bottom: 10px;
+    width: 70%;
+} */
+
+
+/* .form-control,
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill::first-line {
+    font-size: 1rem !important;
+} */
+
+
+/*
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-animation: autofill 0s forwards;
+    animation: autofill 0s forwards;
+}
+
+@keyframes autofill {
+    100% {
+        /* background: transparent; */
+
+
+/* color: inherit; */
+
+
+/*
+        font-size: 1rem;
+    }
+}
+
+@-webkit-keyframes autofill {
+    100% {
+        /* background: transparent; */
+
+
+/* color: inherit; */
+
+
+/*
+        font-size: 1rem;
+    }
+}*/
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    /* border: 1px solid green;
+    -webkit-text-fill-color: green;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+    font-size: 20px; */
+    font-size: 1em;
 }
