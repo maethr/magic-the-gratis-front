@@ -11,7 +11,7 @@
     <div class="row" *ngIf="!cargando">
 
         <div class="col-12">
-            <!-- [ngClass]="tam_fila <= 3 ? 'col-8' : 'col-12'" -->
+            <!-- [ngClass]="tamFila <= 3 ? 'col-8' : 'col-12'" -->
 
             <!---LISTADOR-->
             <div class="row">
@@ -23,9 +23,9 @@
 
                 <div class="col-2 d-flex justify-content-center align-items-center">
                     <div class="number-input align-items-center">
-                        <button class="btn" (click)="recargar(-1)" [disabled]="tam_fila <= 3 || cartasBusqueda.length == 0"></button>
-                        <div class="txt-select"><b>{{tam_fila}}</b></div>
-                        <button class="btn btn-secondary" class="btn plus" [disabled]="tam_fila >= 4 || cartasBusqueda.length == 0" (click)="recargar(1)"></button>
+                        <button class="btn" (click)="recargar(-1)" [disabled]="tamFila <= 3 || cartasBusqueda.length == 0"></button>
+                        <div class="txt-select"><b>{{tamFila}}</b></div>
+                        <button class="btn btn-secondary" class="btn plus" [disabled]="tamFila >= 4 || cartasBusqueda.length == 0" (click)="recargar(1)"></button>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 <div class="row">
 
                     <div class="col-12 d-flex justify-content-center">
-                        <div class="spinner-border text-primary loading" role="status" *ngIf="cargando">
+                        <div *ngIf="cargando" class="spinner-border text-primary loading" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
 
@@ -57,10 +57,10 @@
                         </div>
                     </div>
 
-                    <ul class="listaCartas" *ngIf="!cargando">
+                    <ul *ngIf="!cargando" class="listaCartas">
                         <div class="container">
                             <div class="row justify-content-center">
-                                <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
+                                <div [ngClass]="tamFila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
                                     <li routerLinkActive="active">
                                         <app-carta-mini [carta]="carta"></app-carta-mini>
                                     </li>
@@ -76,6 +76,6 @@
         </div>
     </div>
 
-    <p-paginator *ngIf="cartasBusqueda.length > 12" styleClass="paginator" [rows]="24" [totalRecords]="total_cartas_busqueda" [rowsPerPageOptions]="[12,24,48,175]" (onPageChange)="paginate($event)"></p-paginator>
+    <p-paginator *ngIf="cartasBusqueda.length > 12" styleClass="paginator" [rows]="24" [totalRecords]="totalCartasBusqueda" [rowsPerPageOptions]="[12,24,48,175]" (onPageChange)="paginate($event)"></p-paginator>
 
 </div>
