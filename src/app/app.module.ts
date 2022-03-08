@@ -43,7 +43,9 @@ import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
 
-import { PaginatorModule } from 'primeng/paginator'; 
+import { PaginatorModule } from 'primeng/paginator';
+import { CheckboxModule } from 'primeng/checkbox';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 registerLocaleData(localeES, 'es');
@@ -123,8 +125,10 @@ export function initializeApp(simbolosService: SimbolosService): Function {
 
     GalleryModule,
     LightboxModule,
-    
-    PaginatorModule
+
+    PaginatorModule,
+    CheckboxModule,
+    SkeletonModule
   ],
   providers: [
     UsuarioService,
