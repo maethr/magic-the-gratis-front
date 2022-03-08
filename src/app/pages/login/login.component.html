@@ -1,45 +1,47 @@
-<div class="row ">
-    <div class="col-3"></div>
-    <div class="col-6 mb-2"><img class="img_logo" src="./assets/images/album/mtg-logo.png"></div>
-    <div class="col-3"></div>
+<div class="d-flex justify-content-center pt-5">
+    <div class="card shadow w-50 p-4">
 
-    <div class="col-4"></div>
-
-    <div class="card col-4 text-center sinMargenes">
-        <div class="card-header text-center">Bienvenido a <strong id="resaltarAzul"> Album Collector</strong></div>
-        <div class="box cad-body">
-            <form (ngSubmit)="loguear()" action="index.html" method="post">
-
-                <div class="inputBox">
-                    <input type="text" [(ngModel)]="usuario.username" required="" name="username" autofocus>
-                    <label><strong id="resaltarAzul">Username</strong></label>
-                </div>
-
-                <div class="inputBox">
-                    <input type="password" [(ngModel)]="usuario.password" required="" name="origen">
-                    <label><strong id="resaltarAzul">Password</strong></label>
-                </div>
-                <div>
-                    <button class="btn margenAbajo" role="button" style="border: solid 2px;">Entrar</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
-    <div class="col-1"></div>
-    <div class="col-3">
-        <div class="row">
-            <div class="card text-center sinMargenes">
-
-                <div class="card-header text-center"><strong>¿Aún no tienes cuenta?</strong></div>
-                <div class="box cad-body">
-                    <div class="my-2 text-center">
-                        <button class="btn btn-rounden btn-info" type="button" name="button"
-                            [routerLink]="['/crearCuenta']">Crear Usuario</button>
-                    </div>
-                </div>
+        <!-- cabezera -->
+        <div class="text-center mb-5">
+            <img src="https://c2.scryfall.com/file/scryfall-symbols/sets/pmtg2.svg?1646024400" alt="Image" height="50" class="simbolo-edicion mb-3">
+            <div class="mb-3">
+                Bienvenido a <strong id="resaltarAzul">Magic: <i>the Gratis</i></strong>
             </div>
+            <span>¿Aún no tienes cuenta?</span>&nbsp;
+            <a [routerLink]="['/crearCuenta']">Crear cuenta!</a>
         </div>
+
+
+        <form (ngSubmit)="loguear()" action="index.html" method="post" style="padding:0 10%" class="container">
+
+            <!--usuario -->
+            <div class="row justify-content-center">
+                <label for="email1" class="col-3 text-right pr-4 form-label mb-2">Usuario</label>
+                <input id="email1" type="text" class="col-9 mb-3 form-control" [(ngModel)]="usuario.username" autofocus>
+            </div>
+
+            <!-- contraseña-->
+            <div class="row justify-content-center mb-3">
+                <label for="password1" class="col-3 text-right pr-4 form-label mb-2">Contraseña</label>
+                <input id="password1" type="password" class="col-9 mb-3 form-control" [(ngModel)]="usuario.password">
+            </div>
+
+
+            <div class="row align-items-center justify-content-center mb-6" style="padding:0 20%">
+                <!-- recuérdame -->
+                <div class="col-6 pl-5">
+                    <p-checkbox label="Recuérdame" id="rememberme1" [binary]="true"></p-checkbox>
+                </div>
+
+                <!-- olvidó la contraseña-->
+                <a class="col-6 pl-2 text-right">¿Olvidaste la contraseña?</a>
+            </div>
+
+            <!-- submit -->
+            <div class="row justify-content-center p-3">
+                <button role="button" class="btn btn-primary rounded-3 col-4">
+                    <i class="pi pi-user mr-3"></i>Iniciar sesión</button>
+            </div>
+        </form>
     </div>
 </div>
