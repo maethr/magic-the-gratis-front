@@ -1,3 +1,4 @@
+// Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import localeES from '@angular/common/locales/es';
-
+// Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -24,29 +25,30 @@ import { BuscadorUsuariosComponent } from './pages/usuarios/buscador-usuarios/bu
 import { CartaComponent } from './pages/carta/carta.component';
 import { ColeccionComponent } from './pages/coleccion/coleccion.component';
 import { OpcionesAlbumComponent } from './pages/opciones-album/opciones-album.component';
-
+import { AlbumComponent } from './pages/album/album.component';
+// Services
 import { UsuarioService } from './core/services/data/usuario.service';
 import { ColeccionService } from './core/services/data/coleccion.service';
-import { AlbumComponent } from './pages/album/album.component';
 import { AlbumService } from './core/services/data/album.service';
 import { EdicionService } from './core/services/scryfall/edicion.service';
+import { ScryfallService } from './core/services/scryfall/scryfall.service';
+import { EdicionPipe } from './core/pipes/edicion.pipe';
+import { SimbolosPipe } from './core/pipes/simbolos.pipe';
+import { SimbolosService } from './core/services/scryfall/simbolos.service';
 
 import { PaginadorAlbumesComponent } from './layout/paginator/paginador-albumes/paginador-albumes.component';
 import { PaginadorAlbumComponent } from './layout/paginator/paginador-album/paginador-album.component';
 import { PaginadorBuscadorComponent } from './layout/paginator/paginador-buscador/paginador-buscador.component';
 import { PaginadorUsuariosComponent } from './layout/paginator/paginador-usuarios/paginador-usuarios.component';
-import { ScryfallService } from './core/services/scryfall/scryfall.service';
-import { EdicionPipe } from './core/pipes/edicion.pipe';
-import { SimbolosPipe } from './core/pipes/simbolos.pipe';
-import { SimbolosService } from './core/services/scryfall/simbolos.service';
+import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
+// Lightbox
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
-import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
-
+// PrimeNG
 import { PaginatorModule } from 'primeng/paginator';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SkeletonModule } from 'primeng/skeleton';
-
+import { SidebarModule } from 'primeng/sidebar';
 
 registerLocaleData(localeES, 'es');
 
@@ -128,7 +130,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
 
     PaginatorModule,
     CheckboxModule,
-    SkeletonModule
+    SkeletonModule,
+    SidebarModule
   ],
   providers: [
     UsuarioService,

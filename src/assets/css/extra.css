@@ -38,3 +38,7 @@ hr.hr-shadow {
     margin-bottom: 20px;
     border-radius: 10px;
 }
+
+.p-sidebar-header {
+    height: 120px !important;
+}
