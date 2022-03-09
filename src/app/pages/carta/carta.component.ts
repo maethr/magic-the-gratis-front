@@ -54,13 +54,52 @@ export class CartaComponent implements OnInit {
       this.obtenerAlbumes();
     });
     this._lightbox.setConfig({
-      panelClass: 'fullscreen',
-      keyboardShortcuts: false
+      panelClass: 'fullscreen'
     });
     this._gallery.ref().setConfig({
-      thumb: false
+      thumb: false,
+      imageSize: 'contain'
+    });
+    this._gallery.ref().itemClick.subscribe((item: number) => {
+      this.descargarImagen(item);
     });
     this._gallery.ref().load(this.galeria);
+  }
+
+  descargarImagen(item) {
+    let name = this.carta.name;
+    if (this.carta.card_faces && this.carta.card_faces[item].image_uris) {
+      name = this.carta.card_faces[item].name
+    }
+    let art_url: string;
+    if (this.carta.card_faces) {
+      if (this.carta.card_faces[item].image_uris.art_crop) {
+        art_url = this.carta.card_faces[item].image_uris.art_crop;
+      }
+    } else {
+      if (this.carta.image_uris.art_crop) {
+        art_url = this.carta.image_uris.art_crop;
+      }
+    }
+    Swal.fire({
+      title: '¿Descargar imagen?',
+      text: `¿Quieres descargar esta imagen de ${name}?`,
+      icon: 'info',
+      showDenyButton: (art_url != null),
+      showCancelButton: true,
+      denyButtonText: 'Ver arte',
+      denyButtonColor: '#2196f3',
+      confirmButtonText: 'Descargar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.open(this.galeria[item].data.src, '_blank');
+      }
+      if (result.isDenied) {
+        window.open(art_url, '_blank');
+      }
+    });
   }
 
   obtenerCarta(): void {
