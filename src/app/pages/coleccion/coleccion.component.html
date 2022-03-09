@@ -48,7 +48,9 @@
                                 <div class="col-4" *ngFor="let album of albums">
                                     <li routerLinkActive="active">
                                         <a class="link-album" routerLink="/album/{{album.id}}">
-                                            <img src="./assets/images/album/ultra-pro-1.png" class="rounded album" width="100%" height="100%">
+                                            <div class="album">
+                                                <img src="./assets/images/album/ultra-pro-1.png" class="rounded imagen-album" width="100%">
+                                            </div>
                                             <div class="datos-album text-center">{{album.nombre}}</div>
                                             <br>
                                         </a>
