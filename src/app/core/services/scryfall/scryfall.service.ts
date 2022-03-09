@@ -51,4 +51,10 @@ export class ScryfallService {
     let url = this.url + "symbology";
     return this.http.get(url);
   }
+
+  public getCardByName(name: string): Observable<any> {
+    let type = "fuzzy";
+    let url = `${this.url}cards/named?${type}=${name}`;
+    return this.http.get(url);
+  }
 }

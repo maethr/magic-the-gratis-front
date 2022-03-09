@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <p-fileUpload name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" chooseLabel="Browse"></p-fileUpload>
+        </div>
+    </div>
+
+    <div *ngIf="true || cartasEncontradas" class="row">
+        <div class="col-12">
+            <div class="card shadow m-3">
+                <p-table [value]="cartasEncontradas" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Set</th>
+                            <th>Rareza</th>
+                            <th>Full Res Image?</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-carta>
+                        <tr *ngIf="carta.name">
+                            <td>{{carta.name}}</td>
+                            <td><span [innerHTML]="carta.set | edicion:'26px' | async"></span></td>
+                            <td>{{carta.rarity }}</td>
+                            <td *ngIf>Sí</td>
+                        </tr>
+                        <tr *ngIf="!carta.name" class="text-danger" style="background-color: rgb(255, 185, 185);">
+                            <td>
+                                <i class="pi pi-exclamation-circle mr-2"></i> {{carta.textoBuscado}}
+                            </td>
+                            <td colspan="3">
+                                <span class="text-center">
+                                    Carta no encontrada
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

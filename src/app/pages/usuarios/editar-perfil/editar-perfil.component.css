@@ -7,7 +7,7 @@ input:focus::placeholder {
     color: #0066A1;
     font-size: 25px;
     margin-bottom: 15px;
-    Font-family: Copperplate, Copperplate Gothic Light, fantasy;
+    font-family: Copperplate, Copperplate Gothic Light, fantasy;
 }
 
 .linea {

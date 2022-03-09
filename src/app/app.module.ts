@@ -46,6 +46,10 @@ import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.co
 import { PaginatorModule } from 'primeng/paginator';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SkeletonModule } from 'primeng/skeleton';
+import { FileUploadModule } from 'primeng/fileupload';
+import { TableModule } from 'primeng/table';
+
+import { ImportadorComponent } from './pages/importador/importador/importador.component';
 
 
 registerLocaleData(localeES, 'es');
@@ -71,7 +75,8 @@ const routes: Routes = [
   { path: 'buscar/:tipo/:txt/:page', component: BuscadorComponent },
   { path: 'buscarUsuarios', component: BuscadorUsuariosComponent },
   { path: 'carta/:scid/:id', component: CartaComponent },
-  { path: 'carta/:scid', component: CartaComponent }
+  { path: 'carta/:scid', component: CartaComponent },
+  { path: 'importador', component: ImportadorComponent },
 
 ]
 
@@ -111,7 +116,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     CartaComponent,
     EdicionPipe,
     SimbolosPipe,
-    CartaMiniComponent
+    CartaMiniComponent,
+    ImportadorComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +134,9 @@ export function initializeApp(simbolosService: SimbolosService): Function {
 
     PaginatorModule,
     CheckboxModule,
-    SkeletonModule
+    SkeletonModule,
+    FileUploadModule,
+    TableModule,
   ],
   providers: [
     UsuarioService,
