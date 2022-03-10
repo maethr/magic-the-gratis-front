@@ -1,38 +1,11 @@
 <div class="container">
     <div class="row justify-content-between">
-        <!-- <div [ngClass]="cartasEncontradas.length > 0 ? 'col-8' : 'col-12'">
-            <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" [showCancelButton]="false" (uploadHandler)="onUpload($event)" (onRemove)="onCancel()" chooseLabel="Browse"></p-fileUpload>
-        </div>
-
-        <div *ngIf="cartasEncontradas.length > 0" class="col-3 p-4">
-            <div class="row align-content-center justify-content-center w-75">
-                <div class="card-header">
-                    Guardar en album
-                </div>
-                <div class="card shadow rounded-3 col-12">
-
-                    <div class="row">
-                        <button pButton icon="pi pi-plus" class="w-100 p-button-sm m-1">Crear nuevo</button>
-                    </div>
-                    <div class="row">
-                        <button pButton icon="pi pi-plus" class="w-100 p-button-sm m-1">Guardar en...</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="card col-12 shadow"> -->
-        <!-- <div class="row">
-                <p-fileUpload mode="basic" name="demo[]" customUpload="true" maxFileSize="1000000" (uploadHandler)="onUpload($event)" chooseLabel="Browse"></p-fileUpload>
-                <button pButton label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
-            </div> -->
-
-        <!-- <div class="row"> -->
         <div class="col-12">
             <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" (onClear)="onCancel()" chooseLabel="Browse">
                 <ng-template pTemplate="toolbar">
                     <div *ngIf="cartasEncontradas.length > 0" class="float-right">
-                        <button pButton label="Guardar en album" icon="pi pi-save" (click)="onCancel()"></button>
-                        <button pButton label="Crear album" icon="pi pi-plus" class="p-button-success" (click)="onCancel()"></button>
+                        <button pButton label="Guardar en album" icon="pi pi-save" (click)="guardarCartasEnAlbum()"></button>
+                        <button pButton label="Crear album" icon="pi pi-plus" class="p-button-success" (click)="crearAlbum()"></button>
                     </div>
                 </ng-template>
                 <ng-template let-file pTemplate="file">
@@ -52,19 +25,6 @@
         </div>
     </div>
 
-
-
-    <!-- <div class="row justify-content-center mx-3 mt-4 mb-2">
-        <div class="card shadow rounded-3">
-            <div class="row">
-                <button class="p-button m-1" role="button">Crear nuevo</button>
-                </div>
-                <div class="row">
-                    <button class="p-button m-1" role="button">Guardar en...</button>
-                </div>
-            </div>
-        </div> -->
-
     <div *ngIf="cartasEncontradas.length > 0" class="row">
         <div class="col-12">
             <div class="card shadow mt-5" style="border-radius:6px;">
@@ -74,25 +34,32 @@
                             <th>Nombre</th>
                             <th>Set</th>
                             <th>Rareza</th>
-                            <th>Full Res Image?</th>
+                            <th>Imagen HD</th>
+                            <th></th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-carta>
-                        <tr *ngIf="carta.name">
-                            <td><button class="btn btn-link" [lightbox]="cartasEncontradas.indexOf(carta)">{{carta.name}}</button></td>
-                            <td><span [innerHTML]="carta.set | edicion:'26px' | async"></span></td>
-                            <td [ngClass]="getCssRarity(carta.rarity)">{{carta.rarity}}</td>
-                            <td>Sí</td>
-                        </tr>
-                        <tr *ngIf="!carta.name" class="text-danger" style="background-color: #FFCCCC;">
+                    <ng-template pTemplate="body" let-data>
+                        <!-- IF CARTA -->
+                        <tr *ngIf="data.carta">
+                            <td><button class="btn btn-link" [lightbox]="cartasEncontradas.indexOf(data)">{{data.carta.name}}</button></td>
+                            <td><span [innerHTML]="data.carta.set | edicion:'26px' | async"></span></td>
+                            <td [ngClass]="getCssRarity(data.carta.rarity)">{{data.carta.rarity}}</td>
+                            <td>{{ data.fullResImg ? 'Sí' : 'No' }}</td>
                             <td>
-                                <i class="pi pi-exclamation-circle m-2"></i> {{carta.textoBuscado}}
+                                <button pButton type="button" icon="pi pi-pencil" class="p-button-sm p-button-outlined m-1" (click)="editarItem(data)"></button>
+                                <button pButton type="button" icon="pi pi-times" class="p-button-sm p-button-danger p-button-outlined m-1" (click)="eliminarItem(data)"></button>
                             </td>
-                            <td colspan="2" class="text-center">
+                        </tr>
+                        <!-- IF NO CARTA -->
+                        <tr *ngIf="!data.carta" class="text-danger" style="background-color: #FFCCCC;">
+                            <td>
+                                <i class="pi pi-exclamation-circle m-2"></i> {{data.textoBuscado}}
+                            </td>
+                            <td colspan="3" class="text-center">
                                 Carta no encontrada &nbsp;
                             </td>
                             <td>
-                                <button class="btn btn-danger" (click)="editarItem(carta)">editar</button>
+                                <button class="btn btn-danger" (click)="editarItem(data)">editar</button>
                             </td>
                         </tr>
                     </ng-template>

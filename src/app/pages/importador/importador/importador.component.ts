@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Gallery, ImageItem } from 'ng-gallery';
+import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { Carta } from 'src/app/core/models/carta';
+import { AlbumWrapService } from 'src/app/core/services/local/album-wrap.service';
 import { CartaService } from 'src/app/core/services/local/carta.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import Swal from 'sweetalert2';
+import { ImportCarta } from './import-carta.model';
 
 @Component({
   selector: 'app-importador',
@@ -14,22 +16,20 @@ import Swal from 'sweetalert2';
 })
 export class ImportadorComponent implements OnInit {
 
-  texto: string = "";
-
-  uploadedFiles: any[] = [];
-  cartasEncontradas: any[] = [];
-  galeria = [];
+  cartasEncontradas: ImportCarta[] = [];
+  galeria: GalleryItem[] = [];
 
   constructor(
     private scryfallService: ScryfallService,
     private cartaService: CartaService,
     public _gallery: Gallery,
     public _lightbox: Lightbox,
-    private router: Router
-
+    private router: Router,
+    private albumWrapService: AlbumWrapService
   ) { }
 
   ngOnInit(): void {
+    this.albumWrapService.obtenerAlbumes();
     this._lightbox.setConfig({
       panelClass: 'fullscreen'
     });
@@ -41,22 +41,10 @@ export class ImportadorComponent implements OnInit {
   }
 
   onSelect(event) {
-    // console.log(event);
-    // for (let file of event.files) {
-    //   this.uploadedFiles.push(file);
-    // }
-
-    // console.log(this.uploadedFiles);
   }
 
   onUpload(event) {
     this.uploadDocument(event.files[0]);
-
-    // if (state === 'upload-handler') {
-    //   this.uploadDocument(event.files[0]);
-
-    //   console.log('done');
-    // }
   }
 
   onCancel() {
@@ -79,17 +67,29 @@ export class ImportadorComponent implements OnInit {
   }
 
   parseTexto(texto: string) {
+    //texto = texto.replace(/\r?\n|\r/g, " ");
+    
     let arr_nombres = texto.split("\n");
     let arr_cartas_parsed: Carta[];
     for (let nombre of arr_nombres) {
-      this.getCartaByNombre(nombre);
+      console.log(nombre.charCodeAt(0));
+      console.log(nombre == '\r');
+      console.log(nombre.length);
+      nombre = nombre.replace("\r", "");
+      if (nombre != "") {
+        this.getCartaByNombre(nombre);
+      }
     }
   }
 
-
-  rellenarArrayGaleria(carta: Carta) {
+  rellenarArrayGaleria(carta: Carta): boolean {
+    let fullResImg = false;
     let image_uri_arr = this.cartaService.getAllImageUris(carta);
     for (let image_uri of image_uri_arr) {
+      fullResImg = (image_uri.png != null || image_uri.large != null) || fullResImg;
+      if (fullResImg) {
+        console.log(image_uri);
+      }
       this.galeria.push(new ImageItem({
         src: this.cartaService.getBestImage(image_uri),
         thumb: this.cartaService.getWorstImage(image_uri),
@@ -100,17 +100,18 @@ export class ImportadorComponent implements OnInit {
         thumb: true
       });
     }
+    return fullResImg;
   }
 
   getCartaByNombre(nombre: string) {
+    let data: ImportCarta = new ImportCarta();
+    data.textoBuscado = nombre;
     this.scryfallService.getCardByName(nombre).subscribe(carta => {
-      carta.textoBuscado = nombre;
-      this.cartasEncontradas.push(carta);
-      this.rellenarArrayGaleria(carta);
+      data.carta = carta;
+      data.fullResImg = this.rellenarArrayGaleria(carta);
+      this.cartasEncontradas.push(data);
     }, error => {
-      let carta: any = new Carta();
-      carta.textoBuscado = nombre;
-      this.cartasEncontradas.push(carta);
+      this.cartasEncontradas.push(data);
     });
   }
 
@@ -130,10 +131,8 @@ export class ImportadorComponent implements OnInit {
     }
   }
 
-
-
-  editarItem(carta: any) {
-    let textoBuscado = carta.textoBuscado;
+  editarItem(data: any) {
+    let textoBuscado = data.textoBuscado;
     Swal.fire({
       title: "Editar carta",
       text: null,
@@ -144,7 +143,7 @@ export class ImportadorComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (result.value !== textoBuscado) {
-          this.cartasEncontradas = this.cartasEncontradas.filter(elem => elem !== carta);
+          this.cartasEncontradas = this.cartasEncontradas.filter(elem => elem !== data);
           if (result.value !== "") {
             this.getCartaByNombre(result.value);
           }
@@ -152,4 +151,19 @@ export class ImportadorComponent implements OnInit {
       }
     });
   }
+
+  eliminarItem(data: any) {
+    this.cartasEncontradas = this.cartasEncontradas.filter(elem => elem !== data);
+  }
+
+  guardarCartasEnAlbum() {
+    let cartasArray = this.cartasEncontradas.map(elem => elem.carta);
+    this.albumWrapService.showGuardarCartas(cartasArray);
+  }
+
+  crearAlbum() {
+    let cartasArray = this.cartasEncontradas.map(elem => elem.carta);
+    this.albumWrapService.showCrearAlbum(cartasArray);
+  }
+
 }
