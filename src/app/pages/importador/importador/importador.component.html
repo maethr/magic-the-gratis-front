@@ -1,13 +1,41 @@
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <p-fileUpload name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" chooseLabel="Browse"></p-fileUpload>
+    <div class="row justify-content-between">
+        <div [ngClass]="cartasEncontradas.length > 0 ? 'col-8' : 'col-12'">
+            <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" [showCancelButton]="false" (uploadHandler)="onUpload($event)" (onRemove)="onCancel()" chooseLabel="Browse"></p-fileUpload>
+        </div>
+
+        <div *ngIf="cartasEncontradas.length > 0" class="col-3 p-4">
+            <div class="row align-content-center justify-content-center w-75">
+                <div class="card-header">
+                    Guardar en album
+                </div>
+                <div class="card shadow rounded-3 col-12">
+
+                    <div class="row">
+                        <button pButton icon="pi pi-plus" class="w-100 p-button-sm m-1">Crear nuevo</button>
+                    </div>
+                    <div class="row">
+                        <button pButton icon="pi pi-plus" class="w-100 p-button-sm m-1">Guardar en...</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div *ngIf="true || cartasEncontradas" class="row">
+    <!-- <div class="row justify-content-center mx-3 mt-4 mb-2">
+        <div class="card shadow rounded-3">
+            <div class="row">
+                <button class="p-button m-1" role="button">Crear nuevo</button>
+                </div>
+                <div class="row">
+                    <button class="p-button m-1" role="button">Guardar en...</button>
+                </div>
+            </div>
+        </div> -->
+
+    <div *ngIf="cartasEncontradas.length > 0" class="row">
         <div class="col-12">
-            <div class="card shadow m-3">
+            <div class="card shadow mt-5">
                 <p-table [value]="cartasEncontradas" responsiveLayout="scroll">
                     <ng-template pTemplate="header">
                         <tr>
@@ -19,19 +47,20 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-carta>
                         <tr *ngIf="carta.name">
-                            <td>{{carta.name}}</td>
+                            <td><button class="btn btn-link" [lightbox]="cartasEncontradas.indexOf(carta)">{{carta.name}}</button></td>
                             <td><span [innerHTML]="carta.set | edicion:'26px' | async"></span></td>
-                            <td>{{carta.rarity }}</td>
-                            <td *ngIf>Sí</td>
+                            <td [ngClass]="getCssRarity(carta.rarity)">{{carta.rarity}}</td>
+                            <td>Sí</td>
                         </tr>
-                        <tr *ngIf="!carta.name" class="text-danger" style="background-color: rgb(255, 185, 185);">
+                        <tr *ngIf="!carta.name" class="text-danger" style="background-color: #FFCCCC;">
                             <td>
-                                <i class="pi pi-exclamation-circle mr-2"></i> {{carta.textoBuscado}}
+                                <i class="pi pi-exclamation-circle m-2"></i> {{carta.textoBuscado}}
                             </td>
-                            <td colspan="3">
-                                <span class="text-center">
-                                    Carta no encontrada
-                                </span>
+                            <td colspan="2" class="text-center">
+                                Carta no encontrada &nbsp;
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" (click)="editarItem(carta)">editar</button>
                             </td>
                         </tr>
                     </ng-template>

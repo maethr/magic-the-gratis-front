@@ -5,8 +5,36 @@
     /* drop-shadow(1px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white) drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));*/
 }
 
+
+/*.simbolo-mitico {
+    filter: invert(46%) sepia(22%) saturate(7492%) hue-rotate(9deg) brightness(98%) contrast(97%) drop-shadow(1px 1.5px 0 black) drop-shadow(-0.5px -1px 0 black) drop-shadow(0px 0px 1px dimgray);
+}*/
+
 .simbolo-mana {
     filter: drop-shadow(1px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white) drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.texto-rareza {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.texto-mitica {
+    color: #ec8e00;
+    /* color: #f09000; */
+}
+
+.texto-rara {
+    color: #D5B365;
+}
+
+.texto-infrecuente {
+    color: #a2a2a2;
+}
+
+.texto-comun {
+    /* color: #333333; */
 }
 
 hr.hr-shadow {
@@ -41,4 +69,12 @@ hr.hr-shadow {
 
 .p-fileupload-row>div:empty {
     display: none;
+}
+
+.p-fileupload-content {
+    padding: 1rem !important;
+}
+
+.p-fileupload {
+    border-radius: 30px;
 }
