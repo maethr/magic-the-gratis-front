@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row justify-content-between">
-        <div [ngClass]="cartasEncontradas.length > 0 ? 'col-8' : 'col-12'">
+        <!-- <div [ngClass]="cartasEncontradas.length > 0 ? 'col-8' : 'col-12'">
             <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" [showCancelButton]="false" (uploadHandler)="onUpload($event)" (onRemove)="onCancel()" chooseLabel="Browse"></p-fileUpload>
         </div>
 
@@ -19,8 +19,39 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <!-- <div class="card col-12 shadow"> -->
+        <!-- <div class="row">
+                <p-fileUpload mode="basic" name="demo[]" customUpload="true" maxFileSize="1000000" (uploadHandler)="onUpload($event)" chooseLabel="Browse"></p-fileUpload>
+                <button pButton label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+            </div> -->
+
+        <!-- <div class="row"> -->
+        <div class="col-12">
+            <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" [showCancelButton]="false" (uploadHandler)="onUpload($event)" (onRemove)="onCancel()" chooseLabel="Browse">
+                <ng-template pTemplate="toolbar">
+                    <div class="float-right">
+                        <button pButton label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+                    </div>
+                </ng-template>
+                <ng-template let-file pTemplate="file">
+                    <div class="row justify-content-center">
+                        <div class="col-9">
+                            <span>{{file.name}}</span>
+                            <span class="float-right">{{file.size}} bytes</span>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content" let-files>
+                    <div *ngIf="files.length==0" class="row justify-content-center">
+                        <span>Pulsa <em>Browse</em> para comenzar a importar un fichero.</span>
+                    </div>
+                </ng-template>
+            </p-fileUpload>
         </div>
     </div>
+
+
 
     <!-- <div class="row justify-content-center mx-3 mt-4 mb-2">
         <div class="card shadow rounded-3">
