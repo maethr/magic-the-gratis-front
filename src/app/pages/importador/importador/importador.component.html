@@ -67,8 +67,8 @@
 
     <div *ngIf="cartasEncontradas.length > 0" class="row">
         <div class="col-12">
-            <div class="card shadow mt-5">
-                <p-table [value]="cartasEncontradas" responsiveLayout="scroll">
+            <div class="card shadow mt-5" style="border-radius:6px;">
+                <p-table [value]="cartasEncontradas" responsiveLayout="scroll" style="border-radius:6px;">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>Nombre</th>

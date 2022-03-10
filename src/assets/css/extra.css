@@ -78,3 +78,7 @@ hr.hr-shadow {
 .p-fileupload {
     border-radius: 30px;
 }
+
+.p-datatable-wrapper {
+    border-radius: 6px !important;
+}
