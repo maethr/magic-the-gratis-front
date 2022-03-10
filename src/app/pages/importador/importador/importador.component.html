@@ -28,10 +28,11 @@
 
         <!-- <div class="row"> -->
         <div class="col-12">
-            <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" [showCancelButton]="false" (uploadHandler)="onUpload($event)" (onRemove)="onCancel()" chooseLabel="Browse">
+            <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" (onClear)="onCancel()" chooseLabel="Browse">
                 <ng-template pTemplate="toolbar">
-                    <div class="float-right">
-                        <button pButton label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+                    <div *ngIf="cartasEncontradas.length > 0" class="float-right">
+                        <button pButton label="Guardar en album" icon="pi pi-save" (click)="onCancel()"></button>
+                        <button pButton label="Crear album" icon="pi pi-plus" class="p-button-success" (click)="onCancel()"></button>
                     </div>
                 </ng-template>
                 <ng-template let-file pTemplate="file">
