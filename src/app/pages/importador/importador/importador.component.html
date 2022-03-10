@@ -44,7 +44,11 @@
                             <td><button class="btn btn-link" [lightbox]="cartasEncontradas.indexOf(data)">{{data.carta.name}}</button></td>
                             <td><span [innerHTML]="data.carta.set | edicion:'26px' | async"></span></td>
                             <td [ngClass]="getCssRarity(data.carta.rarity)">{{data.carta.rarity}}</td>
-                            <td>{{ data.fullResImg ? 'Sí' : 'No' }}</td>
+                            <td>
+                                <i *ngIf="data.fullResImg" class='pi pi-check'></i>
+                                <i *ngIf="!data.fullResImg" class='pi pi-times'></i>
+                                <!-- {{ data.fullResImg ? 'Sí' : 'No' }} -->
+                            </td>
                             <td>
                                 <button pButton type="button" icon="pi pi-pencil" class="p-button-sm p-button-outlined m-1" (click)="editarItem(data)"></button>
                                 <button pButton type="button" icon="pi pi-times" class="p-button-sm p-button-danger p-button-outlined m-1" (click)="eliminarItem(data)"></button>
