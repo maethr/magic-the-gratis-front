@@ -6,6 +6,7 @@ import { Carta } from 'src/app/core/models/carta';
 import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-buscador',
@@ -17,8 +18,6 @@ export class BuscadorComponent implements OnInit {
   cartasBusqueda: Carta[] = [];
   cartasPagina: Carta[] = [];
 
-  textoBuscado: string;
-  tipoBusqueda: string;
   paginador: any;
   pagina: number;
 
@@ -31,38 +30,56 @@ export class BuscadorComponent implements OnInit {
 
   cargando: boolean = false;
 
+  searchForm: FormGroup;
+
+  uniqueValues: { name: string, code: string }[] = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private ref: ChangeDetectorRef,
     private scryfallService: ScryfallService,
-  ) { }
+    private formBuilder: FormBuilder
+  ) {
+    SearchParams.unique_values.forEach(element => {
+      this.uniqueValues.push({
+        name: element.charAt(0).toUpperCase() + element.slice(1),
+        code: element
+      });
+    });
+
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
+      console.log("PARAMS: ", params);
       this.pagina = +params.get('page');
       if (!this.pagina) {
         this.pagina = 0;
       }
 
-      this.tipoBusqueda = params.get('tipo')
-      if (!this.tipoBusqueda) {
-        this.tipoBusqueda = "cards";
+      let tipoBusqueda = params.get('tipo')
+      if (!tipoBusqueda) {
+        tipoBusqueda = "cards";
       }
-
-      this.textoBuscado = params.get('txt');
-      if (this.textoBuscado) {
+      let textoBuscado = params.get('txt');
+      this.searchForm = this.formBuilder.group({
+        unique: [tipoBusqueda],
+        texto: [textoBuscado, Validators.required]
+      });
+      if (textoBuscado) {
         this.getPaginaByPagScry();
       }
     });
     if (localStorage.getItem('tam_fila') != null) {
       this.tamFila = +localStorage.getItem('tam_fila');
     }
+
   }
 
   buscar() {
-    if (this.textoBuscado) {
-      this.router.navigate(['buscar', this.tipoBusqueda, this.textoBuscado]);
+    if (this.searchForm.value.texto) {
+      this.router.navigate(['buscar', this.searchForm.value.unique, this.searchForm.value.texto]);
       this.pagScry = 1;
     }
   }
@@ -73,7 +90,7 @@ export class BuscadorComponent implements OnInit {
     localStorage.setItem('tam_fila', this.tamFila.toString());
     this.ref.detectChanges();
     if (num > 0 && this.paginador.last) {
-      this.router.navigate(['buscar', this.tipoBusqueda, this.textoBuscado, this.pagina])
+      this.router.navigate(['buscar', this.searchForm.value.unique, this.searchForm.value.texto, this.pagina])
     }
     this.getPaginaByPagScry();
   }
@@ -134,7 +151,7 @@ export class BuscadorComponent implements OnInit {
 
             this.getCartas(nuevaPagScry + 1).subscribe(() => {
               this.cartasPagina = this.cartasPagina.concat(this.cartasBusqueda.slice(0, event.rows - this.cartasPagina.length));
-              
+
               console.log("mostrando", this.cartasPagina.length, "cartas");
               console.log(this.cartasPagina);
             });
@@ -153,16 +170,18 @@ export class BuscadorComponent implements OnInit {
     console.log("-indice pagina scryfall: ", this.indicePagScry)
     this.getCartas().subscribe(() => {
       this.cartasPagina = this.cartasBusqueda.slice(0, this.tamPag);
+    }, () => {
+      this.cargando = false;
     });
   }
 
   getCartas(page_num?: number): Observable<any> {
     let params: SearchParams = {
-      unique: this.tipoBusqueda,
+      unique: this.searchForm.value.unique,
       page: page_num ? page_num : 1
     }
     this.cargando = true;
-    return this.scryfallService.search(this.textoBuscado, params).pipe(map(
+    return this.scryfallService.search(this.searchForm.value.texto, params).pipe(map(
       response => {
         console.log("RESPUESTA SCRYFALL: ", response);
         this.totalCartasBusqueda = response.total_cards;
@@ -170,7 +189,6 @@ export class BuscadorComponent implements OnInit {
         this.cartasBusqueda = response.data as Carta[];
         console.log("Cartas Busqueda: ", this.cartasBusqueda)
         this.cargando = false;
-        //this.getImagenes();
       }));
   }
 }

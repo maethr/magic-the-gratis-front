@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -48,6 +48,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { ImportadorComponent } from './pages/importador/importador/importador.component';
 
@@ -128,6 +130,9 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     MatDatepickerModule,
     MatMomentDateModule,
     MatProgressBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    
 
     GalleryModule,
     LightboxModule,
@@ -137,6 +142,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     SkeletonModule,
     FileUploadModule,
     TableModule,
+    InputTextModule,
+    DropdownModule
   ],
   providers: [
     UsuarioService,

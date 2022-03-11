@@ -39,3 +39,7 @@ gallery {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.p-button-link {
+    color: #3a99ff !important;
+}

@@ -13,6 +13,7 @@ export class SearchParams {
      * Options: cards, art, print.
      */
     unique?: string;
+    static readonly unique_values = ['cards', 'art', 'prints'];
 
     /**
      * The method to sort returned cards.
@@ -20,12 +21,15 @@ export class SearchParams {
      *  eur, cmc, power, toughness, edhrec, artist, review     
      */
     order?: string;
+    static readonly order_values = ['name', 'set', 'released', 'rarity', 'color', 'usd', 'tix',
+        'eur', 'cmc', 'power', 'toughness', 'edhrec', 'artist', 'review'];
 
     /**
      * The direction to sort cards.
      * Options: asc, desc, auto
      */
     dir?: string;
+    static readonly dir_values = ['asc', 'desc', 'auto'];
 
     /**
      * If true, extra cards (tokens, planes, etc) will be included.
