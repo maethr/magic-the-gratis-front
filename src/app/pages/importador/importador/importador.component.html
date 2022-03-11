@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-12">
-            <p-fileUpload styleClass="shadow" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" (onClear)="onCancel()" chooseLabel="Browse">
+            <p-fileUpload styleClass="shadow-md" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" (onClear)="onCancel()" chooseLabel="Browse">
                 <ng-template pTemplate="toolbar">
                     <div *ngIf="cartasEncontradas.length > 0" class="float-right">
                         <button pButton label="Guardar en album" icon="pi pi-save" (click)="guardarCartasEnAlbum()"></button>

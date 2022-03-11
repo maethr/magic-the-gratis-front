@@ -34,6 +34,8 @@ export class BuscadorComponent implements OnInit {
 
   uniqueValues: { name: string, code: string }[] = [];
 
+  paramValues: any = { uniqueValues: [], orderValues: [], dirValues: [] };
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -41,13 +43,7 @@ export class BuscadorComponent implements OnInit {
     private scryfallService: ScryfallService,
     private formBuilder: FormBuilder
   ) {
-    SearchParams.unique_values.forEach(element => {
-      this.uniqueValues.push({
-        name: element.charAt(0).toUpperCase() + element.slice(1),
-        code: element
-      });
-    });
-
+    this.populateDropdowns();
   }
 
   ngOnInit(): void {
@@ -59,14 +55,16 @@ export class BuscadorComponent implements OnInit {
       }
 
       let tipoBusqueda = params.get('tipo')
-      if (!tipoBusqueda) {
-        tipoBusqueda = "cards";
-      }
       let textoBuscado = params.get('txt');
+
+      // FORM BUILDER
       this.searchForm = this.formBuilder.group({
         unique: [tipoBusqueda],
-        texto: [textoBuscado, Validators.required]
+        texto: [textoBuscado, Validators.required],
+        order: [null],
+        dir: ['auto'],
       });
+
       if (textoBuscado) {
         this.getPaginaByPagScry();
       }
@@ -178,6 +176,8 @@ export class BuscadorComponent implements OnInit {
   getCartas(page_num?: number): Observable<any> {
     let params: SearchParams = {
       unique: this.searchForm.value.unique,
+      order: this.searchForm.value.order,
+      dir: (this.searchForm.value.dir !== null) ? ((this.searchForm.value.dir == true) ? 'asc' : 'desc') : 'auto',
       page: page_num ? page_num : 1
     }
     this.cargando = true;
@@ -190,5 +190,56 @@ export class BuscadorComponent implements OnInit {
         console.log("Cartas Busqueda: ", this.cartasBusqueda)
         this.cargando = false;
       }));
+  }
+
+  private populateDropdowns(): void {
+    SearchParams.unique_values.forEach(element => {
+      this.paramValues.uniqueValues.push({
+        name: element.charAt(0).toUpperCase() + element.slice(1),
+        code: element
+      });
+    });
+    SearchParams.order_values.forEach(element => {
+      this.paramValues.orderValues.push({
+        name: element.charAt(0).toUpperCase() + element.slice(1),
+        code: element
+      });
+    });
+    SearchParams.dir_values.forEach(element => {
+      this.paramValues.dirValues.push({
+        name: element.charAt(0).toUpperCase() + element.slice(1),
+        code: element
+      });
+    });
+  }
+
+  changeAscParam() {
+    let dir = this.searchForm.value.dir;
+    let newDir: string;
+    switch (dir) {
+      case 'asc':
+        newDir = 'desc';
+        break;
+      case 'desc':
+        newDir = 'auto';
+        break;
+      case 'auto':
+        newDir = 'asc';
+        break;
+      default:
+        newDir = 'auto';
+    }
+    this.searchForm.controls.dir.setValue(newDir);
+  }
+
+  getSortIconCss() {
+    let dir = this.searchForm.value.dir;
+    if (dir === 'asc') {
+      return 'pi-sort-alpha-up';
+    } else if (dir === 'desc') {
+      return 'pi-sort-alpha-down';
+    } else {
+      return 'pi-sort-alt';
+    }
   }
 }

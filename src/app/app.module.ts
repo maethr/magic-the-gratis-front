@@ -50,6 +50,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { ToolbarModule } from 'primeng/toolbar';
 
 import { ImportadorComponent } from './pages/importador/importador/importador.component';
 
@@ -132,7 +134,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     MatProgressBarModule,
     FormsModule,
     ReactiveFormsModule,
-    
+
+
 
     GalleryModule,
     LightboxModule,
@@ -143,7 +146,9 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     FileUploadModule,
     TableModule,
     InputTextModule,
-    DropdownModule
+    DropdownModule,
+    TriStateCheckboxModule,
+    ToolbarModule,
   ],
   providers: [
     UsuarioService,

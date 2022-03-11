@@ -10,8 +10,8 @@
     display: block;
     width: 100%;
     z-index: 100;
-    margin-bottom: 15rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.10);
+    /* margin-bottom: 20rem; */
+    /* box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.10); */
 }
 
 #nav::before {
