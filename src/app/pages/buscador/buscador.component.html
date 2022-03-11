@@ -33,26 +33,40 @@
 
                     <hr>
 
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left" [formGroup]="searchForm">
+                            <div class="ml-1">
+                                <i class="pi pi-th-large mr-2" style="color:gray; font-size: 1.2rem; vertical-align: middle;"></i>
+                                <p-dropdown class="ml-1" [options]="paramValues.uniqueValues" placeholder="Agrupar por..." formControlName="unique" optionLabel="name" optionValue="code"></p-dropdown>
+                            </div>
+                            <div class="ml-2">
+                                <button pButton class="ml-2 sort-button p-button-rounded p-button-text" [icon]="'pi '+ getSortIconCss()" (click)="changeAscParam()"></button>
+                                <p-dropdown [options]="paramValues.orderValues" placeholder="Ordenar por..." formControlName="order" optionLabel="name" optionValue="code"></p-dropdown>
+                            </div>
+                            <div class="ml-4">
+                                <p-checkbox class="ml-2" name="ext" value="ext1" label="Extras" [formControl]="searchForm.controls['extras']"></p-checkbox>
+                                <p-checkbox class="ml-2" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
+                                <p-checkbox class="ml-2" name="lan" value="lan1" label="Todos los idiomas" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
+                            </div>
+                        </div>
+                    </p-toolbar>
+
+                    <hr>
+
                     <div class="row" [formGroup]="searchForm">
                         <div class="col-3 d-flex align-items-center">
                             <i class="pi pi-th-large col-2" style="color:gray; font-size: 1.2rem"></i>
                             <p-dropdown [options]="paramValues.uniqueValues" class="col" styleClass="w-100" placeholder="Agrupar por..." formControlName="unique" optionLabel="name" optionValue="code"></p-dropdown>
                         </div>
                         <div class="col-3 d-flex align-items-center">
-                            <!-- <i class="pi col-2" [ngClass]="{
-                                'pi-sort-alpha-down': searchForm.value.dir == 'desc',
-                                'pi-sort-alpha-up': searchForm.value.dir == 'asc',
-                                'pi-sort-alt': searchForm.value.dir == 'auto'
-                                }" (click)="changeAscParam()" style="color:gray; font-size: 1.2rem">
-                            </i> -->
                             <button pButton [icon]="'pi '+ getSortIconCss()" (click)="changeAscParam()" class="sort-button p-button-rounded p-button-text"></button>
                             <p-dropdown [options]="paramValues.orderValues" class="col" styleClass="w-100" placeholder="Ordenar por..." formControlName="order" optionLabel="name" optionValue="code"></p-dropdown>
                         </div>
-                        <div class="col-3 d-flex align-items-center">
-                            <!-- <i class="pi pi-sort-alt col-2" style="color:gray; font-size: 1.2rem"></i>
-                            <p-dropdown [options]="paramValues.dirValues" class="col" styleClass="w-100" formControlName="dir" optionLabel="name" optionValue="code"></p-dropdown> -->
+                        <div class="col-5 d-flex align-items-center">
+                            <p-checkbox class="col-3" name="ext" value="ext1" label="Extras" [formControl]="searchForm.controls['extras']"></p-checkbox>
+                            <p-checkbox class="col-4" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
+                            <p-checkbox class="col-4" name="lan" value="lan1" label="Todos los idiomas" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
                         </div>
-
                     </div>
 
                     <hr>
@@ -63,9 +77,9 @@
 
                         <div class="col-10">
                             <span class="p-input-icon-left w-100">
-                        <i class="pi pi-search"></i>
-                        <input type="text" pInputText class="w-100" placeholder="Search" formControlName="texto"/>
-                    </span>
+                                <i class="pi pi-search"></i>
+                                <input type="text" pInputText class="w-100" placeholder="Search" formControlName="texto"/>
+                            </span>
                         </div>
 
                         <div class="col-2">

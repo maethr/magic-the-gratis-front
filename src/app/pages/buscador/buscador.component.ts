@@ -63,6 +63,9 @@ export class BuscadorComponent implements OnInit {
         texto: [textoBuscado, Validators.required],
         order: [null],
         dir: ['auto'],
+        extras: [false],
+        variations: [false],
+        multilingual: [false],
       });
 
       if (textoBuscado) {

@@ -113,5 +113,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 .sort-button {
     color: gray;
-    height: 50% !important;
+    height: 75% !important;
+}
+
+p-toolbar-group-left>* {
+    margin-left: 1em;
+}
+
+::ng-deep label {
+    margin-bottom: 0 !important;
 }

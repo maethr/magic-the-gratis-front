@@ -92,3 +92,17 @@ hr.hr-shadow {
 .pi.pi-sort-alt {
     font-size: 1.1rem !important;
 }
+
+.p-toolbar {
+    padding: 5px 15px !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.p-checkbox {
+    vertical-align: middle !important;
+}
+
+::ng-deep .p-checkbox label {
+    margin-bottom: 0 !important;
+}
