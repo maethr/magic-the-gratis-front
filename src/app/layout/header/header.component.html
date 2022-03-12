@@ -46,11 +46,11 @@
                 <li class="col"></li>
 
                 <li class="nav-item mr-3" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton icon="pi pi-user" class="nav-link nav-button p-button-sm p-button-rounded p-button-outlined" routerLink="/perfil"></button>
+                    <button pButton icon="pi pi-user" class="nav-link nav-button p-button-sm p-button-rounded p-button-text p-button-raised" routerLink="/perfil"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton icon="pi pi-sign-out" class="nav-link nav-button p-button-sm p-button-rounded p-button-outlined" (click)="logOut()"></button>
+                    <button pButton icon="pi pi-sign-out" class="nav-link nav-button p-button-sm p-button-rounded p-button-text p-button-raised" (click)="logOut()"></button>
 
                 </li>
             </ul>
