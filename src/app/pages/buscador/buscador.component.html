@@ -50,9 +50,9 @@
                     <p-dropdown [options]="paramValues.orderValues" class="col" styleClass="w-100" placeholder="Ordenar por..." formControlName="order" optionLabel="name" optionValue="code"></p-dropdown>
                 </div>
                 <div class="d-flex col-md-12 col-lg-6 justify-content-end align-items-center">
-                    <span class="d-md-none d-lg-block p-4"></span>
+                    <span class="d-none d-lg-block d-xl-block p-4"></span>
                     <i class="pi pi-plus ml-2 mr-4" style="color:gray; font-size: 1.2rem"></i>
-                    <div class="checkbox-box w-100 mr-1">
+                    <div class="checkbox-box px-1 w-100 mr-1">
                         <p-checkbox class="ml-3" name="ext" value="ext1" label="Tokens" [formControl]="searchForm.controls['extras']"></p-checkbox>
                         <p-checkbox class="ml-3" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
                         <p-checkbox class="mx-3" name="lan" value="lan1" icon="pi pi-globe" label="En español" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
@@ -97,7 +97,8 @@
         <ul *ngIf="!cargando" class="listaCartas">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div [ngClass]="tamFila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
+                    <!-- <div [ngClass]="tamFila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina"> -->
+                    <div class="col-lg-3 col-md-4" *ngFor="let carta of cartasPagina">
                         <li routerLinkActive="active">
                             <app-carta-mini [carta]="carta"></app-carta-mini>
                         </li>
