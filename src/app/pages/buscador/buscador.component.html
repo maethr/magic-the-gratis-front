@@ -1,22 +1,11 @@
 <div class="container">
 
-    <div class="row" *ngIf="false && cargando">
-        <div class="col-12 d-flex justify-content-center">
-            <div class="spinner-border text-primary loading" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
+    <div class="row justify-content-center">
+        <div class="card shadow-md px-4 pt-3 col-11" style="border-radius: 12px; margin-bottom: 2.5rem;">
 
-    <div class="row">
+            <!---LISTADOR -->
 
-        <div class="col-12">
-            <div class="row justify-content-center">
-                <div class="card shadow-md px-4 pt-3 col-11" style="border-radius: 12px; margin-bottom: 2.5rem;">
-
-                    <!---LISTADOR -->
-
-                    <!-- <div class="row align-items-center">
+            <!-- <div class="row align-items-center">
                         <div class="col text-secondary" style="font-size: 1.5rem;">
                             <i class="pi pi-search pl-1" style="font-size: 1.5rem;"></i>
                             <span class="pl-3">Buscador</span>
@@ -33,7 +22,7 @@
 
                     <hr> -->
 
-                    <!-- p-toolbar>
+            <!-- p-toolbar>
                         <div class="p-toolbar-group-left" [formGroup]="searchForm">
                             <div class="ml-1">
                                 <i class="pi pi-th-large mr-2" style="color:gray; font-size: 1.2rem; vertical-align: middle;"></i>
@@ -51,79 +40,76 @@
                         </div>
                     </p-toolbar -->
 
-                    <div class="row og-toolbar" [formGroup]="searchForm">
-                        <div class="col-md-6 col-lg-3 d-flex align-items-center justify-content-between">
-                            <!-- <i class="col-2 px-2 text-center pi pi-th-large" style="color:gray; font-size: 1.2rem; padding-left: 5px;"></i> -->
-                            <p-dropdown [options]="paramValues.uniqueValues" class="col" styleClass="w-100" placeholder="Agrupar por..." formControlName="unique" optionLabel="name" optionValue="code"></p-dropdown>
-                        </div>
-                        <div class="col-md-6 col-lg-3 d-flex align-items-center">
-                            <button pButton [icon]="'pi '+ getSortIconCss()" (click)="changeAscParam()" class="col-2 text-center sort-button p-button-rounded p-button-outlined"></button>
-                            <p-dropdown [options]="paramValues.orderValues" class="col" styleClass="w-100" placeholder="Ordenar por..." formControlName="order" optionLabel="name" optionValue="code"></p-dropdown>
-                        </div>
-                        <div class="d-flex col-md-12 col-lg-6 justify-content-center align-items-center">
-                            <span class="d-md-none d-lg-block p-1"></span>
-                            <i class="pi pi-plus ml-2 mr-4" style="color:gray; font-size: 1.2rem"></i>
-                            <div class="checkbox-box mr-1">
-                                <p-checkbox class="ml-3" name="ext" value="ext1" label="Extras" [formControl]="searchForm.controls['extras']"></p-checkbox>
-                                <p-checkbox class="ml-3" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
-                                <p-checkbox class="mx-3" name="lan" value="lan1" label="Todos los idiomas" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
-                            </div>
-                        </div>
+            <div class="row og-toolbar" [formGroup]="searchForm">
+                <div class="col-md-6 col-lg-3 d-flex align-items-center justify-content-between">
+                    <!-- <i class="col-2 px-2 text-center pi pi-th-large" style="color:gray; font-size: 1.2rem; padding-left: 5px;"></i> -->
+                    <p-dropdown [options]="paramValues.uniqueValues" class="col" styleClass="w-100" placeholder="Agrupar por..." formControlName="unique" optionLabel="name" optionValue="code"></p-dropdown>
+                </div>
+                <div class="col-md-6 col-lg-3 d-flex align-items-center">
+                    <button pButton [icon]="'pi '+ getSortIconCss()" (click)="changeAscParam()" class="col-2 text-center sort-button p-button-rounded p-button-outlined"></button>
+                    <p-dropdown [options]="paramValues.orderValues" class="col" styleClass="w-100" placeholder="Ordenar por..." formControlName="order" optionLabel="name" optionValue="code"></p-dropdown>
+                </div>
+                <div class="d-flex col-md-12 col-lg-6 justify-content-center align-items-center">
+                    <span class="d-md-none d-lg-block p-1"></span>
+                    <i class="pi pi-plus ml-2 mr-4" style="color:gray; font-size: 1.2rem"></i>
+                    <div class="checkbox-box mr-1">
+                        <p-checkbox class="ml-3" name="ext" value="ext1" label="Tokens" [formControl]="searchForm.controls['extras']"></p-checkbox>
+                        <p-checkbox class="ml-3" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
+                        <p-checkbox class="mx-3" name="lan" value="lan1" icon="pi pi-globe" label="En español" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
                     </div>
+                </div>
+            </div>
 
-                    <hr>
+            <hr>
 
-                    <!---BUSCADOR-->
+            <!---BUSCADOR-->
 
-                    <form class="form-inline md-form form-sm mb-4 row" [formGroup]="searchForm">
+            <form class="form-inline md-form form-sm mb-4 row" [formGroup]="searchForm">
 
-                        <div class="col-md-10 col-sm-12">
-                            <span class="p-input-icon-left w-100">
+                <div class="col-md-10 col-sm-12">
+                    <span class="p-input-icon-left w-100">
                                 <i class="pi pi-search"></i>
                                 <input type="text" pInputText class="w-100" placeholder="Search" formControlName="texto"/>
                             </span>
-                        </div>
-
-                        <div class="col-md-2 col-sm-12">
-                            <button pButton label="Buscar" type="submit" class="w-100" (click)="buscar()"></button>
-                        </div>
-                    </form>
                 </div>
+
+                <div class="col-md-2 col-sm-12">
+                    <button pButton label="Buscar" type="submit" class="w-100" (click)="buscar()"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONTENIDO -->
+
+    <div class="row">
+
+        <div class="col-12 d-flex justify-content-center">
+            <div *ngIf="cargando" class="spinner-border text-primary loading" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
 
-            <!-- CONTENIDO -->
-
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-12 d-flex justify-content-center">
-                        <div *ngIf="cargando" class="spinner-border text-primary loading" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-
-                        <div *ngIf="cartasBusqueda.length == 0 && !cargando">
-                            <img src="./assets/images/icons/deck-icon.png" class="deck">
-                        </div>
-                    </div>
-
-                    <ul *ngIf="!cargando" class="listaCartas">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div [ngClass]="tamFila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
-                                    <li routerLinkActive="active">
-                                        <app-carta-mini [carta]="carta"></app-carta-mini>
-                                    </li>
-                                </div>
-                            </div>
-                        </div>
-                    </ul>
-
-                </div>
+            <div *ngIf="cartasBusqueda.length == 0 && !cargando">
+                <img src="./assets/images/icons/deck-icon.png" class="deck">
             </div>
         </div>
-        <!---PAGINADOR-->
-        <!-- <app-paginador-buscador *ngIf="paginador" [paginador]="paginador" [tipoBusqueda]="tipoBusqueda" [textoBuscado]="textoBuscado"></app-paginador-buscador> -->
+
+        <ul *ngIf="!cargando" class="listaCartas">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div [ngClass]="tamFila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
+                        <li routerLinkActive="active">
+                            <app-carta-mini [carta]="carta"></app-carta-mini>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </ul>
+
     </div>
+
+    <!---PAGINADOR-->
+    <!-- <app-paginador-buscador *ngIf="paginador" [paginador]="paginador" [tipoBusqueda]="tipoBusqueda" [textoBuscado]="textoBuscado"></app-paginador-buscador> -->
 
     <p-paginator *ngIf="cartasBusqueda.length > 12" styleClass="paginator" [rows]="24" [totalRecords]="totalCartasBusqueda" [rowsPerPageOptions]="[12,24,48,175]" (onPageChange)="paginate($event)"></p-paginator>
 

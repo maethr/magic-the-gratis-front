@@ -60,7 +60,7 @@ export class BuscadorComponent implements OnInit {
       // FORM BUILDER
       this.searchForm = this.formBuilder.group({
         unique: [tipoBusqueda],
-        texto: [textoBuscado, Validators.required],
+        texto: [textoBuscado],
         order: [],
         dir: ['auto'],
         extras: [false],
