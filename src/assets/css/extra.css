@@ -106,3 +106,7 @@ hr.hr-shadow {
 ::ng-deep .p-checkbox label {
     margin-bottom: 0 !important;
 }
+
+::ng-deep .og-toolbar p-button {
+    margin: 5px !important;
+}

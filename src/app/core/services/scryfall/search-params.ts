@@ -12,7 +12,7 @@ export class SearchParams {
      * The strategy for omitting similar cards.
      * Options: cards, art, print.
      */
-    unique?: string;
+    unique?: string = 'cards';
     static readonly unique_values = ['cards', 'art', 'prints'];
 
     /**
@@ -20,7 +20,7 @@ export class SearchParams {
      * Options: name, set, released, rarity, color, usd, tix,
      *  eur, cmc, power, toughness, edhrec, artist, review     
      */
-    order?: string;
+    order?: string = 'name';
     static readonly order_values = ['name', 'set', 'released', 'rarity', 'color', 'usd', 'tix',
         'eur', 'cmc', 'power', 'toughness', 'edhrec', 'artist', 'review'];
 
@@ -28,7 +28,7 @@ export class SearchParams {
      * The direction to sort cards.
      * Options: asc, desc, auto
      */
-    dir?: string;
+    dir?: string = 'auto';
     static readonly dir_values = ['asc', 'desc', 'auto'];
 
     /**
@@ -36,22 +36,22 @@ export class SearchParams {
      * Equivalent to adding include:extras to the fulltext search.
      * Defaults to false.
      */
-    include_extras?: boolean;
+    include_extras?: boolean = false;
 
     /**
      * If true, cards in every language supported by Scryfall will be included.
      * Defaults to false.
      */
-    include_multilingual?: boolean;
+    include_multilingual?: boolean = false;
 
     /**
      * If true, rare care variants will be included, like the Hairy Runesword.
      * Defaults to false.
      */
-    include_variations?: boolean;
+    include_variations?: boolean = false;
 
     /**
      * The page number to return, default 1.
      */
-    page?: number;
+    page?: number = 1;
 }

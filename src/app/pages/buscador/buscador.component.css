@@ -112,8 +112,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .sort-button {
-    color: gray;
-    height: 75% !important;
+    color: rgb(140, 140, 140);
+    border-color: #ced4da;
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+    padding-left: 19px !important;
+    padding-right: 19px !important;
 }
 
 p-toolbar-group-left>* {
@@ -122,4 +126,15 @@ p-toolbar-group-left>* {
 
 ::ng-deep label {
     margin-bottom: 0 !important;
+}
+
+.checkbox-box {
+    height: 3rem;
+    display: flex;
+    vertical-align: middle;
+    border: 1px solid black;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    color: gray;
+    overflow: hidden;
 }

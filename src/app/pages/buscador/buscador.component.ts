@@ -54,14 +54,14 @@ export class BuscadorComponent implements OnInit {
         this.pagina = 0;
       }
 
-      let tipoBusqueda = params.get('tipo')
+      let tipoBusqueda = params.get('tipo');
       let textoBuscado = params.get('txt');
 
       // FORM BUILDER
       this.searchForm = this.formBuilder.group({
         unique: [tipoBusqueda],
         texto: [textoBuscado, Validators.required],
-        order: [null],
+        order: [],
         dir: ['auto'],
         extras: [false],
         variations: [false],
@@ -79,8 +79,12 @@ export class BuscadorComponent implements OnInit {
   }
 
   buscar() {
+    // if (!this.searchForm.value.unique) {
+    //   this.searchForm.controls.unique.setValue('cards');
+    // }
     if (this.searchForm.value.texto) {
-      this.router.navigate(['buscar', this.searchForm.value.unique, this.searchForm.value.texto]);
+      //this.router.navigate(['buscar', this.searchForm.value.unique, this.searchForm.value.texto]);
+      this.getPaginaByPagScry();
       this.pagScry = 1;
     }
   }
@@ -97,6 +101,12 @@ export class BuscadorComponent implements OnInit {
   }
 
   paginate(event: any) {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
     this.tamPag = event.rows;
     this.indicePagScry = ((event.page) * event.rows) % this.tamPagScry;
     let nuevaPagScry = Math.floor(event.first / this.tamPagScry) + 1;
@@ -176,13 +186,26 @@ export class BuscadorComponent implements OnInit {
     });
   }
 
+  createParamsFromForm(): SearchParams {
+    let params: SearchParams = new SearchParams();;
+    if (this.searchForm.value.unique)
+      params.unique = this.searchForm.value.unique;
+    if (this.searchForm.value.order)
+      params.order = this.searchForm.value.order;
+    if (this.searchForm.value.dir)
+      params.dir = this.searchForm.value.dir;
+    if (this.searchForm.value.extras)
+      params.include_extras = this.searchForm.value.extras;
+    if (this.searchForm.value.variations)
+      params.include_variations = this.searchForm.value.variations;
+    if (this.searchForm.value.multilingual)
+      params.include_multilingual = this.searchForm.value.multilingual;
+    return params;
+  }
+
   getCartas(page_num?: number): Observable<any> {
-    let params: SearchParams = {
-      unique: this.searchForm.value.unique,
-      order: this.searchForm.value.order,
-      dir: (this.searchForm.value.dir !== null) ? ((this.searchForm.value.dir == true) ? 'asc' : 'desc') : 'auto',
-      page: page_num ? page_num : 1
-    }
+    let params: SearchParams = this.createParamsFromForm();
+    params.page = page_num ? page_num : 1;
     this.cargando = true;
     return this.scryfallService.search(this.searchForm.value.texto, params).pipe(map(
       response => {
