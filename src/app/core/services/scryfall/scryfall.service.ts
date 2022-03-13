@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 import { Carta } from 'src/app/core/models/carta';
 import { SearchParams } from './search-params';
 
+/**
+ * Servicio que ataca a la API de Scryfall para obtener los datos de
+ * las cartas y sus imagenes.
+ * @author Miguel Bautista Pérez
+ */
 @Injectable({
   providedIn: 'root'
 })

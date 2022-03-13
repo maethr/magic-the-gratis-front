@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+/**
+ * Servicio que ataca a la API de Scryfall para obtener los datos de
+ * los simbolos de Magic y sus imagenes.
+ * @author Miguel Bautista Pérez
+ */
 @Injectable({
   providedIn: 'root'
 })

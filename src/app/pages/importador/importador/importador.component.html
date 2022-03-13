@@ -31,11 +31,15 @@
                 <p-table [value]="cartasEncontradas" responsiveLayout="scroll" style="border-radius:6px;">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Nombre</th>
+                            <th style="padding-left: 28px;">Nombre</th>
                             <th>Set</th>
                             <th>Rareza</th>
                             <th>Imagen HD</th>
-                            <th></th>
+                            <th>
+                                <div class="float-right">
+                                    <button pButton label="Añadir" icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary" (click)="addItem()"></button>
+                                </div>
+                            </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-data>
@@ -50,8 +54,10 @@
                                 <!-- {{ data.fullResImg ? 'Sí' : 'No' }} -->
                             </td>
                             <td>
-                                <button pButton type="button" icon="pi pi-pencil" class="p-button-sm p-button-outlined m-1" (click)="editarItem(data)"></button>
-                                <button pButton type="button" icon="pi pi-times" class="p-button-sm p-button-danger p-button-outlined m-1" (click)="eliminarItem(data)"></button>
+                                <div class="float-right">
+                                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text m-1" (click)="editarItem(data)"></button>
+                                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text m-1" (click)="eliminarItem(data)"></button>
+                                </div>
                             </td>
                         </tr>
                         <!-- IF NO CARTA -->

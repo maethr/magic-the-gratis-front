@@ -8,6 +8,12 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+/**
+ * Buscador inteligente de cartas. Este ataca a la API de Scryfall
+ * para obtener las cartas que coincidan con el criterio de búsqueda
+ * introducido, formateado según los parametros de búsqueda indicados.
+ * @author Miguel Bautista Pérez
+ */
 @Component({
   selector: 'app-buscador',
   templateUrl: './buscador.component.html',
@@ -101,6 +107,9 @@ export class BuscadorComponent implements OnInit {
   }
 
   paginate(event: any) {
+
+    // Lo primero hacemos scroll en modo smooth, para que según suba
+    // el scroll se vayan recargando las cartas
     window.scroll({
       top: 0,
       left: 0,
@@ -111,14 +120,17 @@ export class BuscadorComponent implements OnInit {
     this.indicePagScry = ((event.page) * event.rows) % this.tamPagScry;
     let nuevaPagScry = Math.floor(event.first / this.tamPagScry) + 1;
 
-    console.log("PAGINACIÓN: ", event);
-    console.log("-to pagina: ", event.page + 1)
-    console.log("-pagina scryfall: ", this.pagScry)
-    console.log("-indice pagina scryfall: ", this.indicePagScry)
-    console.log("-nueva pagina scryfall: ", nuevaPagScry)
-    console.log("-total paginas scryfall: ", Math.floor(this.totalCartasBusqueda / this.tamPagScry) + 1)
-    console.log("-total paginas: ", event.pageCount)
-    console.log("-total cartas busqueda: ", this.totalCartasBusqueda)
+    // Mostrar estado de paginación por consola
+    {
+      console.log("PAGINACIÓN: ", event);
+      console.log("-to pagina: ", event.page + 1)
+      console.log("-pagina scryfall: ", this.pagScry)
+      console.log("-indice pagina scryfall: ", this.indicePagScry)
+      console.log("-nueva pagina scryfall: ", nuevaPagScry)
+      console.log("-total paginas scryfall: ", Math.floor(this.totalCartasBusqueda / this.tamPagScry) + 1)
+      console.log("-total paginas: ", event.pageCount)
+      console.log("-total cartas busqueda: ", this.totalCartasBusqueda)
+    }
 
     if (nuevaPagScry == this.pagScry) {
       this.cartasPagina = this.cartasBusqueda.slice(this.indicePagScry, this.indicePagScry + event.rows);
@@ -167,7 +179,6 @@ export class BuscadorComponent implements OnInit {
               console.log(this.cartasPagina);
             });
           }
-
         }
       });
     }
@@ -187,7 +198,7 @@ export class BuscadorComponent implements OnInit {
   }
 
   createParamsFromForm(): SearchParams {
-    let params: SearchParams = new SearchParams();;
+    let params: SearchParams = new SearchParams();
     if (this.searchForm.value.unique)
       params.unique = this.searchForm.value.unique;
     if (this.searchForm.value.order)
@@ -260,9 +271,9 @@ export class BuscadorComponent implements OnInit {
 
   getSortIconCss() {
     let dir = this.searchForm.value.dir;
-    if (dir === 'asc') {
+    if (dir === 'desc') {
       return 'pi-sort-alpha-up';
-    } else if (dir === 'desc') {
+    } else if (dir === 'asc') {
       return 'pi-sort-alpha-down';
     } else {
       return 'pi-sort-alt';

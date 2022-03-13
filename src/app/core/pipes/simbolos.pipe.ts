@@ -1,6 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { SimbolosService } from '../services/scryfall/simbolos.service';
 
+/**
+ * Pipe que substituye, a partir de un texto cualquiera, todas las
+ * apariciones de códigos de simbolos por sus iconos.
+ * @usage <span [innerHTML]=" carta.texto | simbolos:'22px' "></span>
+ * @author Miguel Bautista Pérez
+ */
 @Pipe({
   name: 'simbolos'
 })
@@ -11,11 +17,9 @@ export class SimbolosPipe implements PipeTransform {
   ) { }
 
   /**
-   * Pipe que substituye todas las apariciones de códigos de simbolos por sus iconos.
    * @param value un string que puede (o no) (solo) contener un simbolo
    * @param args un tamaño de imagen en pixeles, por defecto es 20px
    * @returns el texto original con los simbolos reemplazados por sus imagenes
-   * @usage <span [innerHTML]=" carta.texto | simbolos:'22px' "></span>
    */
 
   transform(value: string, ...args: unknown[]): string {

@@ -20,7 +20,7 @@ export class SearchParams {
      * Options: name, set, released, rarity, color, usd, tix,
      *  eur, cmc, power, toughness, edhrec, artist, review     
      */
-    order?: string = 'name';
+    order?: string = 'rarity';
     static readonly order_values = ['name', 'set', 'released', 'rarity', 'color', 'usd', 'tix',
         'eur', 'cmc', 'power', 'toughness', 'edhrec', 'artist', 'review'];
 

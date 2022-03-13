@@ -9,6 +9,12 @@ import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service
 import Swal from 'sweetalert2';
 import { ImportCarta } from './import-carta.model';
 
+/**
+ * Importación de cartas en lote desde un archivo de texto. Posee una
+ * interfaz previa a la importación, que permite modificar la
+ * selección de cartas encontrada en el archivo.
+ * @author Miguel Bautista Pérez
+ */
 @Component({
   selector: 'app-importador',
   templateUrl: './importador.component.html',
@@ -67,8 +73,8 @@ export class ImportadorComponent implements OnInit {
   }
 
   parseTexto(texto: string) {
-    //texto = texto.replace(/\r?\n|\r/g, " ");
-    
+    // TODO: RegExp for \n and \r
+    // texto = texto.replace(/\r?\n|\r/g, " ");
     let arr_nombres = texto.split("\n");
     let arr_cartas_parsed: Carta[];
     for (let nombre of arr_nombres) {
@@ -134,7 +140,7 @@ export class ImportadorComponent implements OnInit {
   editarItem(data: any) {
     let textoBuscado = data.textoBuscado;
     Swal.fire({
-      title: "Editar carta",
+      title: "Modificar <i class='pi pi-pencil ml-2'></i>",
       text: null,
       inputPlaceholder: null,
       input: 'text',
@@ -147,6 +153,22 @@ export class ImportadorComponent implements OnInit {
           if (result.value !== "") {
             this.getCartaByNombre(result.value);
           }
+        }
+      }
+    });
+  }
+
+  addItem() {
+    Swal.fire({
+      title: "Añadir carta",
+      text: "Añade cartas al listado de importación",
+      inputPlaceholder: "Jace Beleren",
+      input: 'text',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (result.value !== "") {
+          this.getCartaByNombre(result.value);
         }
       }
     });
