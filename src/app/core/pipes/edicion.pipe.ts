@@ -35,7 +35,7 @@ export class EdicionPipe implements PipeTransform {
         }
 
         let img = `<img width="${size}" height="${size}"
-                   src="${response.icon_svg_uri}" title="${response.name}" alt="${response.name}"
+                   src="${response.icon_svg_uri}" title="${response.name}\n${response.code.toUpperCase()}" alt="${response.name}"
                    class="simbolo-edicion" />`;
 
         return img;

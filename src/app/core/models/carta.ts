@@ -1,4 +1,6 @@
-
+/**
+ * Clase que representa la cara de una carta de Scryfall.
+ */
 export class CardFace {
 
   // Propiedades de la carta
@@ -12,7 +14,7 @@ export class CardFace {
   toughness?: string;
   loyalty?: string;
 
-  // Propiedades de la tirada
+  // Propiedades de la impresión
   printed_text?: string;
   oracle_text?: string;
   flavor_text?: string;
@@ -21,6 +23,9 @@ export class CardFace {
   image_uris?: ImageURIs;
 }
 
+/**
+ * Clase que representa una carta de Magic según la API de Scryfall.
+ */
 export class Carta extends CardFace {
 
   // Propiedades del usuario
@@ -41,16 +46,12 @@ export class Carta extends CardFace {
   layout?: string;
   card_faces?: CardFace[];
   all_parts?: Carta[];
-
-  /* TODO:
-    public get images(): ImageURIs {
-    if (this.card_faces != null) {
-      return this.card_faces[0].image_uris;
-    }
-    return this.image_uris;
-    } */
 }
 
+/**
+ * Clase que contiene las imagenes de las cartas o las caras de
+ * la API de Scryfall.
+ */
 export class ImageURIs {
   small?: string;
   normal?: string;

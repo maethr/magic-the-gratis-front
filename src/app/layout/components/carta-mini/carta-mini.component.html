@@ -49,7 +49,7 @@
 
             <!-- <span class="pi pi-plus pt-1 pr-1" label="Otras ediciones de {{carta.name}}" role='button' [routerLink]="['/buscar', 'prints', carta.name ]"></span> -->
             <span>
-                <button pButton style="height: 1rem;" class="p-button-sm p-button-text p-button-secondary" icon="pi pi-angle-double-right" [routerLink]="['/buscar', 'prints', carta.name ]"><span label="Otras ediciones en las que aparece {{carta.name}}"></span></button>
+                <button pButton style="height: 1rem;" class="p-button-text p-button-secondary" icon="pi pi-angle-double-right" [routerLink]="['/buscar', 'prints', carta.name ]" title="Todas las ediciones de {{carta.name}}"></button>
             </span>
         </div>
     </div>
