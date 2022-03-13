@@ -13,6 +13,8 @@ export class CartaMiniComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // alert(this.carta);
+    // console.log(this.carta);
   }
 
 }

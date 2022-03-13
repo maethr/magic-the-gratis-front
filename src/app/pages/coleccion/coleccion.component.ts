@@ -47,6 +47,8 @@ export class ColeccionComponent implements OnInit {
   obtenerAlbumes(pagina: number) {
     this.coleccionService.getAlbumes(this.usuario.username, pagina.toString()).subscribe(
       response => {
+        alert()
+        console.log(response);
         this.albums = response.content as Album[];
         this.paginador = response;
       });

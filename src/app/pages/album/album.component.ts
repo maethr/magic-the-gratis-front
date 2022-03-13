@@ -68,6 +68,8 @@ export class AlbumComponent implements OnInit {
 
   obtenerCartas(pagina: number): void {
     this.albumService.getPaginaAlbum(this.id_album, pagina, this.tam_fila ** 2).subscribe(response => {
+      alert()
+      console.log(response);
       this.cartas = response.content as Carta[];
       this.paginador = response;
       this.cargando = false;
