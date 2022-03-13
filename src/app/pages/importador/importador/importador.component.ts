@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { Carta } from 'src/app/core/models/carta';
+import { Edicion } from 'src/app/core/models/edicion';
 import { AlbumWrapService } from 'src/app/core/services/local/album-wrap.service';
 import { CartaService } from 'src/app/core/services/local/carta.service';
+import { EdicionService } from 'src/app/core/services/scryfall/edicion.service';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
+import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 import Swal from 'sweetalert2';
 import { ImportCarta } from './import-carta.model';
 
@@ -25,13 +28,20 @@ export class ImportadorComponent implements OnInit {
   cartasEncontradas: ImportCarta[] = [];
   galeria: GalleryItem[] = [];
 
+  // @ViewChild('edicion') edicionSelectorRef: any;
+  @ViewChild('edicion', { read: ElementRef }) edicionSelectorRef: ElementRef;
+  edicionSelectorData: { edicion: Edicion, rareza?: string }[] = [{ edicion: new Edicion() }];
+  edicionSelectorSelected: Edicion;
+  edicionSelectorOpen = false;
+
   constructor(
     private scryfallService: ScryfallService,
     private cartaService: CartaService,
     public _gallery: Gallery,
     public _lightbox: Lightbox,
     private router: Router,
-    private albumWrapService: AlbumWrapService
+    private albumWrapService: AlbumWrapService,
+    private edicionService: EdicionService
   ) { }
 
   ngOnInit(): void {
@@ -83,7 +93,19 @@ export class ImportadorComponent implements OnInit {
       console.log(nombre.length);
       nombre = nombre.replace("\r", "");
       if (nombre != "") {
-        this.getCartaByNombre(nombre);
+        let arr_palabras: string[] = nombre.split(" ");
+        let ultima_pos: string = arr_palabras[arr_palabras.length - 1];
+        if (ultima_pos[0].toLowerCase() === 'x') {
+          let valor: number = Number(ultima_pos.slice(1, ultima_pos.length));
+          if (!isNaN(valor) && valor > 0) {
+            for (let i = 0; i < valor; i++) {
+              nombre = arr_palabras.slice(0, arr_palabras.length - 1).join(" ");
+              this.getCartaByNombre(nombre);
+            }
+          }
+        } else {
+          this.getCartaByNombre(nombre);
+        }
       }
     }
   }
@@ -186,6 +208,28 @@ export class ImportadorComponent implements OnInit {
   crearAlbum() {
     let cartasArray = this.cartasEncontradas.map(elem => elem.carta);
     this.albumWrapService.showCrearAlbum(cartasArray);
+  }
+
+  elegirVersionCarta(data: ImportCarta) {
+    let params: SearchParams = new SearchParams();
+    params.unique = "prints";
+    this.scryfallService.search(data.carta.name, params).subscribe(result => {
+      let cartas = result.data as Carta[];
+      this.edicionSelectorData = [];
+      for (let i = 0; i < cartas.length; i++) {
+        let carta = cartas[i];
+        this.edicionService.getEdicion(carta.set).subscribe(res => {
+          let edicion = res as Edicion;
+          this.edicionSelectorData.push({ edicion: edicion, rareza: carta.rarity });
+          if (i === cartas.length - 1) {
+            this.edicionSelectorOpen = true;
+            console.log(this.edicionSelectorRef);
+            console.log(this.edicionSelectorData);
+            //this.edicionSelectorRef.nativeElement.querySelector('.open-me').click();
+          }
+        });
+      }
+    });
   }
 
 }

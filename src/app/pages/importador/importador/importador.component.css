@@ -1,0 +1,15 @@
+::ng-deep .p-dropdown .p-dropdown-trigger {
+    border-left: none;
+}
+
+::ng-deep .open-me.p-dropdown {
+    border: none;
+}
+
+::ng-deep .open-me.p-dropdown .p-dropdown-trigger {
+    /* display: none; */
+}
+
+::ng-deep .open-me.p-dropdown .p-dropdown-label {
+    display: none;
+}
