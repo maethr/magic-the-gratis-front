@@ -1,0 +1,7 @@
+::ng-deep .row {
+    /* padding: 0; */
+}
+
+::ng-deep .row>* {
+    /* padding: 0; */
+}

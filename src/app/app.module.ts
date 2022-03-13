@@ -54,6 +54,7 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import { ImportadorComponent } from './pages/importador/importador/importador.component';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 
 registerLocaleData(localeES, 'es');
@@ -81,6 +82,7 @@ const routes: Routes = [
   { path: 'carta/:scid/:id', component: CartaComponent },
   { path: 'carta/:scid', component: CartaComponent },
   { path: 'importador', component: ImportadorComponent },
+  { path: 'welcome', component: WelcomeComponent },
 
 ]
 
@@ -121,7 +123,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     EdicionPipe,
     SimbolosPipe,
     CartaMiniComponent,
-    ImportadorComponent
+    ImportadorComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

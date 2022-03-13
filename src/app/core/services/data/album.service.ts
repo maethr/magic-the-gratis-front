@@ -62,6 +62,10 @@ export class AlbumService {
     ));
   }
 
+  getWelcomePage(): Observable<any> {
+    return this.http.get<any>(this.url + "/welcome/28");
+  }
+
 
 
   delete(){
