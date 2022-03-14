@@ -15,19 +15,19 @@
             <ul class="navbar-nav mr-auto col-12">
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton label="Inicio" class="nav-link p-button-link" routerLink="/inicio"></button>
+                    <button pButton label="Inicio" class="nav-link p-button-link" icon="pi pi-home" routerLink="/inicio"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton label="Colección" class="nav-link p-button-link" routerLink="/coleccion"></button>
+                    <button pButton label="Colección" class="nav-link p-button-link" icon="pi pi-book" routerLink="/coleccion"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton label="Buscar" class="nav-link p-button-link" routerLink="/buscar"></button>
+                    <button pButton label="Buscar" class="nav-link p-button-link" icon="pi pi-search" routerLink="/buscar"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton label="Importar" class="nav-link p-button-link" routerLink="/importador"></button>
+                    <button pButton label="Importar" class="nav-link p-button-link" icon="pi pi-box" routerLink="/importador"></button>
                 </li>
 
                 <li *ngIf="admin" class="nav-item dropdown" routerLinkActive="active">

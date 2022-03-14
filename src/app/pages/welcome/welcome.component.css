@@ -24,14 +24,12 @@
 
 .welcome-container:hover .carta-welcome {
     /* transform: scale(1.1); */
-    top: -4px;
+    top: -6px;
     height: 110%;
     filter: none;
     /* top: 0; */
     transition: height 0.1s, top 0.1s, filter 0.1s;
 }
-
-.welcome-container:hover {}
 
 .titulo {
     position: absolute;
@@ -56,4 +54,27 @@
     box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.45);
     border-radius: 25px;
     background-color: rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+.carta-elem {
+    width: 14.28%;
+}
+
+@media only screen and (max-width: 1300px) {
+    .carta-elem {
+        width: 20%;
+    }
+    .titulo {
+        font-size: 3rem;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .carta-elem {
+        width: 33.3%;
+    }
+    .titulo {
+        display: none;
+    }
 }
