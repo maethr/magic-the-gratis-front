@@ -6,7 +6,7 @@
 </div> -->
 
 <div *ngIf="cartas.length > 0">
-    <div class="row justify-content-center" style="background-color: dimgray;">
+    <div class="row justify-content-center mosaico">
         <div class="carta-elem" *ngFor="let carta of cartas">
             <div routerLinkActive="active" style="height: 100%">
                 <div class="welcome-container" style="height: 100%" [routerLink]="carta.local_id ? ['/carta', carta.id, carta.local_id ] : ['/carta', carta.id ]">
@@ -19,7 +19,7 @@
 </div>
 
 <div *ngIf="cartas.length > 0" class="titulo-container">
-    <div class="titulo">
+    <div class="titulo shadow">
         <div>Bienvenido a Magic <em>The Gratis</em></div>
     </div>
 </div>

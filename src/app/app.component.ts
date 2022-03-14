@@ -5,7 +5,7 @@ import { SimbolosService } from './core/services/scryfall/simbolos.service';
   selector: 'app-root',
   template: `
     <app-header></app-header>
-    <div class="container-fluid mt-4 my-3 wrap">
+    <div class="container-fluid mt-4 my-3 wrap contenido">
         <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>`

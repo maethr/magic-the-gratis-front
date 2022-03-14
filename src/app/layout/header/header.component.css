@@ -1,5 +1,6 @@
 :host {
     --link-color: #3a99ff;
+    --link-color-transp: #3a99ff1a;
 }
 
 #nav {
@@ -43,8 +44,14 @@ a {
 }
 
 .nav-button {
-    transform: scale(90%);
+    /* transform: scale(90%); */
+    /* border: none; */
     color: var(--link-color);
+    /* background-color: var(--link-color-transp); */
+}
+
+.nav-button:hover {
+    background-color: var(--link-color);
 }
 
 ::ng-deep .nav-button .pi {

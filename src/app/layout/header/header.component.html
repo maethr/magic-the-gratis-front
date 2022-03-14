@@ -19,15 +19,19 @@
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton label="Colección" class="nav-link p-button-link" icon="pi pi-book" routerLink="/coleccion"></button>
-                </li>
-
-                <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
                     <button pButton label="Buscar" class="nav-link p-button-link" icon="pi pi-search" routerLink="/buscar"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
+                    <button pButton label="Colección" class="nav-link p-button-link" icon="pi pi-book" routerLink="/coleccion"></button>
+                </li>
+
+                <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
                     <button pButton label="Importar" class="nav-link p-button-link" icon="pi pi-box" routerLink="/importador"></button>
+                </li>
+
+                <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
+                    <button pButton label="Config." class="nav-link p-button-link" icon="pi pi-cog"></button>
                 </li>
 
                 <li *ngIf="admin" class="nav-item dropdown" routerLinkActive="active">
@@ -46,11 +50,11 @@
                 <li class="col"></li>
 
                 <li class="nav-item mr-3" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton icon="pi pi-user" class="nav-link nav-button p-button-sm p-button-rounded p-button-text p-button-raised" routerLink="/perfil"></button>
+                    <button pButton icon="pi pi-user" class="nav-link nav-button p-button-outlined p-button-rounded" routerLink="/perfil"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton icon="pi pi-sign-out" class="nav-link nav-button p-button-sm p-button-rounded p-button-text p-button-raised" (click)="logOut()"></button>
+                    <button pButton icon="pi pi-sign-out" class="nav-link nav-button p-button-outlined p-button-rounded" (click)="logOut()"></button>
 
                 </li>
             </ul>
