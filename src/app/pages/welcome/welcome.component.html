@@ -1,11 +1,4 @@
-<!-- <div class="container" *ngIf="cartas">
-    <div class="col" *ngFor="let carta of cartas">
-
-    </div>
-
-</div> -->
-
-<div *ngIf="cartas.length > 0">
+<div *ngIf="cartas.length >= cantidadMosaico">
     <div class="row justify-content-center mosaico">
         <div class="carta-elem" *ngFor="let carta of cartas">
             <div routerLinkActive="active" style="height: 100%">

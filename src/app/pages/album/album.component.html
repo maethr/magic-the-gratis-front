@@ -1,73 +1,109 @@
 <div class="container">
-    <div class="row">
 
-        <div class="col-12">
-            <!-- [ngClass]="tam_fila <= 3 ? 'col-8' : 'col-12'" -->
-
-            <!-- Menú -->
-            <div class="row d-flex align-items-center">
-                <div class="pl-5 col-9 d-flex flex-nowrap align-items-center">
-                    <!---Título Album-->
-                    <img class="album-icon" width="32" height="32" class="mr-3" src="./assets/images/icons/album-icon.svg">
-                    <h1 class="mb-0">
-                        {{album.nombre}}
-                    </h1>
-                </div>
-
-                <!---Enlace a opciones Album-->
-                <div class="col-1 d-flex justify-content-end">
-                    <img [routerLink]="['/album', album.id, 'config']" class="text-center" id="ajustes" src="./assets/images/icons/fat-config-icon.svg" width="26" height="26">
-                </div>
-
-                <!-- Selector nº cartas por fila -->
-                <div class="col-2 d-flex justify-content-center">
-                    <div class="number-input align-items-center">
-                        <button class="btn" (click)="recargar(-1)" [disabled]="tam_fila <= 3 || cartas.length == 0"></button>
-                        <div class="txt-select"><b>{{tam_fila}}</b></div>
-                        <button class="btn btn-secondary" class="btn plus" [disabled]="tam_fila >= 4 || cartas.length == 0" (click)="recargar(1)"></button>
-                    </div>
-                </div>
-            </div>
-
-            <!---Buscador-->
-            <form *ngIf="false && cartas.length" class="form-inline d-flex justify-content-between md-form form-sm mb-4 row">
-                <input class="form-control form-control-sm ml-3 col-9" type="text" placeholder="Busca entre las cartas del album" aria-label="Search" mdbInput>
-                <button type="submit" class="btn btn-primary col-2 py-1 mr-3">
-                            Buscar
-                        </button>
-            </form>
-
-            <!---Cartas del album-->
-            <div class="container mt-4">
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-center">
-                        <div class="alert alert-info mt-3" *ngIf="cartas?.length==0 && paginador!=null">
-                            <img class="album-icon" width="32" height="32" class="mr-3" src="./assets/images/emojis/guino.png"> Busca cartas para añadirlas a tu colección
-                            <button type="submit" class="btn btn-primary ml-3" routerLink="/buscar">Añadir cartas</button>
-                        </div>
-
-                        <div class="spinner-border text-primary loading" role="status" *ngIf="cargando && cartas?.length!=0">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-
-                    <ul class="listaCartas" *ngIf="!cargando">
-                        <div class="container">
-                            <div class="row">
-                                <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartas">
-                                    <li routerLinkActive="active">
-                                        <app-carta-mini [carta]="carta"></app-carta-mini>
-                                    </li>
-                                </div>
-                            </div>
-                        </div>
-                    </ul>
-
-                </div>
-            </div>
-            <!---PAGINADOR-->
-            <app-paginador-album *ngIf="paginador" [paginador]="paginador" [album]="album"></app-paginador-album>
+    <!-- Menú -->
+    <div class="row d-flex align-items-center" *ngIf="album">
+        <div class="pl-5 col-9 d-flex flex-nowrap align-items-center">
+            <!---Título Album-->
+            <img class="album-icon" width="32" height="32" class="mr-3" src="./assets/images/icons/album-icon.svg">
+            <h1 class="mb-0">
+                {{album.nombre}}
+            </h1>
         </div>
 
+        <!---Enlace a opciones Album-->
+        <div class="col-1 d-flex justify-content-end">
+            <img [routerLink]="['/album', album.id, 'config']" class="text-center" id="ajustes" src="./assets/images/icons/fat-config-icon.svg" width="26" height="26">
+        </div>
+
+        <!-- Selector nº cartas por fila -->
+        <div class="col-2 d-flex justify-content-center">
+            <div class="number-input align-items-center">
+                <button class="btn" (click)="recargar(-1)" [disabled]="tam_fila <= 3 || cartas?.length == 0"></button>
+                <div class="txt-select"><b>{{tam_fila}}</b></div>
+                <button class="btn btn-secondary" class="btn plus" [disabled]="tam_fila >= 4 || cartas?.length == 0" (click)="recargar(1)"></button>
+            </div>
+        </div>
     </div>
+
+    <!---Buscador-->
+    <div class="row justify-content-center">
+
+        <div class="card shadow-md py-3 col-11" style="border-radius: 12px; margin-bottom: 2.5rem; padding-left: 20px; padding-right: 18px;">
+
+            <div class="row og-toolbar" [formGroup]="filterForm">
+                <div class="col-md-6 col-lg-2 d-flex align-items-center justify-content-between">
+                    <!-- <i class="col-2 px-2 text-center pi pi-sliders-v" style="color:gray; font-size: 1.2rem; padding-left: 5px;"></i> -->
+                    <input type="text" pInputText class="col" placeholder="Nombre" formControlName='nombre' />
+                </div>
+                <div class="col-md-6 col-lg-2 d-flex align-items-center">
+                    <input type="text" pInputText class="col" placeholder="Set" formControlName='set' />
+                </div>
+                <div class="col-md-6 col-lg-2 d-flex align-items-center">
+                    <input type="text" pInputText class="col" placeholder="CMC" formControlName='cmc' />
+                    <!-- <p-inputNumber formControlName='cmc' [showButtons]="true" inputId="stacked" class="col" styleClass="mana"></p-inputNumber> -->
+
+                    <!-- <p-inputNumber formControlName='cmc' [showButtons]="true" class="col" styleClass="w-100" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" [min]="0" [max]="10"></p-inputNumber> -->
+                </div>
+                <div class="col-md-6 col-lg-2 d-flex align-items-center">
+
+                    <input type="text" pInputText class="col" placeholder="Color" formControlName='color' />
+                </div>
+                <div class="col-md-6 col-lg-2 d-flex align-items-center">
+                    <input type="text" pInputText class="col" placeholder="Tipo" formControlName='tipo' />
+                </div>
+                <div class="col-md-6 col-lg-2 d-flex align-items-center">
+                    <input type="text" pInputText class="col" placeholder="Texto" formControlName='oracle_text' />
+                </div>
+
+            </div>
+
+            <!--hr class="ml-2 mr-3">
+
+            <form class="form-inline md-form form-sm mb-4 row pl-1 pr-2" [formGroup]="searchForm">
+
+                <div class="col-lg-10 col-md-12">
+                    <span class="p-input-icon-left w-100">
+                        <i class="pi pi-search"></i>
+                        <input type="text" pInputText class="w-100" placeholder="Search" formControlName=""/>
+                    </span>
+                </div>
+
+                <div class="col-lg-2 col-md-12">
+                    <button pButton label="Buscar" type="submit" class="w-100"></button>
+                </div>
+            </form-->
+
+        </div>
+    </div>
+
+    <!---Cartas del album-->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="alert alert-info mt-3" *ngIf="cartas?.length==0 && paginador!=null">
+                    <img class="album-icon" width="32" height="32" class="mr-3" src="./assets/images/emojis/guino.png"> Busca cartas para añadirlas a tu colección
+                    <button type="submit" class="btn btn-primary ml-3" routerLink="/buscar">Añadir cartas</button>
+                </div>
+
+                <div class="spinner-border text-primary loading" role="status" *ngIf="cargando && cartas?.length!=0">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <ul class="listaCartas" *ngIf="!cargando && cartasFiltro">
+                <div class="container">
+                    <div class="row">
+                        <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasFiltro">
+                            <li routerLinkActive="active">
+                                <app-carta-mini [carta]="carta"></app-carta-mini>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+    <!---PAGINADOR-->
+    <app-paginador-album *ngIf="paginador" [paginador]="paginador" [album]="album"></app-paginador-album>
 </div>
