@@ -2,8 +2,10 @@ import { Carta, ImageURIs } from "./carta";
 
 export class CartaWrap {
 
-    carta: Carta;
-    mainImage: ImageURIs;
+    data: Carta;
+    id: number;
+    scryfall_id: string;
+    // mainImage: ImageURIs;
     amount: number;
 
 

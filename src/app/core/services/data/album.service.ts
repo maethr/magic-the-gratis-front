@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Carta } from 'src/app/core/models/carta';
 import { Album } from 'src/app/pages/album/album';
 import { ScryfallService } from '../scryfall/scryfall.service';
+import { CartaWrap } from '../../models/carta-wrap';
 
 
 @Injectable()
@@ -22,26 +23,28 @@ export class AlbumService {
 
     return this.http.get(`${url}/${id}/${page}`,{params:params}).pipe(
       map((response: any) => {
-        (response.content as any[]).map(carta => {
-          let scryfall_id = carta.scryfallId;
-          carta.local_id = carta.id;
-          carta.id = scryfall_id;
-          this.scryfallService.getCard(scryfall_id).subscribe(carta_scryfall => {
-            for (let key in carta_scryfall) {
-              carta[key] = carta_scryfall[key];
-            }
+        (response.content as any[]).map((res) => {
+          res.data = new CartaWrap();
+          this.scryfallService.getCard(res.scryfall_id).subscribe(carta_scryfall => {
+            res.data = carta_scryfall as Carta;
           });
-          return carta;
+          console.log(res);
+          return res as CartaWrap;
         });
+        console.log(response);
+
         return response;
       }
       )
     );
   }
 
-  putCartaInAlbum (scryfall_id: string, album_id: number): Observable<any> {
+  putCartaInAlbum (scryfall_id: string, album_id: number, amount?: number): Observable<any> {
+    if (amount == null) {
+      amount = 1;
+    }
     let url = this.url +  "/album";
-    let params = new HttpParams().set("carta", scryfall_id);
+    let params = new HttpParams().set("carta", scryfall_id).set("n", amount.toString());
     return this.http.put(`${url}/${album_id}`, params);
   }
 

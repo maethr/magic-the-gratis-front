@@ -10,6 +10,7 @@ import { AlbumService } from 'src/app/core/services/data/album.service';
 import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Edicion } from 'src/app/core/models/edicion';
+import { CartaWrap } from 'src/app/core/models/carta-wrap';
 
 @Component({
   selector: 'app-album',
@@ -22,8 +23,8 @@ export class AlbumComponent implements OnInit {
   tam_fila: number = 3;
 
   id_album: number;
-  cartas: Carta[];
-  cartasFiltro: Carta[];
+  cartas: CartaWrap[];
+  cartasFiltro: CartaWrap[];
 
   paginador: any;
   pagina: number;
@@ -88,8 +89,10 @@ export class AlbumComponent implements OnInit {
 
   obtenerCartas(pagina: number): void {
     this.albumService.getPaginaAlbum(this.id_album, pagina, this.tam_fila ** 2).subscribe(response => {
-      this.cartas = response.content as Carta[];
+      this.cartas = response.content as CartaWrap[];
       this.cartasFiltro = Object.assign([], this.cartas);
+
+      console.log(this.cartasFiltro)
       this.paginador = response;
       this.cargando = false;
     })
@@ -105,8 +108,8 @@ export class AlbumComponent implements OnInit {
           case 'color':
             console.log('Filtrado por color');
             this.cartasFiltro = this.cartasFiltro.filter(carta => {
-              console.log(carta.colors);
-              for (let color of carta.colors) {
+              console.log(carta.data.colors);
+              for (let color of carta.data.colors) {
                 if (valor_filtro.includes(color.toLowerCase())) {
                   return true;
                 }
@@ -116,55 +119,52 @@ export class AlbumComponent implements OnInit {
             break;
           case 'tipo':
             console.log('Filtrado por tipo');
-            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.type_line.toLowerCase().includes(valor_filtro));
+            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.data.type_line.toLowerCase().includes(valor_filtro));
             break;
           case 'oracle_text':
             console.log('Filtrado por oracle_text');
-            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.oracle_text?.toLowerCase().includes(valor_filtro));
+            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.data.oracle_text?.toLowerCase().includes(valor_filtro));
             break;
           case 'nombre':
             console.log('Filtrado por nombre');
-            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.name.toLowerCase().includes(valor_filtro));
+            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.data.name.toLowerCase().includes(valor_filtro));
             break;
           case 'cmc':
             console.log('Filtrado por cmc');
-            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.cmc == Number(valor_filtro));
+            this.cartasFiltro = this.cartasFiltro.filter(carta => carta.data.cmc == Number(valor_filtro));
             break;
           case 'set':
             console.log('Filtrado por set');
             this.cargando = true;
             for (let i = 0; i < this.cartasFiltro.length; i++) {
               let carta = this.cartasFiltro[i];
-              if (key == 'set') {
-                this.cargando = true;
-                this.edicionService.getEdicion(carta.set).subscribe((response) => {
-                  if (response.name.toString().toLowerCase().includes(valor[key].toString().toLowerCase()) == false
-                    && (response.block_name != null
-                      && response.block_name.toString().toLowerCase().includes(valor[key].toString().toLowerCase())) == false) {
-                    this.cartasFiltro = this.cartasFiltro.filter(_carta => _carta != carta);
-                  }
-                  if (i >= this.cartasFiltro.length - 1) {
-                    this.cargando = false;
-                  }
-                })
-              }
+              this.edicionService.getEdicion(carta.data.set).subscribe((response) => {
+                if (response.name.toString().toLowerCase().includes(valor[key].toString().toLowerCase()) == false
+                  && (response.block_name != null
+                    && response.block_name.toString().toLowerCase().includes(valor[key].toString().toLowerCase())) == false) {
+                  this.cartasFiltro = this.cartasFiltro.filter(_carta => _carta != carta);
+                }
+                if (i >= this.cartasFiltro.length - 1) {
+                  this.cargando = false;
+                }
+              })
             }
             break;
-          }
-
-          // let cartasARetirar = this.cartasFiltro.filter((carta: Carta) => carta[key].includes(valor[key]) === false);
-          // console.log(cartasARetirar);
-          // cartasARetirar.forEach(carta => {
-          //   this.cartasFiltro.splice(this.cartasFiltro.indexOf(carta), 1);
-          // }
-          // );
-
         }
+
+        // let cartasARetirar = this.cartasFiltro.filter((carta: Carta) => carta[key].includes(valor[key]) === false);
+        // console.log(cartasARetirar);
+        // cartasARetirar.forEach(carta => {
+        //   this.cartasFiltro.splice(this.cartasFiltro.indexOf(carta), 1);
+        // }
+        // );
+
       }
     }
-
-    onClear() {
-      this.filterForm.reset();
-      this.cartasFiltro = this.cartas;
-    }
   }
+
+  onClear() {
+    this.filterForm.reset();
+    this.cartasFiltro = this.cartas;
+  }
+}
