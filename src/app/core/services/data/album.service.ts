@@ -23,10 +23,15 @@ export class AlbumService {
 
     return this.http.get(`${url}/${id}/${page}`,{params:params}).pipe(
       map((response: any) => {
-        (response.content as any[]).map((res) => {
-          res.data = new CartaWrap();
+        (response.content as any[]).map((res: CartaWrap) => {
+          res.data = res.data as Carta;
           this.scryfallService.getCard(res.scryfall_id).subscribe(carta_scryfall => {
-            res.data = carta_scryfall as Carta;
+            //res.data = carta_scryfall as Carta;
+            
+            for (let key in carta_scryfall) {
+              res.data[key] = carta_scryfall[key];
+            }
+
           });
           console.log(res);
           return res as CartaWrap;

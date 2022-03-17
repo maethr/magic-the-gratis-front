@@ -28,7 +28,7 @@
 
     <!-- DATOS DE LA CARTA -->
     <div *ngIf="carta && carta.data && carta.data.id" class="datos-carta">
-        <div class="titulo text-overflow" [title]="carta.data.name" [routerLink]="carta.data.carta.id ? ['/carta', carta.data.id, carta.id ] : ['/carta', carta.data.id ]">
+        <div class="titulo text-overflow" [title]="carta.data.name" [routerLink]="carta.data.id ? ['/carta', carta.data.id, carta.id ] : ['/carta', carta.data.id ]">
             {{carta.data.name}}
         </div>
 
