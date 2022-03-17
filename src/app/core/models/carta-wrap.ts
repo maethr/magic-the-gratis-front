@@ -6,7 +6,5 @@ export class CartaWrap {
     mainImage: ImageURIs;
     amount: number;
 
-    textoBuscado?: string;
-
 
 }

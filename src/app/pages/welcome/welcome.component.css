@@ -9,7 +9,22 @@
 .mosaico {
     background-color: dimgray;
     border-bottom: 1px solid gray;
-    box-shadow: inset 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px 0px 80px 0px rgba(0, 0, 0, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.mosaico::before {
+    content: "";
+    height: 100%;
+    left: -100px;
+    right: -100px;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    bottom: 0;
+    z-index: 31;
+    box-shadow: inset 0px 0px 50px 0px rgba(0, 0, 0, 1);
 }
 
 .carta-welcome {

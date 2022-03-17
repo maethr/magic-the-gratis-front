@@ -21,7 +21,7 @@ export class WelcomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.albumService.getWelcomePage().subscribe(res => {
+    this.albumService.getWelcomePage(this.cantidadMosaico).subscribe(res => {
       let id_array = res as string[];
       id_array.forEach(id => {
         this.scryfallService.getCard(id).subscribe(carta => {
