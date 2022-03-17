@@ -6,6 +6,7 @@ import { Usuario } from '../../core/models/usuario';
 import { UsuarioService } from '../../core/services/data/usuario.service';
 import Swal from 'sweetalert2';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
+import { AlbumService } from 'src/app/core/services/data/album.service';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class ColeccionComponent implements OnInit {
     private coleccionService: ColeccionService,
     private usuarioService: UsuarioService,
     private scryfallService: ScryfallService,
+    private albumService: AlbumService,
     private router: Router
   ) {
     this.usuario = this.usuarioService.usuario
@@ -49,8 +51,25 @@ export class ColeccionComponent implements OnInit {
       response => {
         this.albums = response.content as Album[];
         this.paginador = response;
+
+        //Obtenemos el total de cartas de cada album.
+        this.albums.forEach(album => {
+          this.contarCartasAlbum(album);
+        })
+        
       });
   }
+
+  contarCartasAlbum(album: Album){
+    this.albumService.countCartasAlbum(Number(album.id)).subscribe(
+      response =>{
+        album.totalCartas = response as number;
+        console.log(album);
+        console.log("RESPONSE: "+response);
+      }
+    )
+  }
+
 
   crearAlbum () {
     Swal.fire({

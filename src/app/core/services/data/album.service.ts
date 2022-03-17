@@ -66,7 +66,9 @@ export class AlbumService {
     return this.http.get<any>(this.url + "/welcome/28");
   }
 
-
+  countCartasAlbum(id : number): Observable<any> {
+    return this.http.get<any>(this.url + `/album/${id}/contar-cartas`);
+  }
 
   delete(){
     
