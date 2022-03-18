@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CardFace, Carta, ImageURIs } from '../../models/carta';
+import { CartaWrap } from '../../models/carta-wrap';
+import { ScryfallService } from '../scryfall/scryfall.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartaService {
 
-  constructor() { }
+  constructor(
+    private scryfallService: ScryfallService
+  ) { }
 
   public getDefaultText(carta: Carta): string {
     if (carta.oracle_text) {

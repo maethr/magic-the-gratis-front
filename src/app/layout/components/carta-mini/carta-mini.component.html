@@ -2,8 +2,10 @@
 
     <!-- IMÁGEN DE LA CARTA -->
     <div class="carta && carta.data && carta.data.id" [routerLink]="carta.id ? ['/carta', carta.data.id, carta.id ] : ['/carta', carta.data.id ]">
-        <img *ngIf="carta.data.image_uris" src="{{carta.data.image_uris.normal}}" width="100%" class="imagen-carta">
-        <img *ngIf="!carta.data.image_uris && carta.data.card_faces" src="{{carta.data.card_faces[0].image_uris.normal}}" width="100%" class="imagen-carta">
+        <!-- <img *ngIf="carta.data.image_uris" src="{{carta.data.image_uris.normal}}" width="100%" class="imagen-carta">
+        <img *ngIf="!carta.data.image_uris && carta.data.card_faces" src="{{carta.data.card_faces[0].image_uris.normal}}" width="100%" class="imagen-carta"> -->
+        <img *ngIf="carta.main_image" src="{{carta.main_image.normal}}" width="100%" class="imagen-carta">
+
     </div>
 
     <!-- PLACEHOLDER -->

@@ -6,6 +6,7 @@ import { Carta } from 'src/app/core/models/carta';
 import { Album } from 'src/app/pages/album/album';
 import { ScryfallService } from '../scryfall/scryfall.service';
 import { CartaWrap } from '../../models/carta-wrap';
+import { CartaService } from '../local/carta.service';
 
 
 @Injectable()
@@ -21,26 +22,13 @@ export class AlbumService {
     let url = this.url + "/album";
     let params = new HttpParams().set("page", page.toString()).set("size", size.toString());
 
-    return this.http.get(`${url}/${id}/${page}`,{params:params}).pipe(
+    return this.http.get(`${url}/${id}/${page}`, {params: params}).pipe(
       map((response: any) => {
         (response.content as any[]).map((res: CartaWrap) => {
-          res.data = res.data as Carta;
-          this.scryfallService.getCard(res.scryfall_id).subscribe(carta_scryfall => {
-            //res.data = carta_scryfall as Carta;
-            
-            for (let key in carta_scryfall) {
-              res.data[key] = carta_scryfall[key];
-            }
-
-          });
-          console.log(res);
-          return res as CartaWrap;
+          this.scryfallService.fillCartaData(res).subscribe();
         });
-        console.log(response);
-
         return response;
-      }
-      )
+      })
     );
   }
 
