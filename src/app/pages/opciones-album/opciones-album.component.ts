@@ -51,6 +51,15 @@ export class OpcionesAlbumComponent implements OnInit {
     )
   }
 
+  eliminarAlbum() {
+    this.albumService.deleteAlbum(Number(this.album.id)).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
+    this.router.navigate(['/coleccion']);
+  }
+
   descargarZip() {
     window.location.assign(`aaaaaaaaaaaaaaa`); 
   }

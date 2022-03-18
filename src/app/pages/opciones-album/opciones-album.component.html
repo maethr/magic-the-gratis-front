@@ -6,8 +6,12 @@
 
         <!---Título-->
         <div class="card-header row">
-            <div class="titulofiltros mt-2">Opciones Album: {{album.nombre}}</div>
+            <div class="titulofiltros mt-2 col">Opciones Album: {{album.nombre}}</div>
+            <div class="titulofiltros mt-2 col-2 float-right">
+                    <button pButton label="Eliminar album" icon="pi pi-trash" (click)="eliminarAlbum()"></button>
+            </div>
         </div>
+
         <div class="cad-body row col-12 text-center mx-0 alturaminima">
             <div class="col-12">
 
