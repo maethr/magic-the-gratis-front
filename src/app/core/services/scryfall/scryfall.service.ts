@@ -23,6 +23,17 @@ export class ScryfallService {
     private cartaService: CartaService
   ) { }
 
+  public _search(search_text: string, search_params?: SearchParams): Observable<CartaWrap[]> {
+    return this.search(search_text, search_params).pipe(map(res => {
+      return res.data.map((carta: Carta) => {
+        let newCarta = new CartaWrap();
+        newCarta.data = carta;
+        newCarta.main_image = this.cartaService.getDefaultImageUris(carta);
+        return newCarta;
+      });
+    }));
+  }
+
   public search(search_text: string, search_params?: SearchParams): Observable<any> {
     let url = this.url + "cards/search?q=" + encodeURIComponent(search_text);
     if (search_params) {
