@@ -28,7 +28,6 @@ export class ImportadorComponent implements OnInit {
   cartasEncontradas: ImportCarta[] = [];
   galeria: GalleryItem[] = [];
 
-  // @ViewChild('edicion') edicionSelectorRef: any;
   @ViewChild('edicion', { read: ElementRef }) edicionSelectorRef: ElementRef;
   edicionSelectorData: { edicion: Edicion, rareza?: string }[] = [{ edicion: new Edicion() }];
   edicionSelectorSelected: Edicion;
@@ -96,12 +95,10 @@ export class ImportadorComponent implements OnInit {
         let arr_palabras: string[] = nombre.split(" ");
         let ultima_pos: string = arr_palabras[arr_palabras.length - 1];
         if (ultima_pos[0].toLowerCase() === 'x') {
-          let valor: number = Number(ultima_pos.slice(1, ultima_pos.length));
+          let valor: number = Number(ultima_pos.slice(1));
           if (!isNaN(valor) && valor > 0) {
-            for (let i = 0; i < valor; i++) {
-              nombre = arr_palabras.slice(0, arr_palabras.length - 1).join(" ");
-              this.getCartaByNombre(nombre);
-            }
+            nombre = arr_palabras.slice(0, arr_palabras.length - 1).join(" ");
+            this.getCartaByNombre(nombre, valor);
           }
         } else {
           this.getCartaByNombre(nombre);
@@ -131,15 +128,16 @@ export class ImportadorComponent implements OnInit {
     return fullResImg;
   }
 
-  getCartaByNombre(nombre: string) {
-    let data: ImportCarta = new ImportCarta();
-    data.textoBuscado = nombre;
-    this.scryfallService.getCardByName(nombre).subscribe(carta => {
-      data.carta = carta;
-      data.fullResImg = this.rellenarArrayGaleria(carta);
-      this.cartasEncontradas.push(data);
+  getCartaByNombre(nombre: string, amount: number = 1) {
+    let carta: ImportCarta = new ImportCarta();
+    carta.textoBuscado = nombre;
+    carta.amount = amount;
+    this.scryfallService.getCardByName(nombre).subscribe(res => {
+      carta.data = res;
+      carta.fullResImg = this.rellenarArrayGaleria(res);
+      this.cartasEncontradas.push(carta);
     }, error => {
-      this.cartasEncontradas.push(data);
+      this.cartasEncontradas.push(carta);
     });
   }
 
@@ -201,19 +199,17 @@ export class ImportadorComponent implements OnInit {
   }
 
   guardarCartasEnAlbum() {
-    let cartasArray = this.cartasEncontradas.map(elem => elem.carta);
-    this.albumWrapService.showGuardarCartas(cartasArray);
+    this.albumWrapService.showGuardarCartas(this.cartasEncontradas);
   }
 
   crearAlbum() {
-    let cartasArray = this.cartasEncontradas.map(elem => elem.carta);
-    this.albumWrapService.showCrearAlbum(cartasArray);
+    this.albumWrapService.showCrearAlbum(this.cartasEncontradas);
   }
 
-  elegirVersionCarta(data: ImportCarta) {
+  elegirVersionCarta(carta: ImportCarta) {
     let params: SearchParams = new SearchParams();
     params.unique = "prints";
-    this.scryfallService.search(data.carta.name, params).subscribe(result => {
+    this.scryfallService.search(carta.data.name, params).subscribe(result => {
       let cartas = result.data as Carta[];
       this.edicionSelectorData = [];
       for (let i = 0; i < cartas.length; i++) {

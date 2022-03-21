@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Album } from 'src/app/pages/album/album';
 import Swal from 'sweetalert2';
 import { Carta } from '../../models/carta';
+import { CartaWrap } from '../../models/carta-wrap';
 import { AlbumService } from '../data/album.service';
 import { ColeccionService } from '../data/coleccion.service';
 import { UsuarioService } from '../data/usuario.service';
@@ -68,7 +69,7 @@ export class AlbumWrapService {
     });
   }
 
-  showGuardarCartas(cartaArray: Carta[]): void {
+  showGuardarCartas(cartaArray: CartaWrap[]): void {
     this.elegirAlbumModal().then((result) => {
       if (result.isConfirmed) {
         this.guardarCartasEnAlbum(cartaArray, result.value, () => {
@@ -78,10 +79,11 @@ export class AlbumWrapService {
     });
   }
 
-  private guardarCartasEnAlbum(cartaArray: Carta[], albumId: number, then?: Function) {
+  private guardarCartasEnAlbum(cartaArray: CartaWrap[], albumId: number, then?: Function) {
     let cartasAdded = 0;
     for (let i = 0; i < cartaArray.length; i++) {
-      this.albumService.putCartaInAlbum(cartaArray[i].id, albumId).subscribe(() => {
+      let carta = cartaArray[i];
+      this.albumService.putCartaInAlbum(carta.data.id, albumId, carta.amount).subscribe(() => {
         cartasAdded++;
         if (cartasAdded === cartaArray.length) {
           if (then) {
@@ -129,7 +131,7 @@ export class AlbumWrapService {
     })
   }
 
-  showCrearAlbum(cartaArray?: Carta[]) {
+  showCrearAlbum(cartaArray?: CartaWrap[]) {
     this.crearAlbumModal().then((result) => {
       if (result.isConfirmed) {
         let mensaje = `El album <b>${result.value}</b> ha sido creado`;
@@ -148,7 +150,7 @@ export class AlbumWrapService {
     });
   }
 
-  showCrearAlbumFromCartas(cartaArray: Carta[]) {
+  showCrearAlbumFromCartas(cartaArray: CartaWrap[]) {
     this.crearAlbumModal().then((result) => {
       if (result.isConfirmed) {
         this.coleccionService.createAlbum(result.value, this.usuarioService.usuario.username).subscribe(
