@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Carta } from 'src/app/core/models/carta';
+import { CartaWrap } from '../../models/carta-wrap';
+import { CartaService } from '../local/carta.service';
 import { SearchParams } from './search-params';
 
 /**
@@ -16,30 +19,40 @@ export class ScryfallService {
 
   private url: string = "http://api.scryfall.com/";
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cartaService: CartaService
   ) { }
+
+  public _search(search_text: string, search_params?: SearchParams): Observable<CartaWrap[]> {
+    return this.search(search_text, search_params).pipe(map(res => {
+      return res.data.map((carta: Carta) => {
+        let newCarta = new CartaWrap();
+        newCarta.data = carta;
+        newCarta.main_image = this.cartaService.getDefaultImageUris(carta);
+        return newCarta;
+      });
+    }));
+  }
 
   public search(search_text: string, search_params?: SearchParams): Observable<any> {
     let url = this.url + "cards/search?q=" + encodeURIComponent(search_text);
     if (search_params) {
-      url += "&" + this.serialize(search_params);
+      url += "&" + this._serialize(search_params);
     }
     return this.http.get(url) as Observable<any>;
-  }
-
-  private serialize(obj: any): string {
-    let str = [];
-    for (let p in obj) {
-      if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-      }
-    }
-    return str.join("&");
   }
 
   public getCard(id: string): Observable<any> {
     let url = this.url + "cards/" + id;
     return this.http.get(url);
+  }
+
+  public fillCartaData(res: CartaWrap): Observable<any> {
+    return this.getCard(res.scryfall_id).pipe(map(carta_scryfall => {
+      res.data = carta_scryfall as Carta;
+      res.main_image = this.cartaService.getDefaultImageUris(res.data);
+      return res;
+    }));
   }
 
   public searchAutocomplete(name: string): Observable<any> {
@@ -48,7 +61,7 @@ export class ScryfallService {
       pretty: "true",
       include_extras: "false",
     }
-    url += "&" + this.serialize(params);
+    url += "&" + this._serialize(params);
     return this.http.get(url);
   }
 
@@ -61,5 +74,15 @@ export class ScryfallService {
     let type = "fuzzy";
     let url = `${this.url}cards/named?${type}=${name}`;
     return this.http.get(url);
+  }
+
+  private _serialize(obj: any): string {
+    let str = [];
+    for (let p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    }
+    return str.join("&");
   }
 }

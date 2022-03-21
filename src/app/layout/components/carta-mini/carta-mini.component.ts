@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Carta } from 'src/app/core/models/carta';
+import { CartaWrap } from 'src/app/core/models/carta-wrap';
 
 @Component({
   selector: 'app-carta-mini',
@@ -8,11 +9,16 @@ import { Carta } from 'src/app/core/models/carta';
 })
 export class CartaMiniComponent implements OnInit {
 
-  @Input('carta') carta: Carta;
+  @Input('carta') carta: CartaWrap;
 
-  constructor() { }
+  constructor() {
+    console.log("INPUT CARTA: " + this.carta);
+
+   }
 
   ngOnInit(): void {
+    console.log("INPUT CARTA ngOnInit: " + this.carta);
+
   }
 
 }

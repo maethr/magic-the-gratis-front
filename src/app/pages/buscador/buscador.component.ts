@@ -7,6 +7,8 @@ import { SearchParams } from 'src/app/core/services/scryfall/search-params';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { CartaWrap } from 'src/app/core/models/carta-wrap';
+import { CartaService } from 'src/app/core/services/local/carta.service';
 
 /**
  * Buscador inteligente de cartas. Este ataca a la API de Scryfall
@@ -21,8 +23,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class BuscadorComponent implements OnInit {
 
-  cartasBusqueda: Carta[] = [];
-  cartasPagina: Carta[] = [];
+  cartasBusqueda: CartaWrap[] = [];
+  cartasPagina: CartaWrap[] = [];
 
   paginador: any;
   pagina: number;
@@ -41,13 +43,15 @@ export class BuscadorComponent implements OnInit {
   uniqueValues: { name: string, code: string }[] = [];
 
   paramValues: any = { uniqueValues: [], orderValues: [], dirValues: [] };
+ 
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private ref: ChangeDetectorRef,
     private scryfallService: ScryfallService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cartaService: CartaService
   ) {
     this.populateDropdowns();
   }
@@ -223,7 +227,12 @@ export class BuscadorComponent implements OnInit {
         console.log("RESPUESTA SCRYFALL: ", response);
         this.totalCartasBusqueda = response.total_cards;
         console.log(this.totalCartasBusqueda)
-        this.cartasBusqueda = response.data as Carta[];
+
+        this.cartasBusqueda = response.data.map((carta: Carta) => {
+          let newCarta = new CartaWrap();
+          newCarta.data = carta;
+          newCarta.main_image = this.cartaService.getDefaultImageUris(carta);
+        });
         console.log("Cartas Busqueda: ", this.cartasBusqueda)
         this.cargando = false;
       }));

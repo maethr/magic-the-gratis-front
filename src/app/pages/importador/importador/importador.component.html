@@ -35,6 +35,7 @@
                             <th>Set</th>
                             <th>Rareza</th>
                             <th>Imagen HD</th>
+                            <th>Cantidad</th>
                             <th>
                                 <div class="float-right">
                                     <button pButton label="Añadir" icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary" (click)="addItem()"></button>
@@ -42,14 +43,14 @@
                             </th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-data>
+                    <ng-template pTemplate="body" let-carta>
                         <!-- IF CARTA -->
-                        <tr *ngIf="data.carta">
-                            <td><button class="btn btn-link" [lightbox]="cartasEncontradas.indexOf(data)">{{data.carta.name}}</button></td>
+                        <tr *ngIf="carta.data">
+                            <td><button class="btn btn-link" [lightbox]="cartasEncontradas.indexOf(carta)">{{carta.data.name}}</button></td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <button pButton class="p-button-text p-button-rounded p-button-secondary" (click)="elegirVersionCarta(data)">
-                                        <span [innerHTML]="data.carta.set | edicion:'26px' | async"></span>
+                                    <button pButton class="p-button-text p-button-rounded p-button-secondary" (click)="elegirVersionCarta(carta)">
+                                        <span [innerHTML]="carta.data.set | edicion:'26px' | async"></span>
                                     </button>
                                     <p-dropdown #edicion styleClass="open-me" class="open-me" *ngIf="true || edicionSelectorOpen" [options]="edicionSelectorData" [(ngModel)]="edicionSelectorSelected" optionLabel="edicion.name" [filter]="true" filterBy="edicion.name" [showClear]="true" placeholder="Selecciona una edicion">
                                         <ng-template pTemplate="selectedItem">
@@ -69,29 +70,43 @@
                                 </div>
 
                             </td>
-                            <td [ngClass]="getCssRarity(data.carta.rarity)">{{data.carta.rarity}}</td>
+                            <td [ngClass]="getCssRarity(carta.data.rarity)">{{carta.data.rarity}}</td>
                             <td>
-                                <i *ngIf="data.fullResImg" class='pi pi-check'></i>
-                                <i *ngIf="!data.fullResImg" class='pi pi-times'></i>
+                                <i *ngIf="carta.fullResImg" class='pi pi-check'></i>
+                                <i *ngIf="!carta.fullResImg" class='pi pi-times'></i>
                                 <!-- {{ data.fullResImg ? 'Sí' : 'No' }} -->
                             </td>
                             <td>
+                                <!-- CANTIDAD -->
+                                <div class="input-group">
+                                    <input type="number" class="form-control" [(ngModel)]="carta.amount" />
+                                    <!-- <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" (click)="restarCantidad(carta)">
+                                            <i class="pi pi-minus"></i>
+                                        </button>
+                                        <button class="btn btn-outline-secondary" type="button" (click)="sumarCantidad(carta)">
+                                            <i class="pi pi-plus"></i>
+                                        </button>
+                                    </div> -->
+                                </div>
+                            </td>
+                            <td>
                                 <div class="float-right">
-                                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text m-1" (click)="editarItem(data)"></button>
-                                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text m-1" (click)="eliminarItem(data)"></button>
+                                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text m-1" (click)="editarItem(carta)"></button>
+                                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text m-1" (click)="eliminarItem(carta)"></button>
                                 </div>
                             </td>
                         </tr>
                         <!-- IF NO CARTA -->
-                        <tr *ngIf="!data.carta" class="text-danger" style="background-color: #FFCCCC;">
+                        <tr *ngIf="!carta.data" class="text-danger" style="background-color: #FFCCCC;">
                             <td>
-                                <i class="pi pi-exclamation-circle m-2"></i> {{data.textoBuscado}}
+                                <i class="pi pi-exclamation-circle m-2"></i> {{carta.textoBuscado}}
                             </td>
                             <td colspan="3" class="text-center">
                                 Carta no encontrada &nbsp;
                             </td>
                             <td>
-                                <button class="btn btn-danger" (click)="editarItem(data)">editar</button>
+                                <button class="btn btn-danger" (click)="editarItem(carta)">editar</button>
                             </td>
                         </tr>
                     </ng-template>
