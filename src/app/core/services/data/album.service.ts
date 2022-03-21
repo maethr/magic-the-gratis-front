@@ -62,9 +62,11 @@ export class AlbumService {
     return this.http.get<any>(this.url + "/welcome/" + q);
   }
 
+  countCartasAlbum(id : number): Observable<any> {
+    return this.http.get<any>(this.url + `/album/${id}/contar-cartas`);
+  }
 
-
-  delete(){
-    
+  deleteAlbum(id : number): Observable<any>{
+    return this.http.delete<any>(this.url + "/album/" + id);
   }
 }

@@ -10,4 +10,6 @@ export class Album {
 
   cartas?: Carta[];
 
+  totalCartas: number;
+
 }

@@ -1,10 +1,9 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-2">
-        </div>
+       
 
-        <div class="col-8">
+        <div class="col-12">
 
             <!---LISTADOR-->
             <div class="row">
@@ -32,7 +31,7 @@
             </form>
 
             <!-- hr class="hr-shadow" -->
-
+            <!---Albums de la colección-->
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-12 row mt-3 text-center d-flex justify-content-center" *ngIf="albums?.length==0 ">
@@ -42,16 +41,20 @@
 
                     </div>
 
+                    
                     <ul class="listaAlbumes" *ngIf="albums?.length>0">
                         <div class="container">
                             <div class="row">
-                                <div class="col-4" *ngFor="let album of albums">
+                                <div class="col-3" *ngFor="let album of albums">
                                     <li routerLinkActive="active">
                                         <a class="link-album" routerLink="/album/{{album.id}}">
                                             <div class="album">
                                                 <img src="./assets/images/album/ultra-pro-1.png" class="rounded imagen-album" width="100%">
                                             </div>
-                                            <div class="datos-album text-center">{{album.nombre}}</div>
+                                            <div class="datos-album text-center row align-items-center justify-content-between">
+                                                <span class="col">{{album.nombre}}</span>
+                                                <span *ngIf="album.totalCartas !== undefined" class="total-cartas col-2">{{album.totalCartas}}</span>
+                                            </div>
                                             <br>
                                         </a>
                                     </li>
@@ -68,8 +71,6 @@
             <app-paginador-albumes *ngIf="paginador" [paginador]="paginador"></app-paginador-albumes>
         </div>
 
-        <div class="col-2">
-        </div>
-
+  
     </div>
 </div>

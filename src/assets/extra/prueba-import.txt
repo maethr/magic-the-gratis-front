@@ -4,12 +4,10 @@ jace mind sculptor
 counterspel
 opal mox
 
-
-
-emrakul aeon x4
+emrakul aeon
 nissa revne
 chandra naalar
-llanowar elves x8
+llanowar elves
 garruk beast
 
 
