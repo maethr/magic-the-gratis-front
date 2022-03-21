@@ -7,6 +7,7 @@ import { Album } from '../album/album';
 
 import { ColeccionService } from '../../core/services/data/coleccion.service';
 import { AlbumService } from 'src/app/core/services/data/album.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -20,35 +21,41 @@ export class OpcionesAlbumComponent implements OnInit {
   errores: string[];
 
   album: Album;
-  albumEditado: Album;
+  formAlbum: FormGroup;
 
   constructor(
     private albumService: AlbumService,
     private albumesService: ColeccionService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
   ) {
-    this.albumEditado = new Album;
+   
   }
 
   ngOnInit(): void {
+
     this.activatedRoute.paramMap.subscribe(params =>{
       this.id_album = +params.get('id');
       this.albumesService.getAlbum(this.id_album).subscribe(
         response => {
           this.album = response as Album;
+          this.formAlbum = this.fb.group({
+            nombre: [this.album.nombre, Validators.required]
+          })
         }
       );
     });
   }
 
   editar(): void {
-    this.albumService.update(this.album.id, this.album.nombre).subscribe(
+    this.albumService.update(this.album.id, this.formAlbum.value.nombre).subscribe(
       response => {
         this.album = response;
         this.router.navigate(['/album', this.album.id]);
       }
     )
+
   }
 
   eliminarAlbum() {
