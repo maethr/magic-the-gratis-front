@@ -6,7 +6,7 @@ import { SimbolosService } from './core/services/scryfall/simbolos.service';
   template: `
     <app-header></app-header>
     <div class="container-fluid mt-4 my-3 wrap contenido">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
     <app-footer></app-footer>`
 })
@@ -18,5 +18,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     //this.simbolosService.getSimbolosAsync();
+  }
+
+  onActivate(event: any) {
+    window.scroll(0, 0);
   }
 }
