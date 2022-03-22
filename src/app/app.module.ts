@@ -84,7 +84,7 @@ const routes: Routes = [
   { path: 'carta/:scid/:id', component: CartaComponent },
   { path: 'carta/:scid', component: CartaComponent },
   { path: 'importador', component: ImportadorComponent },
-  { path: 'welcome', component: WelcomeComponent },
+  { path: 'welcome', component: WelcomeComponent, data: {header: false} },
 
 ]
 
