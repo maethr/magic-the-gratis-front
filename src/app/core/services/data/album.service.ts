@@ -32,6 +32,18 @@ export class AlbumService {
     );
   }
 
+  getAllCartasFromAlbum(id : number): Observable<any> {
+    return this.http.get<any>(this.url + `/album/${id}/all`).pipe(
+      map((response: any) => {
+        console.log(response);
+        (response as any[]).map((res: CartaWrap) => {
+          this.scryfallService.fillCartaData(res).subscribe();
+        });
+        return response;
+      })
+    );
+  }
+
   putCartaInAlbum (scryfall_id: string, album_id: number, amount?: number): Observable<any> {
     if (amount == null) {
       amount = 1;

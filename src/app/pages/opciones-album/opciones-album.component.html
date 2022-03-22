@@ -9,7 +9,7 @@
             <div class="titulofiltros mt-2 col">Opciones Album: {{album.nombre}}</div>
             <!---Eliminar Album-->
             <div class="titulofiltros mt-2 col-2 float-right">
-                    <button pButton label="Eliminar" icon="pi pi-trash" (click)="eliminarAlbum()"></button>
+                <button pButton label="Eliminar" icon="pi pi-trash" (click)="eliminarAlbum()"></button>
             </div>
         </div>
 
@@ -37,7 +37,14 @@
                 </form>
                 <hr>
 
+                <!---Exportar album a zip-->
+                <div class="row">
+                    <button pButton (click)="descargarZip()" icon="pi pi-download" title="Exportar"></button>
+                </div>
+
             </div>
         </div>
+
+
     </div>
 </div>
