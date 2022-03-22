@@ -42,6 +42,8 @@ import { SimbolosService } from './core/services/scryfall/simbolos.service';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
+import { ImportadorComponent } from './pages/importador/importador/importador.component';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 import { PaginatorModule } from 'primeng/paginator';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -52,9 +54,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ToolbarModule } from 'primeng/toolbar';
+import { MenuItem } from 'primeng/api';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
-import { ImportadorComponent } from './pages/importador/importador/importador.component';
-import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 
 registerLocaleData(localeES, 'es');
@@ -138,8 +140,6 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     FormsModule,
     ReactiveFormsModule,
 
-
-
     GalleryModule,
     LightboxModule,
 
@@ -152,6 +152,7 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     DropdownModule,
     TriStateCheckboxModule,
     ToolbarModule,
+    ContextMenuModule
   ],
   providers: [
     UsuarioService,

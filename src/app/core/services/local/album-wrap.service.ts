@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { Album } from 'src/app/pages/album/album';
 import Swal from 'sweetalert2';
 import { Carta } from '../../models/carta';
@@ -32,12 +33,12 @@ export class AlbumWrapService {
   }
 
   obtenerAlbumes() {
-    this.coleccionService.getAllAlbumes(this.usuarioService.usuario.username).subscribe(
+    return this.coleccionService.getAllAlbumes(this.usuarioService.usuario.username).pipe(map(
       response => {
         for (let element of response) {
           this.albumes.set(element.id, element.nombre);
         }
-      });
+      }));
   }
 
   private elegirAlbumModal() {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, timeout } from 'rxjs/operators';
 
 /**
  * Servicio que ataca a la API de Scryfall para obtener los datos de
@@ -30,7 +30,7 @@ export class SimbolosService {
    */
   async initialize() {
     try {
-      await this.getSimbologia().toPromise(); // LOL
+      await this.getSimbologia().pipe(timeout(3000)).toPromise(); // LOL
       return;
     } catch (err) { }
   }

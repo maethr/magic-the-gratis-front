@@ -44,7 +44,7 @@ export class ImportadorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.albumWrapService.obtenerAlbumes();
+    this.albumWrapService.obtenerAlbumes().subscribe();
     this._lightbox.setConfig({
       panelClass: 'fullscreen'
     });

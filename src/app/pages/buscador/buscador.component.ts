@@ -44,7 +44,6 @@ export class BuscadorComponent implements OnInit {
 
   paramValues: any = { uniqueValues: [], orderValues: [], dirValues: [] };
  
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -232,6 +231,7 @@ export class BuscadorComponent implements OnInit {
           let newCarta = new CartaWrap();
           newCarta.data = carta;
           newCarta.main_image = this.cartaService.getDefaultImageUris(carta);
+          return newCarta;
         });
         console.log("Cartas Busqueda: ", this.cartasBusqueda)
         this.cargando = false;
