@@ -40,6 +40,11 @@
                 <!---Exportar album a zip-->
                 <div class="row">
                     <button pButton (click)="descargarZip()" icon="pi pi-download" title="Exportar"></button>
+
+                    <button pButton (click)="generarZip()" class="p-button" icon="pi pi-download" label="Generar Zip"></button>
+                    <button pButton [disabled]="downloadButtonDisabled" (click)="downloadZip()" class="p-button-success" icon="pi pi-save" label="Guardar"></button>
+
+
                 </div>
 
             </div>
