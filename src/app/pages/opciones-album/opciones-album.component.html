@@ -1,7 +1,7 @@
 <ul class="alert alert-danger" *ngIf="errores?.length>0">
     <li *ngFor="let error of errores">{{error}}</li>
 </ul>
-<div class="row d-flex justify-content-center col-12 text-center">
+<div *ngIf="album" class="row d-flex justify-content-center col-12 text-center">
     <div class="card col-6 card1">
 
         <!---Título-->
