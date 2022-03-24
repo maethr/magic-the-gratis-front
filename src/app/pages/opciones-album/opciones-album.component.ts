@@ -16,6 +16,7 @@ import { CartaWrapBlob } from './carta-wrap-blob.model';
 import { CartaService } from 'src/app/core/services/local/carta.service';
 import { map } from 'rxjs/operators';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
+import { ZipService } from 'src/app/core/services/local/zip.service';
 
 
 @Component({
@@ -38,13 +39,13 @@ export class OpcionesAlbumComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cartaService: CartaService,
     private scryfallService: ScryfallService,
-    private fb: FormBuilder
-  ) {
+    private fb: FormBuilder,
+    private zipService: ZipService
+  ) { }
 
-  }
+  downloadButtonDisabled ;
 
   ngOnInit(): void {
-
     this.activatedRoute.paramMap.subscribe(params => {
       this.id_album = +params.get('id');
       this.albumesService.getAlbum(this.id_album).subscribe(
@@ -55,6 +56,10 @@ export class OpcionesAlbumComponent implements OnInit {
           })
         }
       );
+    });
+
+    this.zipService.ready$.subscribe( () => {
+      this.downloadButtonDisabled = !this.zipService.file_ready;
     });
   }
 
@@ -97,6 +102,14 @@ export class OpcionesAlbumComponent implements OnInit {
     var dataURL = canvas.toDataURL("image/png");
 
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  }
+
+  generarZip() {
+    this.zipService.generarZip(this.album.id);
+  }
+
+  downloadZip() {
+    this.zipService.downloadZip();
   }
 
   async descargarZip() {
