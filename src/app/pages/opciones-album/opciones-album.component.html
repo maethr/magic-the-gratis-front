@@ -4,7 +4,6 @@
 
 <div *ngIf="album" class="d-flex justify-content-center text-center">
 
-
     <div class="card col-8 card1">
 
         <!---Título-->
@@ -21,37 +20,34 @@
             </div>
         </div>
 
-        <div class="cad-body row col-12 text-center mx-0 alturaminima">
-            <div class="col-12">
+        <div class="cad-body container text-center mx-0 alturaminima">
 
-                <!---Editar nombre-->
-                <form class="row mt-3" [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
+            <!---Editar nombre-->
+            <form class="row align-items-center m-4" style="height: 100px" [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
 
-                    <div class="form-group col-9">
-                        <div class="row">
-                            <label for="nombre" class="form-label text-left m-2">Nombre</label>
-                            <div class="inputFormulario p 0">
-                                <input type="text" class="form-control" formControlName="nombre" name="nombre" placeholder="Nuevo nombre">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-2">
-                        <button class="btn btn-primary" role="button" (click)='editar()'>
-                              <i class="bi bi-search"></i>
-                              Editar
-                          </button>
-                    </div>
-                </form>
-                <hr>
-
-                <!---Exportar album a zip-->
-                <div class="row m-4 justify-content-between align-items-center" style="height: 100px;">
-                    <p class="col-6 h4 pt-3" style="color:darkgray">Imprime tu album:</p>
-                    <app-zip [album]="album" class="col-4 w-100"></app-zip>
+                <div class="col-3">
+                    <label for="nombre" class="h6" style="color:gray">
+                        <i class="pi pi-pencil pr-3"></i>Cambiar nombre:
+                    </label>
                 </div>
 
+                <div class="col">
+                    <input pInputText type="text" class="form-control" formControlName="nombre" name="nombre" placeholder="Nuevo nombre">
+                </div>
+
+                <div class="col-1">
+                    <button pButton role="button" icon="pi pi-save" (click)='editar()'></button>
+                </div>
+            </form>
+
+            <hr style="margin: 0">
+
+            <!---Exportar album a zip-->
+            <div class="row m-4 justify-content-between align-items-center" style="height: 100px;">
+                <p class="col-6 h4 pt-3" style="color:darkgray; text-align: left;">Imprime tu album:</p>
+                <app-zip [album]="album" class="col-4 w-100"></app-zip>
             </div>
+
         </div>
 
 
