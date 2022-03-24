@@ -1,14 +1,22 @@
 <ul class="alert alert-danger" *ngIf="errores?.length>0">
     <li *ngFor="let error of errores">{{error}}</li>
 </ul>
-<div *ngIf="album" class="row d-flex justify-content-center col-12 text-center">
-    <div class="card col-6 card1">
+
+<div *ngIf="album" class="d-flex justify-content-center text-center">
+
+
+    <div class="card col-8 card1">
 
         <!---Título-->
-        <div class="card-header row">
-            <div class="titulofiltros mt-2 col">Opciones Album: {{album.nombre}}</div>
+        <div class="card-header row align-items-center" style="color:darkgray">
+            <div class="h4 mt-2 col" style="text-align: left;">
+                <a class="btn btn-light boton-album" routerLink="/album/{{album.id}}">
+                    <span class="h4">{{album.nombre}}</span>
+                </a>
+                <i class="pi pi-chevron-right pl-1 pr-2"></i> Opciones
+            </div>
             <!---Eliminar Album-->
-            <div class="titulofiltros mt-2 col-2 float-right">
+            <div class="col-2">
                 <button pButton label="Eliminar" icon="pi pi-trash" (click)="eliminarAlbum()"></button>
             </div>
         </div>
@@ -40,7 +48,7 @@
                 <!---Exportar album a zip-->
                 <div class="row m-4 justify-content-between align-items-center" style="height: 100px;">
                     <p class="col-6 h4 pt-3" style="color:darkgray">Imprime tu album:</p>
-                    <app-zip [album]="album" class="col-5 w-100"></app-zip>
+                    <app-zip [album]="album" class="col-4 w-100"></app-zip>
                 </div>
 
             </div>

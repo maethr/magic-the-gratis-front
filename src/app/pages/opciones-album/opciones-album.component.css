@@ -18,9 +18,10 @@
 
 .card1,
 .card2 {
-    border: solid 2px #0066A1;
-    border-radius: 7px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    /* border: solid 2px #0066A1; */
+    /* border-radius: 7px; */
+    /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); */
+    margin-top: 2rem;
 }
 
 .botonesfiltros {
@@ -69,4 +70,13 @@ input:valid {
 
 .inputFormulario {
     width: 40%;
+}
+
+.boton-album {
+    color: darkgray;
+    background-color: transparent;
+}
+
+.boton-album:hover {
+    background-color: #e2e6ea;
 }
