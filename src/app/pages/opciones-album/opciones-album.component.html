@@ -38,15 +38,9 @@
                 <hr>
 
                 <!---Exportar album a zip-->
-                <div class="row">
-                    <!--
-                    <button pButton (click)="descargarZip()" icon="pi pi-download" title="Exportar"></button>
-
-                    <button pButton (click)="generarZip()" class="p-button" icon="pi pi-download" label="Generar Zip"></button>
-                    <button pButton [disabled]="downloadButtonDisabled" (click)="downloadZip()" class="p-button-success" icon="pi pi-save" label="Guardar"></button>
-                    -->
-                    <app-zip [album]="album"></app-zip>
-
+                <div class="row m-4 justify-content-between align-items-center" style="height: 100px;">
+                    <p class="col-6 h4 pt-3" style="color:darkgray">Imprime tu album:</p>
+                    <app-zip [album]="album" class="col-5 w-100"></app-zip>
                 </div>
 
             </div>
