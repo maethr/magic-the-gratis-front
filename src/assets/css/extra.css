@@ -115,3 +115,16 @@ hr.hr-shadow {
 ::ng-deep .og-toolbar p-button {
     margin: 5px !important;
 }
+
+.btn-light {
+    color: gray !important;
+    background-color: transparent !important;
+}
+
+.btn-light:hover {
+    background-color: #e2e6ea !important;
+}
+
+.btn-light:not(:disabled):not(.disabled):active {
+    color: gray !important;
+}

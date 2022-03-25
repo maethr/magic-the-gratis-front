@@ -1,0 +1,4 @@
+<button pButton *ngIf="!file_ready && !cargando" (click)="generarZip()" class="p-button boton-zip" icon="pi pi-download" label="Exportar en Zip"></button>
+<button pButton *ngIf="!file_ready && cargando" label="Obteniendo datos" icon="pi pi-spin pi-spinner" class="boton-zip"></button>
+<button pButton *ngIf="file_ready && !cargando" [disabled]="!file_ready" (click)="downloadZip()" class="p-button-success boton-zip" icon="pi pi-save" label="Generar"></button>
+<button pButton *ngIf="file_ready && cargando" label="{{download_progress}}" class="p-button-success boton-zip" icon="pi pi-spin pi-spinner"></button>

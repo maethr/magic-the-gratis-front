@@ -24,6 +24,7 @@ import { BuscadorUsuariosComponent } from './pages/usuarios/buscador-usuarios/bu
 import { CartaComponent } from './pages/carta/carta.component';
 import { ColeccionComponent } from './pages/coleccion/coleccion.component';
 import { OpcionesAlbumComponent } from './pages/opciones-album/opciones-album.component';
+import { ZipComponent } from './layout/components/zip/zip/zip.component';
 
 import { UsuarioService } from './core/services/data/usuario.service';
 import { ColeccionService } from './core/services/data/coleccion.service';
@@ -84,7 +85,7 @@ const routes: Routes = [
   { path: 'carta/:scid/:id', component: CartaComponent },
   { path: 'carta/:scid', component: CartaComponent },
   { path: 'importador', component: ImportadorComponent },
-  { path: 'welcome', component: WelcomeComponent },
+  { path: 'welcome', component: WelcomeComponent, data: {header: false} },
 
 ]
 
@@ -126,7 +127,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     SimbolosPipe,
     CartaMiniComponent,
     ImportadorComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ZipComponent
   ],
   imports: [
     BrowserModule,

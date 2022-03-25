@@ -1,34 +1,39 @@
 <div class="container">
 
-    <!-- Menú -->
-    <div class="row d-flex align-items-center" *ngIf="album">
-        <div class="pl-5 col-9 d-flex flex-nowrap align-items-center">
-            <!---Título Album-->
-            <img class="album-icon" width="32" height="32" class="mr-3" src="./assets/images/icons/album-icon.svg">
-            <h1 class="mb-0">
-                {{album.nombre}}
-            </h1>
-        </div>
-
-        <!---Enlace a opciones Album-->
-        <div class="col-1 d-flex justify-content-end">
-            <img [routerLink]="['/album', album.id, 'config']" class="text-center" id="ajustes" src="./assets/images/icons/fat-config-icon.svg" width="26" height="26">
-        </div>
-
-        <!-- Selector nº cartas por fila -->
-        <div class="col-2 d-flex justify-content-center">
-            <div class="number-input align-items-center">
-                <button class="btn" (click)="recargar(-1)" [disabled]="tam_fila <= 3 || cartas?.length == 0"></button>
-                <div class="txt-select"><b>{{tam_fila}}</b></div>
-                <button class="btn btn-secondary" class="btn plus" [disabled]="tam_fila >= 4 || cartas?.length == 0" (click)="recargar(1)"></button>
-            </div>
-        </div>
-    </div>
-
     <!---Buscador-->
     <div class="row justify-content-center">
 
         <div class="card shadow-md py-3 col-11" style="border-radius: 12px; margin-bottom: 2.5rem; padding-left: 20px; padding-right: 18px;">
+
+            <!-- Menú -->
+            <div class="row px-3
+             d-flex align-items-center" *ngIf="album">
+                <div class="col d-flex flex-nowrap align-items-center">
+                    <!---Título Album-->
+
+                    <p class="h4 mb-0 titulo" style="color: dimgray;">
+                        <i class="pi pi-book pr-1" style="font-size: 1.25rem;"></i> {{album.nombre}}
+                    </p>
+                </div>
+
+                <!-- Selector nº cartas por fila -->
+                <div class="col-2 d-flex justify-content-end">
+                    <div class="number-input align-items-center">
+                        <button class="btn" (click)="recargar(-1)" [disabled]="tam_fila <= 3 || cartas?.length == 0"></button>
+                        <div class="txt-select"><b>{{tam_fila}}</b></div>
+                        <button class="btn btn-secondary" class="btn plus" [disabled]="tam_fila >= 4 || cartas?.length == 0" (click)="recargar(1)"></button>
+                    </div>
+                </div>
+
+                <!---Enlace a opciones Album-->
+                <div class="col-2 d-flex justify-content-end">
+                    <button pButton [routerLink]="['/album', album.id, 'config']" icon="pi" label="Opciones" class="p-button-rounded p-button-secondary p-button-raised p-button-sm text-center">
+                         <i class="pi pi-ellipsis-h" style="font-size: 1.2em;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <hr class="ml-2 mr-3">
 
             <div class="row og-toolbar" [formGroup]="filterForm">
                 <div class="col-md-6 col-lg-2 d-flex align-items-center justify-content-between">

@@ -1,43 +1,81 @@
 <ul class="alert alert-danger" *ngIf="errores?.length>0">
     <li *ngFor="let error of errores">{{error}}</li>
 </ul>
-<div class="row d-flex justify-content-center col-12 text-center">
-    <div class="card col-6 card1">
+
+<div *ngIf="album" class="d-flex justify-content-center text-center">
+
+    <div class="card col-8 card1 shadow">
 
         <!---Título-->
-        <div class="card-header row">
-            <div class="titulofiltros mt-2 col">Opciones Album: {{album.nombre}}</div>
-            <!---Eliminar Album-->
-            <div class="titulofiltros mt-2 col-2 float-right">
-                    <button pButton label="Eliminar" icon="pi pi-trash" (click)="eliminarAlbum()"></button>
+        <div class="card-header row align-items-center" style="color:darkgray">
+            <div class="h4 mt-2 col" style="text-align: left;">
+                <a class="btn btn-light boton-album" routerLink="/album/{{album.id}}">
+                    <span class="h4">{{album.nombre}}</span>
+                </a>
+                <i class="pi pi-chevron-right pl-1 pr-2"></i> Opciones
             </div>
         </div>
 
-        <div class="cad-body row col-12 text-center mx-0 alturaminima">
-            <div class="col-12">
+        <div class="cad-body container text-center mx-0 alturaminima">
 
-                <!---Editar nombre-->
-                <form class="row mt-3" [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
-
-                    <div class="form-group col-9">
-                        <div class="row">
-                            <label for="nombre" class="form-label text-left m-2">Nombre</label>
-                            <div class="inputFormulario p 0">
-                                <input type="text" class="form-control" formControlName="nombre" name="nombre" placeholder="Nuevo nombre">
-                            </div>
-                        </div>
+            <!---Editar nombre-->
+            <form [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
+                <div class="row align-items-center m-4">
+                    <div class="col-5 text-left">
+                        <label for="nombre" class="h6" style="color:darkgray">
+                            <i class="pi pi-pencil pr-3"></i>Nuevo nombre
+                        </label>
                     </div>
 
-                    <div class="form-group col-2">
-                        <button class="btn btn-primary" role="button" (click)='editar()'>
-                              <i class="bi bi-search"></i>
-                              Editar
-                          </button>
+                    <div class="col-7">
+                        <input pInputText type="text" class="form-control" formControlName="nombre" name="nombre" placeholder="Nuevo nombre">
                     </div>
-                </form>
-                <hr>
 
+                    <div class="col-1" *ngIf="formAlbum.value.nombre != album.nombre">
+                        <button pButton role="button" icon="pi pi-save" (click)='editar()'></button>
+                    </div>
+                </div>
+
+                <div class="row align-items-center justify-content-between m-4">
+                    <div class="col-5 text-left">
+                        <label for="nombre" class="h6" style="color:darkgray">
+                            Portada del Album
+                        </label>
+                    </div>
+
+                    <div class="col-7">
+                        <input pInputText type="text" class="form-control" formControlName="imagen" name="nombre" placeholder="Nuevo nombre">
+                    </div>
+                </div>
+
+            </form>
+
+            <hr style="margin: 0">
+
+            <!---Exportar album a zip-->
+            <div class="row m-4 justify-content-between align-items-center">
+                <p class="col-6 h4 pt-3" style="color:darkgray; text-align: left;">Imprime tu album:</p>
+                <app-zip [album]="album" class="col-4 w-100"></app-zip>
             </div>
+
+            <hr style="margin: 0">
+
+            <!---Exportar album a zip-->
+            <div class="row m-4 justify-content-between align-items-center">
+                <div class="col-5 text-left">
+                    <label for="nombre" class="h6" style="color:darkgray">
+                        Eliminar album
+                    </label>
+                </div>
+
+                <!---Eliminar Album-->
+                <div class="col-3">
+                    <button pButton label="Eliminar" icon="pi pi-trash" class="p-button-danger w-100" (click)="eliminarAlbum()"></button>
+                </div>
+            </div>
+
         </div>
+
+
     </div>
 </div>

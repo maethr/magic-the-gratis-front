@@ -32,6 +32,10 @@ export class AlbumService {
     );
   }
 
+  getAllCartasFromAlbum(id : number): Observable<any> {
+    return this.http.get<any>(this.url + `/album/${id}/all`);
+  }
+
   putCartaInAlbum (scryfall_id: string, album_id: number, amount?: number): Observable<any> {
     if (amount == null) {
       amount = 1;
