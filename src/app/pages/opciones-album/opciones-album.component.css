@@ -9,15 +9,6 @@
     margin-top: 2.5rem;
 }
 
-.boton-album {
-    color: darkgray;
-    background-color: transparent;
-}
-
-.boton-album:hover {
-    background-color: #e2e6ea;
-}
-
-.boton-album:active {
-    color: gray !important;
+.card1 .cad-body .row {
+    margin: 35px auto !important;
 }

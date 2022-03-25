@@ -50,7 +50,8 @@ export class OpcionesAlbumComponent implements OnInit {
         response => {
           this.album = response as Album;
           this.formAlbum = this.fb.group({
-            nombre: [this.album.nombre, Validators.required]
+            nombre: [this.album.nombre, Validators.required],
+            imagen: ['']
           })
         }
       );
