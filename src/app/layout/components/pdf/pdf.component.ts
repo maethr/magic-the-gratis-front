@@ -108,8 +108,8 @@ export class PdfComponent implements OnInit {
       map((response: any[]) => {
         this.length = response.length;
 
-        let x = 180;
-        let y = 270;
+        let x = 0;
+        let y = 0;
         let tam_x = 63.5;
         let tam_y = 88;
 
@@ -128,19 +128,21 @@ export class PdfComponent implements OnInit {
               r.onload = () => {
                 carta.main_image_object = r.result;
 
-                x += tam_x;
-                y += tam_y;
+                console.log(x, y);
 
-                if (x > 180) {
+                if (x >= 190) {
                   x = 0;
+                  y += tam_y;
                 }
-                if (y > 270) {
+                if (y >= 264) {
                   y = 0;
+                  this.pdf.addPage();
                 }
 
                 this.pdf.addImage(carta.main_image_object, carta.main_image_type.toUpperCase(), x+10, y+10, tam_x, tam_y);
                 this.cargando = false;
                 this.file_ready = true;
+                x += tam_x;
               };
               r.readAsBinaryString(blob);
             };
