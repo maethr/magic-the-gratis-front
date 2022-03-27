@@ -1,34 +1,33 @@
 <div class="container">
     <div class="row">
 
-       
-
         <div class="col-12">
+            <div class="container card rounded-3 shadow">
+                <!---LISTADOR-->
+                <div class="row justify-content-between">
+                    <div class="col-4">
+                        <p class="h3" style="color:dimgray">Mis &Aacute;lbumes</p>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-2">
 
-            <!---LISTADOR-->
-            <div class="row">
-                <div class="col-4">
-                    <h1>Mis &Aacute;lbumes</h1>
-                </div>
-                <div class="col-5"></div>
-                <div class="col-3">
-
-                    <button class="btn btn-primary" type="button" name="button" (click)="crearAlbum()">
+                        <button class="btn btn-primary" type="button" name="button" (click)="crearAlbum()">
                         <i class="bi bi-search"></i>
                         Nuevo Album
                     </button>
+                    </div>
                 </div>
-            </div>
 
-            <!---BUSCADOR-->
-            <form class="form-inline md-form form-sm my-3" *ngIf="albums.length > 8">
-                <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Busca tu album" aria-label="Search" mdbInput>
-                <button type="submit" class="btn btn-primary">
+                <!---BUSCADOR-->
+                <form class="row justify-content-between form-inline md-form form-sm my-3" *ngIf="albums.length > 8">
+                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Busca tu album" aria-label="Search" mdbInput>
+                    <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                     <span class="fa fa-search"></span>
                     Buscar
-              </button>
-            </form>
+                    </button>
+                </form>
+            </div>
 
             <!-- hr class="hr-shadow" -->
             <!---Albums de la colección-->
@@ -41,7 +40,7 @@
 
                     </div>
 
-                    
+
                     <ul class="listaAlbumes" *ngIf="albums?.length>0">
                         <div class="container">
                             <div class="row">
@@ -49,7 +48,11 @@
                                     <li routerLinkActive="active">
                                         <a class="link-album" routerLink="/album/{{album.id}}">
                                             <div class="album">
-                                                <img src="./assets/images/album/ultra-pro-1.png" class="rounded imagen-album" width="100%">
+                                                <div *ngIf="album.portada" class="imagen-album portada" style="background-image: url({{album.portada.main_image.art_crop}})"></div>
+                                                <div *ngIf="!album.portada" class="imagen-album" style="background-image: url('./assets/images/album/ultra-pro-1.png')"></div>
+
+                                                <!-- <div [ngStyle]="{background: 'url(' + true ? 'src/assets/images/album/ultra-pro-1.png' : album.portada.main_image.art_crop + ')' }" class="imagen-album"></div> -->
+                                                <!-- <img src="{{album.portada ? album.portada.main_image.art_crop : './assets/images/album/ultra-pro-1.png'}}" class="rounded imagen-album" width="100%"> -->
                                             </div>
                                             <div class="datos-album text-center row align-items-center justify-content-between">
                                                 <span class="col">{{album.nombre}}</span>
@@ -71,6 +74,6 @@
             <app-paginador-albumes *ngIf="paginador" [paginador]="paginador"></app-paginador-albumes>
         </div>
 
-  
+
     </div>
 </div>

@@ -1,0 +1,6 @@
+<button pButton *ngIf="!file_ready && !cargando" (click)="generarPdf()" class="p-button boton-zip" icon="pi pi-download" label="Exportar en PDF"></button>
+<button pButton *ngIf="!file_ready && cargando" label="Obteniendo datos" icon="pi pi-spin pi-spinner" class="boton-zip"></button>
+<button pButton *ngIf="file_ready && !cargando" [disabled]="!file_ready" (click)="_descargarPdf()" class="p-button-success boton-zip" icon="pi pi-save" label="Generar"></button>
+<button pButton *ngIf="file_ready && cargando" label="Generando PDF" class="p-button-success boton-zip" icon="pi pi-spin pi-spinner"></button>
+
+<!-- <button pButton (click)="generarPdf()"></button> -->

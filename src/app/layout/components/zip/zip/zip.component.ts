@@ -60,6 +60,7 @@ export class ZipComponent implements OnInit {
               let blob = xhr.response;
               var r = new FileReader();
               r.onload = () => {
+                console.log("ZWAAAAAAAAAAAAAAAAP", r.result);
                 carta.main_image_object = r.result;
               };
               r.readAsBinaryString(blob);

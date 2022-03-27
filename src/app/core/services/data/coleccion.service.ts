@@ -3,13 +3,15 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Album } from '../../../pages/album/album';
+import { ScryfallService } from '../scryfall/scryfall.service';
 
 @Injectable()
 export class ColeccionService {
 
   private url: string = "http://localhost:8080/collector";
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private scryfallService: ScryfallService
   ) { }
 
   getAlbumes(username: string, page: string): Observable<any> {
@@ -18,6 +20,9 @@ export class ColeccionService {
     return this.http.get(`${url}/${username}/albums`, { params: params }).pipe(
       map((response: any) => {
         (response.content as Album[]).map(album => {
+          if (album.portada) {
+            this.scryfallService.fillCartaData(album.portada).subscribe();
+          }
           return album;
         });
         return response;
@@ -60,4 +65,14 @@ export class ColeccionService {
       })
     );
   }
+
+  editarAlbum(id: number, nombre?: string, portada?: number): Observable<any>{
+    let url = this.url + "/album";
+    let params = new HttpParams()
+                .set("id", id)
+                .set("nombre", nombre)
+                .set("portada", portada);
+    return this.http.put(`${url}`, params );
+  }
+
 }

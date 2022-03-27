@@ -32,6 +32,14 @@ export class AlbumService {
     );
   }
 
+  getPortadaAlbum(id:number): Observable<any>{
+    return this.http.get<any>(this.url + "/album/" + id + "/portada").pipe(
+      map((response: any) => {
+          this.scryfallService.fillCartaData(response).subscribe();
+      })
+    );
+  }
+
   getAllCartasFromAlbum(id : number): Observable<any> {
     return this.http.get<any>(this.url + `/album/${id}/all`);
   }

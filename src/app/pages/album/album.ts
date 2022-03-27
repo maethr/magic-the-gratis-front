@@ -1,3 +1,4 @@
+import { CartaWrap } from "src/app/core/models/carta-wrap";
 import { Carta } from "src/app/pages/carta/carta";
 import { Usuario } from "../../core/models/usuario";
 
@@ -8,6 +9,7 @@ export class Album {
   nombre: string;
   juego: string;
 
+  portada?: CartaWrap;
   cartas?: Carta[];
 
   totalCartas: number;
