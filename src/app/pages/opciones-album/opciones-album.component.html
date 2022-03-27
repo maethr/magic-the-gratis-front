@@ -54,9 +54,12 @@
 
             <!---Exportar album a zip-->
             <div class="row m-4 justify-content-between align-items-center">
-                <p class="col-6 h4 pt-3" style="color:darkgray; text-align: left;">Imprime tu album:</p>
-                <app-zip [album]="album" class="col-4 w-100"></app-zip>
+                <p class="col-12 h4 p-3" style="color:darkgray; text-align: center;">Imprime tu album:</p>
                 <app-pdf [album]="album" class="col-4 w-100"></app-pdf>
+                <app-zip [album]="album" class="col-4 w-100"></app-zip>
+                <div class="col-4">
+                    <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
+                </div>
             </div>
 
             <hr style="margin: 0">
