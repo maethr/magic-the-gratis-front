@@ -108,7 +108,7 @@ export class PdfComponent implements OnInit {
       map((response: any[]) => {
         this.length = response.length;
 
-        let x = 0;
+        let x = -0.2;
         let y = 0;
         let tam_x = 63.5;
         let tam_y = 88;
@@ -133,6 +133,9 @@ export class PdfComponent implements OnInit {
                 if (x >= 190) {
                   x = 0;
                   y += tam_y;
+                  y+=0.2;
+                } else {
+                  x+=0.2;
                 }
                 if (y >= 264) {
                   y = 0;
