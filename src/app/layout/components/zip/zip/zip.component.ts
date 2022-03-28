@@ -8,6 +8,7 @@ import { CartaWrapBlob } from 'src/app/pages/opciones-album/carta-wrap-blob.mode
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { Album } from 'src/app/pages/album/album';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -80,7 +81,19 @@ export class ZipComponent implements OnInit {
 
   private async waitForZip() {
     let loaded: boolean = false;
+    let counter = 0;
     while (!loaded) {
+      counter++;
+      if (counter > 5) {
+        this.cargando = false;
+        this.file_ready = true;
+        Swal.fire({
+          title: 'Alerta',
+          text: 'No todas se pudieron obtener todas las cartas.',
+          icon: 'warning'
+        });
+        return;
+      }
       let loaded_now = true;
       await new Promise(f => setTimeout(f, 1000));
       for (let carta of this.cartas_resp) {

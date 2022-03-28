@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="cad-body container text-center mx-0 alturaminima">
+        <div class="cad-body text-center mx-0 alturaminima w-100">
 
             <!---Editar nombre-->
             <form [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
@@ -53,13 +53,42 @@
             <hr style="margin: 0">
 
             <!---Exportar album a zip-->
-            <div class="row m-4 justify-content-between align-items-center">
+            <!-- <div class="row m-4 justify-content-between align-items-center">
                 <p class="col-12 h4 p-3" style="color:darkgray; text-align: center;">Imprime tu album:</p>
                 <app-pdf [album]="album" class="col-4 w-100"></app-pdf>
-                <app-zip [album]="album" class="col-4 w-100"></app-zip>
+                <app-pdf [album]="album" class="col-4 w-100"></app-pdf>
                 <div class="col-4">
                     <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
                 </div>
+            </div> -->
+
+            <div class="row m-4 justify-content-between align-items-center">
+                <p class="col-12 h4 p-3" style="color:darkgray; text-align: center;">Imprime tu album:</p>
+
+                <div class="col-4">
+                    <div class="card shadow-sm">
+                        <div class="p-4">
+                            <p-checkbox name="checkbox1" label="" value="true" binary="true"></p-checkbox>
+                            <app-pdf [album]="album" class="w-100"></app-pdf>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card shadow-sm py-4 pr-4 pl-3 text-left row">
+                        <p-checkbox name="checkbox2" label="Multiples copias de cada carta" value="true" binary="true" class="col-12 m-2"></p-checkbox>
+                        <p-checkbox name="checkbox3" label="Solamente las ilustraciones de las cartas" value="false" binary="true" class="col-12 m-2"></p-checkbox>
+
+                        <app-zip [album]="album" class="col-12 m-2"></app-zip>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card shadow-sm">
+                        <div class="p-4">
+                            <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <hr style="margin: 0">
