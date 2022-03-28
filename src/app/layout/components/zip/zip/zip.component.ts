@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { CartaService } from 'src/app/core/services/local/carta.service';
@@ -24,9 +23,6 @@ export class ZipComponent implements OnInit {
 
   @Input("album")
   album: Album;
-
-  @Input("repetidas")
-  guardar_repetidas: boolean = false;
 
   length: number;
   file_ready: boolean = false;
@@ -64,7 +60,7 @@ export class ZipComponent implements OnInit {
 
   ngOnInit(): void {
     this.zipForm = this.fb.group({
-      copias: ['todas', Validators.required],
+      copias: [{ code: 'todas', label: 'Incluir todas' }, Validators.required],
       calidad: [{ code: 'best', label: 'Máxima' }, Validators.required],
       imagen: ['full', Validators.required]
     });
@@ -196,14 +192,16 @@ export class ZipComponent implements OnInit {
     this.cartas_resp.forEach((carta: CartaWrapBlob) => {
       let nombreCarta = carta.data.name.replace(/\//g, '-');
       nombreCarta = nombreCarta + ' - ' + carta.data.set.toUpperCase() + ' - ' + carta.data.id.slice(0, 5);
-      if (this.guardar_repetidas)
+      console.log(this.zipForm.get('copias').value);
+      let guardarRepetidas = (this.zipForm.get('copias').value.code == 'todas');
+      if (guardarRepetidas) {
         nombreCarta += '-' + carta.id;
-
+      }
       for (let i = 0; i < carta.amount; i++) {
         let filename: string = nombreCarta;
-        if (this.guardar_repetidas)
+        if (guardarRepetidas) {
           filename += '-' + Math.floor(Math.random() * 100000);
-
+        }
         filename += '.' + carta.main_image_type;
         zip.file(
           filename,
@@ -222,6 +220,7 @@ export class ZipComponent implements OnInit {
       this.download_progress = "Espera un momento";
       setTimeout(() => {
         this.cargando = false;
+        this.file_ready = false;
       }, 1000);
     });
   }
