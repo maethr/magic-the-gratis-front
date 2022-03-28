@@ -2,3 +2,10 @@
     min-width: 10rem;
     width: 100%;
 }
+
+.drop-gray {
+    color: hsl(211, 21%, 74%);
+    font-weight: bold;
+    float: right;
+    letter-spacing: 2px;
+}

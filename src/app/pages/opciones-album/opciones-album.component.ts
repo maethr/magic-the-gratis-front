@@ -31,6 +31,8 @@ export class OpcionesAlbumComponent implements OnInit {
   album: Album;
   formAlbum: FormGroup;
 
+  opcionesCalidadZip: {code: string, value: string}[];
+
   constructor(
     private albumService: AlbumService,
     private albumesService: ColeccionService,
@@ -39,9 +41,9 @@ export class OpcionesAlbumComponent implements OnInit {
     private cartaService: CartaService,
     private scryfallService: ScryfallService,
     private fb: FormBuilder
-    ) { }
-
-  downloadButtonDisabled ;
+    ) {
+      
+    }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { CartaService } from 'src/app/core/services/local/carta.service';
@@ -9,8 +9,12 @@ import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { Album } from 'src/app/pages/album/album';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
+/**
+ * Componente que gestiona la creación de un zip con las cartas de un album.
+ * @author Miguel Bautista Pérez
+ */
 @Component({
   selector: 'app-zip',
   templateUrl: './zip.component.html',
@@ -30,13 +34,53 @@ export class ZipComponent implements OnInit {
   download_progress: string;
   cartas_resp: CartaWrapBlob[] = [];
 
+  opcionesImagen: { code: string; label: string; }[];
+  opcionesCalidad: { code: string; label: string; }[];
+  opcionesCopias: { code: string; label: string; }[];
+
+  zipForm: FormGroup;
+
   constructor(
     private albumService: AlbumService,
     private cartaService: CartaService,
-    private scryfallService: ScryfallService
-  ) { }
+    private scryfallService: ScryfallService,
+    private fb: FormBuilder
+  ) {
+    this.opcionesImagen = [
+      { code: 'full', label: 'Carta completa' },
+      { code: 'artwork', label: 'Ilustración' }
+    ];
+    this.opcionesCalidad = [
+      { code: 'mini', label: 'Miniatura' },
+      { code: 'med', label: 'Media' },
+      { code: 'high', label: 'Alta' },
+      { code: 'best', label: 'Máxima' }
+    ];
+    this.opcionesCopias = [
+      { code: 'todas', label: 'Incluir todas' },
+      { code: 'una', label: 'Una sola copia' },
+    ];
+  }
 
   ngOnInit(): void {
+    this.zipForm = this.fb.group({
+      copias: ['todas', Validators.required],
+      calidad: [{ code: 'best', label: 'Máxima' }, Validators.required],
+      imagen: ['full', Validators.required]
+    });
+
+    this.zipForm.get("imagen").valueChanges.subscribe(
+      (value) => {
+        if (value.code == "artwork") {
+          this.zipForm.get("calidad").disable();
+          this.zipForm.get("calidad").setValue({ code: 'high', label: 'Alta' });
+          
+        } else {
+          this.zipForm.get("calidad").enable();
+        }
+      });
+
+    console.log(this.zipForm.controls);
   }
 
   generarZip() {
@@ -50,10 +94,40 @@ export class ZipComponent implements OnInit {
 
         response.map((res: CartaWrapBlob) => {
           console.log(this.length);
-          this.scryfallService.fillCartaData(res).subscribe((carta: CartaWrapBlob) => {
-            let url = this.cartaService.getBestImageDefault(carta.data);
-            carta.main_image_type = (carta.main_image.png == url) ? 'png' : 'jpg';
+          this.scryfallService.fillCartaData(res).subscribe(async (carta: CartaWrapBlob) => {
 
+            let loaded = false;
+            while (!loaded) {
+              if (carta.main_image) {
+                loaded = true;
+                console.log("ya está la imagen", carta);
+              }
+              await new Promise(f => setTimeout(f, 1000));
+            }
+
+            console.log(carta)
+            let img_type = this.zipForm.get('calidad').value.code;
+            let url: any;
+            console.log('VALUE:', this.zipForm.value);
+            switch (img_type) {
+              case 'mini':
+                url = carta.main_image.small;
+                break;
+              case 'med':
+                url = carta.main_image.normal;
+                break;
+              case 'high':
+                url = carta.main_image.large;
+                break;
+              case 'best':
+                url = carta.main_image.png;
+                break;
+            }
+            if (this.zipForm.get('imagen').value.code == "artwork") {
+              url = carta.main_image.art_crop;
+              console.log("artwork", url);
+            }
+            carta.main_image_type = (carta.main_image.png == url) ? 'png' : 'jpg';
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.responseType = "blob";
