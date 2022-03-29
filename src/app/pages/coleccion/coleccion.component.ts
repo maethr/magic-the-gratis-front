@@ -7,6 +7,7 @@ import { UsuarioService } from '../../core/services/data/usuario.service';
 import Swal from 'sweetalert2';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import { AlbumService } from 'src/app/core/services/data/album.service';
+import { CartaWrap } from 'src/app/core/models/carta-wrap';
 
 
 @Component({
@@ -41,9 +42,6 @@ export class ColeccionComponent implements OnInit {
 
       this.obtenerAlbumes(pagina);
     });
-      this.scryfallService.search("color>=uw -c:red").subscribe( (response) => {
-        console.log(response);
-      });
   }
 
   obtenerAlbumes(pagina: number) {
@@ -69,7 +67,6 @@ export class ColeccionComponent implements OnInit {
       }
     )
   }
-
 
   crearAlbum () {
     Swal.fire({

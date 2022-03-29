@@ -2,3 +2,16 @@
     min-width: 10rem;
     width: 100%;
 }
+
+.drop-gray {
+    color: hsl(211, 21%, 74%);
+    font-weight: bold;
+    float: right;
+    letter-spacing: 2px;
+}
+
+
+/* .card:hover {
+    border-color: #3b82f6;
+    transition: border-color 0.2s;
+} */

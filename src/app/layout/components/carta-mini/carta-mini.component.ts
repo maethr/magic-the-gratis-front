@@ -2,7 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
+import { ColeccionService } from 'src/app/core/services/data/coleccion.service';
 import { AlbumWrapService } from 'src/app/core/services/local/album-wrap.service';
+import { Album } from 'src/app/pages/album/album';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-carta-mini',
@@ -12,21 +15,17 @@ import { AlbumWrapService } from 'src/app/core/services/local/album-wrap.service
 export class CartaMiniComponent implements OnInit {
 
   @Input('carta') carta: CartaWrap;
+  @Input('album') album?: Album;
 
   items: MenuItem[];
 
   constructor(
     private router: Router,
-    private albumWrapService: AlbumWrapService
-  ) {
-    console.log("INPUT CARTA: " + this.carta);
-
-
-  }
+    private albumWrapService: AlbumWrapService,
+    private coleccionService: ColeccionService
+  ) {}
 
   ngOnInit(): void {
-    console.log("INPUT CARTA ngOnInit: " + this.carta);
-
     this.items = [
       {
         label: 'Ver carta',
@@ -43,7 +42,6 @@ export class CartaMiniComponent implements OnInit {
             this.albumWrapService.showGuardarCarta(this.carta.data);
           });
         }
-
       },
       {
         separator: true
@@ -63,7 +61,31 @@ export class CartaMiniComponent implements OnInit {
         }
       }
     ];
+
+    if(this.album){
+      this.items.push(
+      {
+        separator: true
+      },
+      {
+        label: 'Hacer portada del album',
+        icon: 'pi pi-fw pi-book',
+        command: () => {
+          this.setPortadaAlbum(this.album, this.carta);
+        }
+      });
+    }
   }
 
-
+  setPortadaAlbum(album: Album, portada: CartaWrap){
+    this.coleccionService.editarAlbum(Number(album.id), album.nombre, portada.id).subscribe(
+      (response: Album) => {
+        Swal.fire({
+          title: 'Portada cambiada',
+          text: 'La portada del album ' + response.nombre + ' ha sido cambiada',
+          icon: 'success'
+          });
+      }
+    )
+  }
 }

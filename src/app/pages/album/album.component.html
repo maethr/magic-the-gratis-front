@@ -100,7 +100,7 @@
                     <div class="row">
                         <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasFiltro">
                             <li routerLinkActive="active">
-                                <app-carta-mini [carta]="carta"></app-carta-mini>
+                                <app-carta-mini [carta]="carta" [album]="album"></app-carta-mini>
                             </li>
                         </div>
                     </div>
