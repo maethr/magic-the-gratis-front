@@ -14,21 +14,32 @@ import Swal from 'sweetalert2';
 })
 export class CartaBlobService {
 
+  length: number = 0;
+  album_id: number;
+  img_quality: string;
+
   constructor(
     private albumService: AlbumService,
     private scryfallService: ScryfallService,
   ) { }
 
-  length: number = 0;
-
-  album_id: number;
-  img_quality: string;
-
+  /**
+   * Configura la generación de las imagenes
+   * @param album_id id del album
+   * @param img_quality calidad de las imagenes
+   */
   setAlbum(album_id: any, img_quality: string) {
     this.album_id = Number(album_id);
     this.img_quality = img_quality;
   }
 
+  /**
+   * Método principal del servicio.
+   * Hace falta llamar primero a setAlbum para establecer la configuración.
+   * Realiza las llamadas que obtienen los blobs de las imagenes de las cartas,
+   * y llama a waitForBlob para esperar a que se obtengan todas.
+   * @param then Función que se ejecuta cuando se han obtenido todas las imagenes.
+   */
   generarBlob(then: (res: any) => void) {
     this.albumService.getAllCartasFromAlbum(this.album_id).pipe(
       map((response: any[]) => {
@@ -41,52 +52,16 @@ export class CartaBlobService {
               await new Promise(f => setTimeout(f, 1000));
             }
 
-            let url: any;
-            switch (this.img_quality) {
-              case 'mini':
-                url = carta.main_image.small;
-                break;
-              case 'med':
-                url = carta.main_image.normal;
-                break;
-              case 'high':
-                url = carta.main_image.large;
-                break;
-              case 'best':
-                url = carta.main_image.png;
-                break;
-              case 'artwork':
-                url = carta.main_image.art_crop;
-                break;
-            }
+            let url = this.getImageUrl(carta);
             carta.main_image_type = (carta.main_image.png == url) ? 'png' : 'jpg';
 
             let random = Math.floor(Math.random() * 10000);
             url = url + "?foo=" + random;
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", url);
-            xhr.responseType = "blob";
-            xhr.onload = () => {
-              let blob = xhr.response;
-              var r = new FileReader();
-              r.onload = () => {
-                carta.main_image_object = r.result;
-              };
-              r.readAsBinaryString(blob);
-            };
-            xhr.send();
+            this.imageRequestXHR(url, (res: any) => {
+              carta.main_image_object = res.target.result;
+            });
 
-            // WITH FETCH:
-            // fetch(url, {mode: 'cors'})
-            //   .then(response => response.blob())
-            //   .then(blob => {
-            //     var r = new FileReader();
-            //     r.onload = () => {
-            //       carta.main_image_object = r.result;
-            //     };
-            //     r.readAsBinaryString(blob);
-            //   });
           });
         });
         return response;
@@ -99,6 +74,56 @@ export class CartaBlobService {
     );
   }
 
+  /**
+   * Obtiene la url de la imagen según la calidad seleccionada
+   */
+  private getImageUrl(carta: CartaWrapBlob) {
+    switch (this.img_quality) {
+      case 'mini':
+        return carta.main_image.small;
+      case 'med':
+        return carta.main_image.normal;
+      case 'high':
+        return carta.main_image.large;
+      case 'best':
+        return carta.main_image.png;
+      case 'artwork':
+        return carta.main_image.art_crop;
+    }
+  }
+
+  /**
+   * Obtención del blob de una imagen usando XmlHttpRequest
+   */
+  private imageRequestXHR(url: string, then: (res: any) => void) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.onload = () => {
+      let blob = xhr.response;
+      var r = new FileReader();
+      r.onload = then;
+      r.readAsBinaryString(blob);
+    };
+    xhr.send();
+  }
+
+  /**
+   * Obtención del blob de una imagen usando FetchAPI
+   */
+  private imageRequestFetch(url: string, then: (res: any) => void) {
+    fetch(url, { mode: 'cors' })
+      .then(response => response.blob())
+      .then(blob => {
+        var r = new FileReader();
+        r.onload = then;
+        r.readAsBinaryString(blob);
+      });
+  }
+
+  /**
+   * Función asíncrona que espera la obtención de las imagenes
+   */
   private async waitForBlob(cartas_resp: CartaWrapBlob[], then: (res: any) => void) {
     let loaded: boolean = false;
     let counter = 0;
@@ -110,7 +135,7 @@ export class CartaBlobService {
           text: 'No todas se pudieron obtener todas las cartas.',
           icon: 'warning'
         });
-        return;
+        then(cartas_resp);
       }
       loaded = true;
       await new Promise(f => setTimeout(f, 1000));
