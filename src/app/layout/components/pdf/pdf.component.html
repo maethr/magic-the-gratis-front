@@ -1,6 +1,76 @@
-<button pButton *ngIf="!file_ready && !cargando" (click)="generarPdf()" class="p-button-danger boton-pdf" icon="pi pi-download" label="Exportar en PDF"></button>
+<!-- <button pButton *ngIf="!file_ready && !cargando" (click)="exportarPdf()" class="p-button-danger boton-pdf" icon="pi pi-download" label="Exportar en PDF"></button>
 <button pButton *ngIf="!file_ready && cargando" label="Obteniendo datos" icon="pi pi-spin pi-spinner" class="boton-pdf"></button>
 <button pButton *ngIf="file_ready && !cargando" [disabled]="!file_ready" (click)="_descargarPdf()" class="p-button-success boton-pdf" icon="pi pi-save" label="Generar"></button>
-<button pButton *ngIf="file_ready && cargando" label="Generando PDF" class="p-button-success boton-pdf" icon="pi pi-spin pi-spinner"></button>
+<button pButton *ngIf="file_ready && cargando" label="Generando PDF" class="p-button-success boton-pdf" icon="pi pi-spin pi-spinner"></button> -->
 
 <!-- <button pButton (click)="generarPdf()"></button> -->
+
+<div class="card shadow-sm py-4 pr-4 pl-4 text-left" [formGroup]="pdfForm">
+    <div class="row align-items-center">
+        <div class="col-12 pt-1">Imagen</div>
+        <div class="col-12">
+            <p-dropdown formControlName="imagen" [options]="opcionesImagen" optionLabel="label" name="imagenes" class="w-100" styleClass="w-100">
+            </p-dropdown>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-12 pt-1">Repetidas</div>
+        <div class="col-12">
+            <p-dropdown formControlName="copias" [options]="opcionesCopias" optionLabel="label" name="imagenes" class="w-100" styleClass="w-100">
+            </p-dropdown>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-12 pt-1">Calidad</div>
+        <div class="col-12">
+            <p-dropdown formControlName="calidad" [options]="opcionesCalidad" optionLabel="label" name="formato" class="w-100" styleClass="w-100">
+                <ng-template pTemplate="selectedItem" class="w-100">
+                    <div class="d-flex w-100 justify-content-between" *ngIf="pdfForm.controls['calidad'].value">
+                        <div>{{pdfForm.controls['calidad'].value.label}}</div>
+                        <div class="drop-gray">
+                            <span *ngIf="pdfForm.controls['calidad'].value.code == 'best'">PNG</span>
+                            <span *ngIf="pdfForm.controls['calidad'].value.code != 'best'">JPG</span>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template let-calidad pTemplate="item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>{{calidad.label}}</div>
+                        <div class="drop-gray">
+                            <span *ngIf="calidad.code == 'best'">PNG</span>
+                            <span *ngIf="calidad.code != 'best'">JPG</span>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-12 pt-1">Separación entre cartas</div>
+        <p-inputNumber class="col-12" styleClass="w-100" formControlName="distancia" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.05" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
+            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+        </p-inputNumber>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-12 pt-1">Márgenes</div>
+        <p-inputNumber class="col-6" styleClass="col-6" formControlName="margenX" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.5" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
+            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+        </p-inputNumber>
+        <p-inputNumber class="col-6" styleClass="col-6" formControlName="margenY" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.5" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
+            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+        </p-inputNumber>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-11 mt-4 mb-1">
+            <button pButton *ngIf="!file_ready && !cargando" (click)="exportarPdf()" class="p-button-danger boton-pdf" icon="pi pi-download" label="Exportar en PDF"></button>
+            <button pButton *ngIf="!file_ready && cargando" label="Obteniendo datos" icon="pi pi-spin pi-spinner" class="p-button-danger boton-pdf"></button>
+            <button pButton *ngIf="file_ready && !cargando" [disabled]="!file_ready" (click)="downloadZip()" class="p-button-danger boton-pdf" icon="pi pi-save" label="Generar"></button>
+            <button pButton *ngIf="file_ready && cargando" label="{{download_progress}}" class="p-button-danger boton-pdf" icon="pi pi-spin pi-spinner"></button>
+        </div>
+    </div>
+</div>

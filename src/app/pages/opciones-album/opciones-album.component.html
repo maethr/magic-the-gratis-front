@@ -65,18 +65,13 @@
             <div class="row m-4 justify-content-between align-items-center">
                 <p class="col-12 h4 p-3" style="color:darkgray; text-align: center;">Imprime tu album:</p>
 
-                <div class="col-4">
-                    <div class="card shadow-sm">
-                        <div class="p-4">
-                            <p-checkbox name="checkbox1" label="" value="true" binary="true"></p-checkbox>
-                            <app-pdf [album]="album" class="w-100"></app-pdf>
-                        </div>
-                    </div>
+                <div class="col-lg-4 col-md-12">
+                    <app-pdf [album]="album" class="w-100"></app-pdf>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-md-12">
                     <app-zip [album]="album"></app-zip>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-md-12">
                     <div class="card shadow-sm">
                         <div class="p-4">
                             <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
