@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { Album } from 'src/app/pages/album/album';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CartaBlobService } from './carta-blob.service';
 
 /**
  * Componente que gestiona la creación de un zip con las cartas de un album.
@@ -40,6 +41,7 @@ export class ZipComponent implements OnInit {
     private albumService: AlbumService,
     private cartaService: CartaService,
     private scryfallService: ScryfallService,
+    private cartaBlobService: CartaBlobService,
     private fb: FormBuilder
   ) {
     this.opcionesImagen = [
@@ -62,7 +64,7 @@ export class ZipComponent implements OnInit {
     this.zipForm = this.fb.group({
       copias: [{ code: 'todas', label: 'Incluir todas' }, Validators.required],
       calidad: [{ code: 'best', label: 'Máxima' }, Validators.required],
-      imagen: ['full', Validators.required]
+      imagen: [{ code: 'full', label: 'Carta completa' }, Validators.required]
     });
 
     this.zipForm.get("imagen").valueChanges.subscribe(
@@ -70,13 +72,32 @@ export class ZipComponent implements OnInit {
         if (value.code == "artwork") {
           this.zipForm.get("calidad").disable();
           this.zipForm.get("calidad").setValue({ code: 'high', label: 'Alta' });
-          
+
         } else {
           this.zipForm.get("calidad").enable();
         }
       });
 
     console.log(this.zipForm.controls);
+  }
+
+  _generarZip() {
+    this.file_ready = false;
+    this.cargando = true;
+    this.cartas_resp = [];
+
+    let img_quality = this.zipForm.get('calidad').value.code;
+    if (this.zipForm.get('imagen').value.code == "artwork") {
+      img_quality = "artwork";
+    }
+
+    this.cartaBlobService.setAlbum(this.album.id, img_quality);
+    this.cartaBlobService.generarBlob((res: CartaWrapBlob[]) => {
+      this.cartas_resp = res;
+      this.file_ready = true;
+      this.downloadZip();
+    });
+    
   }
 
   generarZip() {
@@ -88,8 +109,7 @@ export class ZipComponent implements OnInit {
       map((response: any[]) => {
         this.length = response.length;
 
-        response.map((res: CartaWrapBlob) => {
-          console.log(this.length);
+        response.forEach((res: CartaWrapBlob) => {
           this.scryfallService.fillCartaData(res).subscribe(async (carta: CartaWrapBlob) => {
 
             let loaded = false;
@@ -124,6 +144,10 @@ export class ZipComponent implements OnInit {
               console.log("artwork", url);
             }
             carta.main_image_type = (carta.main_image.png == url) ? 'png' : 'jpg';
+
+            let random = Math.floor(Math.random() * 1000);
+            url = url + "?foo=" + random;
+
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.responseType = "blob";
@@ -131,12 +155,21 @@ export class ZipComponent implements OnInit {
               let blob = xhr.response;
               var r = new FileReader();
               r.onload = () => {
-                console.log("ZWAAAAAAAAAAAAAAAAP", r.result);
                 carta.main_image_object = r.result;
               };
               r.readAsBinaryString(blob);
             };
             xhr.send();
+
+            // fetch(url, {mode: 'cors'})
+            //   .then(response => response.blob())
+            //   .then(blob => {
+            //     var r = new FileReader();
+            //     r.onload = () => {
+            //       carta.main_image_object = r.result;
+            //     };
+            //     r.readAsBinaryString(blob);
+            //   });
           });
         });
         return response;
@@ -154,7 +187,7 @@ export class ZipComponent implements OnInit {
     let counter = 0;
     while (!loaded) {
       counter++;
-      if (counter > 5) {
+      if (counter > 1000) {
         this.cargando = false;
         this.file_ready = true;
         Swal.fire({
@@ -176,7 +209,7 @@ export class ZipComponent implements OnInit {
         console.log("ya están todas las cartas");
         loaded = true;
         this.file_ready = true;
-        this.cargando = false;
+        this.downloadZip();
       }
     }
   }
