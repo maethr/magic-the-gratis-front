@@ -10,6 +10,22 @@
     letter-spacing: 2px;
 }
 
+::ng-deep .p-inputnumber-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 6px !important;
+}
+
+::ng-deep .p-inputnumber .p-button.p-button-icon-only {
+    width: auto !important;
+}
+
+::ng-deep .p-inputnumber .p-button-icon {
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 6px !important;
+}
+
 
 /* .card .row.align-items-center {
     height: 0;

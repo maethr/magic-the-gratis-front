@@ -50,19 +50,21 @@
 
     <div class="row align-items-center">
         <div class="col-12 pt-1">Separación entre cartas</div>
-        <p-inputNumber class="col-12" styleClass="w-100" formControlName="distancia" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.05" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
+        <p-inputNumber class="col-12" suffix=" mm" formControlName="distancia" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.05" decrementButtonClass="p-button-danger p-button-text" incrementButtonClass="p-button-danger p-button-text"
             incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
         </p-inputNumber>
     </div>
 
     <div class="row align-items-center">
         <div class="col-12 pt-1">Márgenes</div>
-        <p-inputNumber class="col-6" styleClass="col-6" formControlName="margenX" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.5" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
-            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
-        </p-inputNumber>
-        <p-inputNumber class="col-6" styleClass="col-6" formControlName="margenY" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.5" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
-            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
-        </p-inputNumber>
+        <div class="col-12">
+            <p-inputNumber class="w-50" prefix="x " formControlName="margenX" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger p-button-text" incrementButtonClass="p-button-danger p-button-text"
+                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" title="mm">
+            </p-inputNumber>
+            <p-inputNumber class="w-50" prefix="y " formControlName="margenY" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger p-button-text" incrementButtonClass="p-button-danger p-button-text"
+                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" title="mm">
+            </p-inputNumber>
+        </div>
     </div>
 
     <div class="row justify-content-center">

@@ -65,14 +65,22 @@
             <div class="row m-4 justify-content-between align-items-center">
                 <p class="col-12 h4 p-3" style="color:darkgray; text-align: center;">Imprime tu album:</p>
 
-                <div class="col-lg-4 col-md-12">
-                    <app-pdf [album]="album" class="w-100"></app-pdf>
-                </div>
+
                 <div class="col-lg-4 col-md-12">
                     <app-zip [album]="album"></app-zip>
                 </div>
                 <div class="col-lg-4 col-md-12">
+                    <app-pdf [album]="album"></app-pdf>
+                </div>
+                <div class="col-lg-4 col-md-12">
                     <div class="card shadow-sm">
+                        <div class="row align-items-center">
+                            <div class="col-12 pt-1">Repetidas</div>
+                            <div class="col-12">
+                                <p-dropdown name="imagenes" class="w-100" styleClass="w-100">
+                                </p-dropdown>
+                            </div>
+                        </div>
                         <div class="p-4">
                             <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
                         </div>
