@@ -1,0 +1,11 @@
+<h2>Busca por edición</h2>
+
+<div class="row">
+    <div *ngFor="let edicion of listaSetsAgrupada">
+        <div *ngIf="edicion[0].icon_svg_uri" class="col-1">
+
+            <img src="{{edicion[0].icon_svg_uri}}" height="35px" width="35px">
+            <!--p-menu *ngIf="edicion[0].block_code" #menu [model]="edicion"></p-menu-->
+        </div>
+    </div>
+</div> 

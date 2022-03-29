@@ -57,6 +57,8 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ToolbarModule } from 'primeng/toolbar';
 import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { EdicionComponent } from './pages/edicion/edicion.component';
+import {MenuModule} from 'primeng/menu';
 
 
 
@@ -128,7 +130,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     CartaMiniComponent,
     ImportadorComponent,
     WelcomeComponent,
-    ZipComponent
+    ZipComponent,
+    EdicionComponent
   ],
   imports: [
     BrowserModule,
@@ -154,7 +157,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     DropdownModule,
     TriStateCheckboxModule,
     ToolbarModule,
-    ContextMenuModule
+    ContextMenuModule,
+    MenuModule
   ],
   providers: [
     UsuarioService,
