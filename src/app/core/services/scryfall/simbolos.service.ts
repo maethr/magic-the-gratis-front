@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map, timeout } from 'rxjs/operators';
+import { Edicion } from '../../models/edicion';
 
 /**
  * Servicio que ataca a la API de Scryfall para obtener los datos de
@@ -25,12 +26,19 @@ export class SimbolosService {
   sim_data: any;
 
   /**
+   * Todos los Sets de ediciones de scryfall.
+   * Cóncretamente el .data de la respuesta de la API de scryfall.
+   */
+  public sets_data: Edicion[];
+
+  /**
    * Inicializa el servicio. En teoría, solo se llama una vez, al inicio de la aplicación.
    * @returns Promise<void>
    */
   async initialize() {
     try {
       await this.getSimbologia().pipe(timeout(3000)).toPromise(); // LOL
+      await this.getSets().pipe(timeout(3000)).toPromise(); // RE-LOL
       return;
     } catch (err) { }
   }
@@ -48,6 +56,40 @@ export class SimbolosService {
         console.log("SIMBOLOGIA", this.sim_data);
       })
     );
+  }
+
+ /**
+  * Obtiene todos los SETS de SCRYFALL.
+  * Se la llama desde la inicialización del servicio.
+  * @returns Observable que será ejecutado al inicio de la aplicación.
+  */
+  getSets(): Observable<any> {
+    let url = this.url + "sets";
+    return this.http.get(url).pipe(
+      map((response: any) => {
+        this.sets_data = response.data as Edicion[];
+        console.log("SETS", this.sets_data);
+      })
+    );
+  }
+
+  /**
+   * Obtiene un simbolo de SET de magic a partir de su código entre {}.
+   * @param cod_set string con el código de set a buscar
+   * @returns el objeto de set de Scryfall correspondiente
+   */
+   getSet(cod_set: string): any {
+    if (!this.sets_data) {
+      this.sets_data = []; // Placeholder
+      this.initialize();
+    }
+    let set_enc: any;
+    this.sets_data.forEach((set: any) => {
+      if (set.symbol === cod_set) {
+        set_enc = set;
+      }
+    });
+    return set_enc;
   }
 
   /**
@@ -68,4 +110,8 @@ export class SimbolosService {
     });
     return simbolo_enc;
   }
+
+
+
+
 }
