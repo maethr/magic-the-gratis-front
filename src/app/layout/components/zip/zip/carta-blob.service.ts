@@ -19,8 +19,6 @@ export class CartaBlobService {
     private scryfallService: ScryfallService,
   ) { }
 
-  file_ready: boolean = false;
-  cargando: boolean = false;
   length: number = 0;
 
   album_id: number;
@@ -107,8 +105,6 @@ export class CartaBlobService {
     while (!loaded) {
       counter++;
       if (counter > 50) {
-        this.cargando = false;
-        this.file_ready = true;
         Swal.fire({
           title: 'Alerta',
           text: 'No todas se pudieron obtener todas las cartas.',
@@ -116,18 +112,14 @@ export class CartaBlobService {
         });
         return;
       }
-      let loaded_now = true;
+      loaded = true;
       await new Promise(f => setTimeout(f, 1000));
       for (let carta of cartas_resp) {
         if (carta.data == null || carta.main_image_object == null) {
-          loaded_now = false;
-          console.log("esperando carta ", carta);
+          loaded = false;
         }
       }
-      if (loaded_now) {
-        console.log("ya están todas las cartas");
-        loaded = true;
-        this.file_ready = true;
+      if (loaded) {
         then(cartas_resp);
       }
     }
