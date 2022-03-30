@@ -108,15 +108,15 @@ export class PdfComponent implements OnInit {
     let tam_y = 88;
 
     cartas.forEach((carta: CartaWrapBlob) => {
-      // let cantidad =  (this.pdfForm.get('cantidad').value.code == "all" ) ? carta.amount : 1;
+      let cantidad =  (this.pdfForm.get('copias').value.code == "todas" ) ? carta.amount : 1;
 
-      for (let i = 0; i < carta.amount; i++) {
+      for (let i = 0; i < cantidad; i++) {
         if (x >= 190) {
           x = 0;
           y += tam_y;
-          y += 0.2;
+          y += distancia;
         } else {
-          x += 0.2;
+          x += distancia;
         }
         if (y >= 264) {
           y = 0;
