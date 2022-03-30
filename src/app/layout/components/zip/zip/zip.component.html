@@ -1,16 +1,17 @@
 <div class="card shadow-sm py-4 pr-4 pl-4 text-left" [formGroup]="zipForm">
-    <div class="row align-items-center">
-        <div class="col-12 pt-1">Imagen</div>
-        <div class="col-12">
-            <p-dropdown formControlName="imagen" [options]="opcionesImagen" optionLabel="label" name="imagenes" class="w-100" styleClass="w-100">
-            </p-dropdown>
-        </div>
-    </div>
 
     <div class="row align-items-center">
         <div class="col-12 pt-1">Repetidas</div>
         <div class="col-12">
             <p-dropdown formControlName="copias" [options]="opcionesCopias" optionLabel="label" name="imagenes" class="w-100" styleClass="w-100">
+            </p-dropdown>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-12 pt-1">Imagen</div>
+        <div class="col-12">
+            <p-dropdown formControlName="imagen" [options]="opcionesImagen" optionLabel="label" name="imagenes" class="w-100" styleClass="w-100">
             </p-dropdown>
         </div>
     </div>
