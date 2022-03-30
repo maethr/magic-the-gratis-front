@@ -31,6 +31,7 @@ export class PdfComponent implements OnInit {
   opcionesCopias: { code: string; label: string; }[];
 
   pdfForm: FormGroup;
+  ajustesAvanzados: boolean = false;
 
   constructor(
     private albumService: AlbumService,
@@ -204,14 +205,17 @@ export class PdfComponent implements OnInit {
     );
   }
 
+  toogleAvanzados() {
+    this.ajustesAvanzados = !this.ajustesAvanzados;
+  }
+
   exportarPdf() {
     this.pdf = new jsPDF();
     this.file_ready = false;
     this.cargando = true;
     this.cartas_resp = [];
 
-    let img_quality = 'best';
-    this.pdfForm.get('calidad').value.code;
+    let img_quality = this.pdfForm.get('calidad').value.code;
     if (this.pdfForm.get('imagen').value.code == "artwork") {
       img_quality = "artwork";
     }

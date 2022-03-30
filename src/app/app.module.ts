@@ -42,6 +42,8 @@ import { SimbolosPipe } from './core/pipes/simbolos.pipe';
 import { SimbolosService } from './core/services/scryfall/simbolos.service';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+
 import { CartaMiniComponent } from './layout/components/carta-mini/carta-mini.component';
 import { ImportadorComponent } from './pages/importador/importador/importador.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
@@ -58,7 +60,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { EdicionComponent } from './pages/edicion/edicion.component';
-import {MenuModule} from 'primeng/menu';
+import { MenuModule } from 'primeng/menu';
 import { PdfComponent } from './layout/components/pdf/pdf.component';
 
 
@@ -88,7 +90,7 @@ const routes: Routes = [
   { path: 'carta/:scid/:id', component: CartaComponent },
   { path: 'carta/:scid', component: CartaComponent },
   { path: 'importador', component: ImportadorComponent },
-  { path: 'welcome', component: WelcomeComponent, data: {header: false} },
+  { path: 'welcome', component: WelcomeComponent, data: { header: false } },
 
 ]
 
@@ -160,7 +162,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     TriStateCheckboxModule,
     ToolbarModule,
     ContextMenuModule,
-    MenuModule
+    MenuModule,
+    ToggleButtonModule
   ],
   providers: [
     UsuarioService,

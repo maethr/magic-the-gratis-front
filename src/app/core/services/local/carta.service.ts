@@ -11,7 +11,6 @@ import { ScryfallService } from '../scryfall/scryfall.service';
 export class CartaService {
 
   constructor(
-    private scryfallService: ScryfallService
   ) { }
 
   public getDefaultText(carta: Carta): string {

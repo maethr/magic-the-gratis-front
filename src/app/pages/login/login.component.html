@@ -17,13 +17,13 @@
             <!--usuario -->
             <div class="row justify-content-center">
                 <label for="email1" class="col-3 text-right pr-4 form-label mb-2">Usuario</label>
-                <input id="email1" type="text" class="col-9 mb-3 form-control" [(ngModel)]="usuario.username" autofocus>
+                <input id="email1" type="text" class="col-9 mb-3 form-control" name="username" [(ngModel)]="usuario.username" autofocus>
             </div>
 
             <!-- contraseña-->
             <div class="row justify-content-center mb-3">
                 <label for="password1" class="col-3 text-right pr-4 form-label mb-2">Contraseña</label>
-                <input id="password1" type="password" class="col-9 mb-3 form-control" [(ngModel)]="usuario.password">
+                <input id="password1" type="password" class="col-9 mb-3 form-control" name="password" [(ngModel)]="usuario.password">
             </div>
 
 

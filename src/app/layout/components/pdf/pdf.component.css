@@ -4,10 +4,25 @@
 }
 
 .drop-gray {
-    color: hsl(211, 21%, 74%);
-    font-weight: bold;
+    /* color: hsl(211, 21%, 74%); */
+    /* color: #EF4444 !important; */
+    /* font-weight: bold; */
     float: right;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
+}
+
+.drop-gray::before {
+    content: "";
+    margin-right: 2px;
+}
+
+.drop-gray::after {
+    content: "";
+    margin-left: 2px;
+}
+
+::ng-deep .p-inputnumber {
+    width: 100% !important;
 }
 
 ::ng-deep .p-inputnumber-input {
@@ -17,13 +32,40 @@
 }
 
 ::ng-deep .p-inputnumber .p-button.p-button-icon-only {
-    width: auto !important;
+    width: 1.5rem !important;
+    height: auto !important;
 }
 
 ::ng-deep .p-inputnumber .p-button-icon {
     padding-left: 6px;
     padding-right: 6px;
     border-radius: 6px !important;
+}
+
+.avanzados {
+    transform: scaleY(0);
+    max-height: 0;
+    opacity: 0;
+    transform-origin: top;
+    transition: transform 0.3s, max-height 0.3s, opacity 0.3s;
+}
+
+.avanzados.activo {
+    transform: scaleY(1);
+    max-height: 500px;
+    opacity: 1;
+}
+
+::ng-deep .p-togglebutton.p-button {
+    /* width: 100% !important; */
+    box-shadow: none !important;
+    transform: scale(0.9);
+}
+
+::ng-deep .p-togglebutton.p-button.p-highlight {
+    background: #EF4444 !important;
+    border-color: #EF4444 !important;
+    color: white !important;
 }
 
 
