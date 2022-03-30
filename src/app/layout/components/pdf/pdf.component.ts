@@ -17,9 +17,6 @@ export class PdfComponent implements OnInit {
   file_ready: boolean = false;
   cargando: boolean = false;
   length: number;
-  cartas_resp: CartaWrapBlob[] = [];
-
-  pdf = new jsPDF();
 
   opcionesImagen: { code: string; label: string; }[];
   opcionesCalidad: { code: string; label: string; }[];
@@ -76,10 +73,8 @@ export class PdfComponent implements OnInit {
   }
 
   exportarPdf() {
-    this.pdf = new jsPDF();
     this.file_ready = false;
     this.cargando = true;
-    this.cartas_resp = [];
 
     let img_quality = this.pdfForm.get('calidad').value.code;
     if (this.pdfForm.get('imagen').value.code == "artwork") {

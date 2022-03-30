@@ -4,10 +4,10 @@
 }
 
 .drop-gray {
-    color: hsl(211, 21%, 74%);
-    font-weight: bold;
+    /* color: hsl(211, 21%, 74%); */
+    /* font-weight: bold; */
     float: right;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
 }
 
 

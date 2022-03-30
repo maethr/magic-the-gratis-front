@@ -38,9 +38,6 @@ export class ZipComponent implements OnInit {
   zipForm: FormGroup;
 
   constructor(
-    private albumService: AlbumService,
-    private cartaService: CartaService,
-    private scryfallService: ScryfallService,
     private cartaBlobService: CartaBlobService,
     private fb: FormBuilder
   ) {
@@ -77,11 +74,9 @@ export class ZipComponent implements OnInit {
           this.zipForm.get("calidad").enable();
         }
       });
-
-    console.log(this.zipForm.controls);
   }
 
-  _generarZip() {
+  generarZip() {
     this.file_ready = false;
     this.cargando = true;
     this.cartas_resp = [];
@@ -97,121 +92,6 @@ export class ZipComponent implements OnInit {
       this.file_ready = true;
       this.downloadZip();
     });
-    
-  }
-
-  generarZip() {
-    this.file_ready = false;
-    this.cargando = true;
-    let id_album = Number(this.album.id);
-
-    this.albumService.getAllCartasFromAlbum(id_album).pipe(
-      map((response: any[]) => {
-        this.length = response.length;
-
-        response.forEach((res: CartaWrapBlob) => {
-          this.scryfallService.fillCartaData(res).subscribe(async (carta: CartaWrapBlob) => {
-
-            let loaded = false;
-            while (!loaded) {
-              if (carta.main_image) {
-                loaded = true;
-                console.log("ya está la imagen", carta);
-              }
-              await new Promise(f => setTimeout(f, 1000));
-            }
-
-            console.log(carta)
-            let img_type = this.zipForm.get('calidad').value.code;
-            let url: any;
-            console.log('VALUE:', this.zipForm.value);
-            switch (img_type) {
-              case 'mini':
-                url = carta.main_image.small;
-                break;
-              case 'med':
-                url = carta.main_image.normal;
-                break;
-              case 'high':
-                url = carta.main_image.large;
-                break;
-              case 'best':
-                url = carta.main_image.png;
-                break;
-            }
-            if (this.zipForm.get('imagen').value.code == "artwork") {
-              url = carta.main_image.art_crop;
-              console.log("artwork", url);
-            }
-            carta.main_image_type = (carta.main_image.png == url) ? 'png' : 'jpg';
-
-            let random = Math.floor(Math.random() * 1000);
-            url = url + "?foo=" + random;
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", url);
-            xhr.responseType = "blob";
-            xhr.onload = () => {
-              let blob = xhr.response;
-              var r = new FileReader();
-              r.onload = () => {
-                carta.main_image_object = r.result;
-              };
-              r.readAsBinaryString(blob);
-            };
-            xhr.send();
-
-            // fetch(url, {mode: 'cors'})
-            //   .then(response => response.blob())
-            //   .then(blob => {
-            //     var r = new FileReader();
-            //     r.onload = () => {
-            //       carta.main_image_object = r.result;
-            //     };
-            //     r.readAsBinaryString(blob);
-            //   });
-          });
-        });
-        return response;
-      })
-    ).subscribe(
-      response => {
-        this.cartas_resp = response as CartaWrapBlob[];
-        this.waitForZip();
-      }
-    );
-  }
-
-  private async waitForZip() {
-    let loaded: boolean = false;
-    let counter = 0;
-    while (!loaded) {
-      counter++;
-      if (counter > 1000) {
-        this.cargando = false;
-        this.file_ready = true;
-        Swal.fire({
-          title: 'Alerta',
-          text: 'No todas se pudieron obtener todas las cartas.',
-          icon: 'warning'
-        });
-        return;
-      }
-      let loaded_now = true;
-      await new Promise(f => setTimeout(f, 1000));
-      for (let carta of this.cartas_resp) {
-        if (carta.data == null || carta.main_image_object == null) {
-          loaded_now = false;
-          console.log("esperando carta ", carta);
-        }
-      }
-      if (loaded_now) {
-        console.log("ya están todas las cartas");
-        loaded = true;
-        this.file_ready = true;
-        this.downloadZip();
-      }
-    }
   }
 
   downloadZip() {
