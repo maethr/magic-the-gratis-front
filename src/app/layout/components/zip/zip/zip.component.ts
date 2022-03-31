@@ -68,9 +68,11 @@ export class ZipComponent implements OnInit {
       (value) => {
         if (value.code == "artwork") {
           this.zipForm.get("calidad").disable();
-          this.zipForm.get("calidad").setValue({ code: 'high', label: 'Alta' });
-
+          this.opcionesCalidad.push({ code: 'high', label: 'Máxima' });
+          this.zipForm.get("calidad").setValue({ code: 'high', label: 'Máxima' });
+          this.opcionesCalidad.splice(this.opcionesCalidad.length - 1, 1);
         } else {
+          this.zipForm.get("calidad").setValue({ code: 'best', label: 'Máxima' });
           this.zipForm.get("calidad").enable();
         }
       });
