@@ -31,6 +31,7 @@
                             "src/assets/css/extra.css",
 
                             "src/lib/css/bootstrap.min.css",
+                            "node_modules/bootstrap-icons/font/bootstrap-icons.css",
                             "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
 
                             "node_modules/primeicons/primeicons.css",

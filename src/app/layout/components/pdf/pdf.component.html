@@ -14,6 +14,11 @@
         </div>
     </div -->
 
+    <div class="row pb-2 justify-content-center align-items-center" style="color: #EF4444">
+        <span class="bi" [ngClass]="cargando?'bi-file-earmark-pdf-fill':'bi-file-earmark-pdf'" style="font-size:1.5rem;"></span>
+        <span class="pl-2">PDF</span>
+    </div>
+
     <div class="row align-items-center">
         <div class="col-12 pt-1">Repetidas</div>
         <div class="col-12">
@@ -26,7 +31,7 @@
         <div class="col-12 pt-1">Calidad</div>
         <div class="col-12">
             <p-dropdown formControlName="calidad" [options]="opcionesCalidad" optionLabel="label" name="formato" class="w-100" styleClass="w-100">
-                <ng-template pTemplate="selectedItem" class="w-100">
+                <!-- <ng-template pTemplate="selectedItem" class="w-100">
                     <div class="d-flex w-100 justify-content-between" *ngIf="pdfForm.controls['calidad'].value">
                         <div>{{pdfForm.controls['calidad'].value.label}}</div>
                         <div class="drop-gray">
@@ -43,7 +48,7 @@
                             <span *ngIf="calidad.code != 'best'">JPG</span>
                         </div>
                     </div>
-                </ng-template>
+                </ng-template> -->
             </p-dropdown>
         </div>
     </div>

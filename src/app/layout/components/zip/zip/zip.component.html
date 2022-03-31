@@ -1,5 +1,10 @@
 <div class="card shadow-sm py-4 pr-4 pl-4 text-left" [formGroup]="zipForm">
 
+    <div class="row pb-2 justify-content-center align-items-center" style="color: #F59E0B">
+        <span class="bi" [ngClass]="cargando?'bi-file-zip-fill':'bi-file-zip'" style="font-size:1.5rem;"></span>
+        <span class="pl-2" style="color: #D97706">ZIP</span>
+    </div>
+
     <div class="row align-items-center">
         <div class="col-12 pt-1">Repetidas</div>
         <div class="col-12">
