@@ -28,7 +28,7 @@
     </div>
 
     <div class="row align-items-center">
-        <div class="col-12 pt-1">Calidad</div>
+        <div class="col-12 pt-2">Calidad</div>
         <div class="col-12">
             <p-dropdown formControlName="calidad" [options]="opcionesCalidad" optionLabel="label" name="formato" class="w-100" styleClass="w-100">
                 <!-- <ng-template pTemplate="selectedItem" class="w-100">
@@ -63,25 +63,42 @@
     <div class="avanzados" [ngClass]="{'activo': true}">
 
         <div class="row align-items-center">
-            <div class="col-12 pt-2">Márgenes</div>
+
+            <div class="col-12 pt-2">
+                <!-- <i class="bi bi-aspect-ratio pr-2"></i> -->
+                Márgenes de la página</div>
             <div class="col-12 row justify-content-center" style="font-size: 0.8em">
                 <div class="col-6">Izquierda</div>
-                <div class="col-6">Arriba</div>
+                <div class="col-6 pl-4">Arriba</div>
             </div>
             <div class="col-12">
-                <p-inputNumber class="w-50 pr-1" prefix="" suffix=" mm" formControlName="margenX" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger p-button-text" incrementButtonClass="p-button-danger p-button-text"
+                <p-inputNumber class="w-50 pr-2" prefix="" suffix=" mm" formControlName="margenX" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-secondary p-button-text down" incrementButtonClass="up p-button-secondary p-button-text"
                     incrementButtonIcon="pi pi-chevron-up" decrementButtonIcon="pi pi-chevron-down">
                 </p-inputNumber>
-                <p-inputNumber class="w-50 pl-1" prefix="" suffix=" mm" formControlName="margenY" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger p-button-text" incrementButtonClass="p-button-danger p-button-text"
+                <p-inputNumber class="w-50 pl-2" prefix="" suffix=" mm" formControlName="margenY" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-secondary p-button-text down" incrementButtonClass="up p-button-secondary p-button-text"
                     incrementButtonIcon="pi pi-chevron-up" decrementButtonIcon="pi pi-chevron-down">
                 </p-inputNumber>
             </div>
         </div>
 
         <div class="row align-items-center">
-            <div class="col-12 pt-1">Separación entre cartas</div>
-            <div class="col-12 pb-2">
-                <p-inputNumber class="w-100" suffix=" mm" formControlName="distancia" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="0.05" decrementButtonClass="p-button-danger p-button-text" incrementButtonClass="p-button-danger p-button-text"
+            <div class="col-12 pt-2">
+                <!-- <i class="bi bi-bounding-box pr-2"></i> -->
+                Separación entre cartas</div>
+            <!-- <div class="col-12 pb-2">
+                <p-inputNumber class="w-100" suffix=" mm" formControlName="distancia" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="0.05" decrementButtonClass="p-button-secondary p-button-text" incrementButtonClass="p-button-secondary p-button-text"
+                    incrementButtonIcon="pi pi-chevron-up" decrementButtonIcon="pi pi-chevron-down">
+                </p-inputNumber>
+            </div> -->
+            <div class="col-12 row justify-content-center" style="font-size: 0.8em">
+                <div class="col-6">Horizontal</div>
+                <div class="col-6 pl-4">Vertical</div>
+            </div>
+            <div class="col-12">
+                <p-inputNumber class="w-50 pr-2" prefix="" suffix=" mm" formControlName="distanciaX" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-secondary p-button-text down" incrementButtonClass="up p-button-secondary p-button-text"
+                    incrementButtonIcon="pi pi-chevron-up" decrementButtonIcon="pi pi-chevron-down">
+                </p-inputNumber>
+                <p-inputNumber class="w-50 pl-2" prefix="" suffix=" mm" formControlName="distanciaY" [showButtons]="true" buttonLayout="stacked" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-secondary p-button-text down" incrementButtonClass="up p-button-secondary p-button-text"
                     incrementButtonIcon="pi pi-chevron-up" decrementButtonIcon="pi pi-chevron-down">
                 </p-inputNumber>
             </div>
@@ -90,7 +107,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-11 pt-3 pb-1">
+        <div class="col-11 pt-4 pb-1">
             <button pButton *ngIf="!file_ready && !cargando" (click)="exportarPdf()" class="p-button-danger boton-pdf" icon="pi pi-download" label="Exportar en PDF"></button>
             <button pButton *ngIf="!file_ready && cargando" label="Obteniendo datos" icon="pi pi-spin pi-spinner" class="p-button-danger boton-pdf"></button>
             <button pButton *ngIf="file_ready && !cargando" [disabled]="!file_ready" (click)="downloadZip()" class="p-button-danger boton-pdf" icon="pi pi-save" label="Generar"></button>

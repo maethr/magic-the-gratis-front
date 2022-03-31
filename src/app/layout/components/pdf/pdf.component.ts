@@ -51,7 +51,8 @@ export class PdfComponent implements OnInit {
       calidad: [{ code: 'best', label: 'Máxima' }, Validators.required],
       imagen: [{ code: 'full', label: 'Carta completa' }, Validators.required],
       
-      distancia: [0.2, Validators.required],
+      distanciaX: [0.2, Validators.required],
+      distanciaY: [0.2, Validators.required],
       margenX: [10, Validators.required],
       margenY: [10, Validators.required]
     });
@@ -61,7 +62,6 @@ export class PdfComponent implements OnInit {
         if (value.code == "artwork") {
           this.pdfForm.get("calidad").disable();
           this.pdfForm.get("calidad").setValue({ code: 'high', label: 'Alta' });
-
         } else {
           this.pdfForm.get("calidad").enable();
         }
@@ -96,8 +96,9 @@ export class PdfComponent implements OnInit {
 
     let margen_x = this.pdfForm.get('margenX').value;
     let margen_y = this.pdfForm.get('margenY').value;
-    let distancia = this.pdfForm.get('distancia').value;
-    let x = distancia ? -distancia : 0;
+    let distanciaX = this.pdfForm.get('distanciaX').value;
+    let distanciaY = this.pdfForm.get('distanciaY').value;
+    let x = distanciaX ? -distanciaX : 0;
     let y = 0;
     let tam_x = 63.5;
     let tam_y = 88;
@@ -109,9 +110,9 @@ export class PdfComponent implements OnInit {
         if (x >= 190) {
           x = 0;
           y += tam_y;
-          y += distancia;
+          y += distanciaY;
         } else {
-          x += distancia;
+          x += distanciaX;
         }
         if (y >= 264) {
           y = 0;
