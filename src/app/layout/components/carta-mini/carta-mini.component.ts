@@ -68,7 +68,7 @@ export class CartaMiniComponent implements OnInit {
         separator: true
       },
       {
-        label: 'Hacer portada del album',
+        label: 'Establecer portada',
         icon: 'pi pi-fw pi-book',
         command: () => {
           this.setPortadaAlbum(this.album, this.carta);

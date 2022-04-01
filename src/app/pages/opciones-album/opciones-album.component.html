@@ -7,27 +7,34 @@
     <div class="card col-8 card1 shadow">
 
         <!---Título-->
-        <div class="card-header row align-items-center" style="color:darkgray">
-            <div class="h4 mt-2 col" style="text-align: left;">
+        <div class="card-header row align-items-center">
+
+            <div class="h4 mt-2 col" style="text-align: left; color:darkgray;">
                 <a class="btn btn-light boton-album" routerLink="/album/{{album.id}}">
                     <span class="h4">{{album.nombre}}</span>
                 </a>
                 <i class="pi pi-chevron-right pl-1 pr-2"></i> Opciones
+
             </div>
+            <!-- <div class="col-2 image-wrap">
+                <div class="imagen-header" style="background-image: url({{album.portada&&album.portada.main_image?album.portada.main_image.art_crop:null}});">
+                    &nbsp;
+                </div>
+            </div> -->
         </div>
 
         <div class="cad-body text-center mx-0 alturaminima w-100">
 
             <!---Editar nombre-->
             <form [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
-                <div class="row align-items-center m-4">
-                    <div class="col-5 text-left">
+                <div class="row align-items-center m-4 w-75">
+                    <div class="col-4 text-left">
                         <label for="nombre" class="h6" style="color:darkgray">
-                            <i class="pi pi-pencil pr-3"></i>Nuevo nombre
+                            <i class="bi bi-pencil-fill pr-3" style="font-size: 1.20rem;"></i>Nuevo nombre
                         </label>
                     </div>
 
-                    <div class="col-7">
+                    <div class="col-8">
                         <input pInputText type="text" class="form-control" formControlName="nombre" name="nombre" placeholder="Nuevo nombre">
                     </div>
 
@@ -36,77 +43,82 @@
                     </div>
                 </div>
 
-                <div class="row align-items-center justify-content-between m-4">
-                    <div class="col-5 text-left">
+                <div *ngIf="album.portada" class="row align-items-center justify-content-between m-4 w-75">
+                    <div class="col-4 text-left">
                         <label for="nombre" class="h6" style="color:darkgray">
-                            Portada del Album
+                            <i class="bi bi-image-fill pr-3" style="font-size: 1.25rem;"></i>Portada
                         </label>
                     </div>
 
-                    <div class="col-7">
-                        <input pInputText type="text" class="form-control" formControlName="imagen" name="nombre" placeholder="Nuevo nombre">
+                    <div class="col-8 d-flex portada">
+                        <!-- <div *ngIf="album.portada.main_image" class="portada-preview" style="background-image: url({{album.portada.main_image.art_crop}});"></div> -->
+                        <!-- <input pInputText type="text" class="form-control" disabled="true" formControlName="imagen" name="nombre" placeholder="Nuevo nombre"> -->
+                        <!-- <p class="w-100">{{formAlbum.value.imagen}}</p> -->
+                        <button pButton iconPos="right" label="{{formAlbum.value.imagen}}" class="p-button-sm p-button-secondary p-button-outlined" icon="pi pi-times" (click)='eliminarPortada()'>
+                            <!-- <div style="background-image: url({{album.portada.main_image.art_crop}})"></div> -->
+                        </button>
                     </div>
                 </div>
 
             </form>
 
-            <hr style="margin: 0">
+            <hr style=" margin: 0 ">
 
             <!---Exportar album a zip-->
-            <!-- <div class="row m-4 justify-content-between align-items-center">
-                <p class="col-12 h4 p-3" style="color:darkgray; text-align: center;">Imprime tu album:</p>
-                <app-pdf [album]="album" class="col-4 w-100"></app-pdf>
-                <app-pdf [album]="album" class="col-4 w-100"></app-pdf>
-                <div class="col-4">
-                    <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
+            <!-- <div class="row m-4 justify-content-between align-items-center ">
+                <p class="col-12 h4 p-3 " style="color:darkgray; text-align: center; ">Imprime tu album:</p>
+                <app-pdf [album]="album " class="col-4 w-100 "></app-pdf>
+                <app-pdf [album]="album " class="col-4 w-100 "></app-pdf>
+                <div class="col-4 ">
+                    <button pButton icon="pi pi-download " class="p-button-secondary w-100 " label="Exportar en Texto "></button>
                 </div>
             </div> -->
 
-            <div class="row m-4 justify-content-between align-items-center">
-                <p class="col-12 h4 px-3" style="color:darkgray; text-align: left;">Exporta tu album:</p>
+            <div class="row m-4 justify-content-between align-items-center ">
+                <p class="col-12 h4 px-4" style="color:darkgray; text-align: left; ">Exporta tu album:</p>
 
 
-                <div class="col-lg-4 col-md-12">
-                    <app-zip [album]="album"></app-zip>
+                <div class="col-lg-4 col-md-12 ">
+                    <app-zip [album]="album "></app-zip>
                 </div>
-                <div class="col-lg-4 col-md-12">
-                    <app-pdf [album]="album"></app-pdf>
+                <div class="col-lg-4 col-md-12 ">
+                    <app-pdf [album]="album "></app-pdf>
                 </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="card shadow-sm">
-                        <div class="row justify-content-center align-items-center" style="color: #64748B">
-                            <span class="bi bi-file-earmark-text" style="font-size:1.5rem;"></span>
-                            <span class="pl-2" style="color: #64748B">TXT</span>
+                <div class="col-lg-4 col-md-12 ">
+                    <div class="card shadow-sm ">
+                        <div class="row justify-content-center align-items-center " style="color: #64748B ">
+                            <span class="bi bi-file-earmark-text " style="font-size:1.5rem; "></span>
+                            <span class="pl-2 " style="color: #64748B ">TXT</span>
                         </div>
 
-                        <div class="row align-items-center text-left">
-                            <div class="col-12">Formato</div>
-                            <div class="col-12">
-                                <p-dropdown name="imagenes" class="w-100" styleClass="w-100" placeholder="MTG Arena">
+                        <div class="row align-items-center text-left ">
+                            <div class="col-12 ">Formato</div>
+                            <div class="col-12 ">
+                                <p-dropdown name="imagenes " class="w-100 " styleClass="w-100 " placeholder="MTG Arena ">
                                 </p-dropdown>
                             </div>
                         </div>
-                        <div class="p-4">
-                            <button pButton icon="pi pi-download" class="p-button-secondary w-100" label="Exportar en Texto"></button>
+                        <div class="p-4 ">
+                            <button pButton icon="pi pi-download " class="p-button-secondary w-100 " label="Exportar en Texto "></button>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <hr style="margin: 0">
+            <hr style="margin: 0 ">
 
             <!---Exportar album a zip-->
-            <div class="row m-4 justify-content-between align-items-center">
-                <div class="col-5 text-left">
-                    <label for="nombre" class="h6" style="color:darkgray">
+            <div class="row m-4 justify-content-between align-items-center ">
+                <div class="col-5 text-left ">
+                    <label for="nombre " class="h6 " style="color:darkgray ">
                         Eliminar album
                     </label>
                 </div>
 
                 <!---Eliminar Album-->
-                <div class="col-3">
-                    <button pButton label="Eliminar" icon="pi pi-trash" class="p-button-danger w-100" (click)="eliminarAlbum()"></button>
+                <div class="col-3 ">
+                    <button pButton label="Eliminar " icon="pi pi-trash " class="p-button-danger w-100 " (click)="eliminarAlbum() "></button>
                 </div>
             </div>
 

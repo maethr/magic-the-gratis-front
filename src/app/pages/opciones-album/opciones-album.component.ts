@@ -40,6 +40,7 @@ export class OpcionesAlbumComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cartaService: CartaService,
     private scryfallService: ScryfallService,
+    private coleccionService: ColeccionService,
     private fb: FormBuilder
     ) {
       
@@ -54,7 +55,15 @@ export class OpcionesAlbumComponent implements OnInit {
           this.formAlbum = this.fb.group({
             nombre: [this.album.nombre, Validators.required],
             imagen: ['']
-          })
+          });
+          if (response.portada) {
+            this.scryfallService.fillCartaData(response.portada).subscribe(
+              response => {
+                let name = response.data.name;
+                this.formAlbum.get('imagen').setValue(name);
+              }
+            );
+          }
         }
       );
     });
@@ -180,5 +189,27 @@ export class OpcionesAlbumComponent implements OnInit {
       });
 
     console.log("archivos generados");
+  }
+
+  eliminarPortada() {
+    Swal.fire({
+      title: '¿Eliminar portada?',
+      text: "Reestablecer la portada por defecto",
+      icon: 'warning',
+      showCancelButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.coleccionService.editarAlbum(Number(this.album.id), this.album.nombre, null).subscribe(
+          (response) => {
+            Swal.fire({
+              title: 'Portada cambiada',
+              text: `La portada del album ha sido reestablecida`,
+              icon: 'success'
+              });
+              this.album.portada = null;
+          }
+        )
+      }
+    });
   }
 }

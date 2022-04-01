@@ -12,3 +12,99 @@
 .card1 .cad-body .row {
     margin: 35px auto !important;
 }
+
+.portada-preview {
+    width: 50px;
+    background-size: cover;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0 0 0px 1px white;
+    border-right: none;
+}
+
+
+/* .portada p {
+    width: 100%;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+    color: #6c757d;
+    border-radius: 5px 0 0 5px;
+    border: none;
+} */
+
+
+/* .portada input {
+    display: none;
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+    color: dimgray !important;
+    opacity: 1 !important;
+    text-align: center;
+} */
+
+.portada button {
+    /* border-radius: 0 5px 5px 0; */
+    padding: 0 !important;
+    width: 100%;
+    line-height: 2.2rem;
+    border: 1px solid #ced4da;
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    background-size: 50% !important;
+    background-repeat: no-repeat !important;
+    background-position: left !important;
+    text-align: left;
+}
+
+.portada button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-image: linear-gradient(to right, transparent 0%, white 50%, white 100%); */
+}
+
+::ng-deep .portada button .pi {
+    /* padding-right: 1rem; */
+    z-index: 4 !important;
+}
+
+.card-header {
+    overflow: hidden;
+}
+
+.card-header .imagen-header {
+    display: block;
+    position: absolute;
+    top: -4rem;
+    right: -2.5rem;
+    height: 200px;
+    width: 300px;
+    z-index: 2;
+    background-position: top right;
+    background-size: 100%;
+    background-repeat: no-repeat !important;
+}
+
+.card-header .imagen-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to left, transparent 0%, transparent 30%, #f7f7f7e7 80%, #F7F7F7 98%, #F7F7F7 100%);
+    border-radius: 5px;
+    z-index: 3;
+}
+
+
+/* ::ng-deep .portada button .p-button-label {
+    z-index: 3 !important;
+    text-align: end;
+    padding-right: 15% !important;
+} */
