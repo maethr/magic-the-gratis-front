@@ -27,10 +27,10 @@
 
             <!---Editar nombre-->
             <form [formGroup]="formAlbum" #formularioOpciones="ngForm" method="post">
-                <div class="row align-items-center m-4 w-75">
-                    <div class="col-4 text-left">
+                <div class="row align-items-center justify-content-center m-4 w-75">
+                    <div class="col-3 text-left">
                         <label for="nombre" class="h6" style="color:darkgray">
-                            <i class="bi bi-pencil-fill pr-3" style="font-size: 1.20rem;"></i>Nuevo nombre
+                            <i class="bi bi-pencil-fill pr-3" style="font-size: 1.20rem;"></i>Nombre
                         </label>
                     </div>
 
@@ -43,8 +43,8 @@
                     </div>
                 </div>
 
-                <div *ngIf="album.portada" class="row align-items-center justify-content-between m-4 w-75">
-                    <div class="col-4 text-left">
+                <div *ngIf="album.portada" class="row align-items-center justify-content-center m-4 w-75">
+                    <div class="col-3 text-left">
                         <label for="nombre" class="h6" style="color:darkgray">
                             <i class="bi bi-image-fill pr-3" style="font-size: 1.25rem;"></i>Portada
                         </label>
