@@ -48,14 +48,19 @@
                                     <li routerLinkActive="active">
                                         <a class="link-album" routerLink="/album/{{album.id}}">
                                             <div class="album">
-                                                <div *ngIf="album.portada" class="imagen-album portada" style="background-image: url({{album.portada.main_image.art_crop}})"></div>
-                                                <div *ngIf="!album.portada" class="imagen-album" style="background-image: url('./assets/images/album/ultra-pro-1.png')"></div>
+                                                <div *ngIf="album.portada" class="imagen-album portada" style="background-image: url({{album.portada.main_image.art_crop}})">
+                                                </div>
+                                                <div *ngIf="!album.portada" class="imagen-album cover" style="background-image: url('./assets/images/album/album-cover-v2.png')">
+                                                    <div class="titulo-album">
+                                                        {{album.nombre.charAt(0).toUpperCase() + album.nombre.substring(1,6)}}
+                                                    </div>
+                                                </div>
 
                                                 <!-- <div [ngStyle]="{background: 'url(' + true ? 'src/assets/images/album/ultra-pro-1.png' : album.portada.main_image.art_crop + ')' }" class="imagen-album"></div> -->
                                                 <!-- <img src="{{album.portada ? album.portada.main_image.art_crop : './assets/images/album/ultra-pro-1.png'}}" class="rounded imagen-album" width="100%"> -->
                                             </div>
                                             <div class="datos-album text-center row align-items-center justify-content-between">
-                                                <span class="col">{{album.nombre}}</span>
+                                                <span class="col text ml-2 mr-1">{{album.nombre}}</span>
                                                 <span *ngIf="album.totalCartas !== undefined" class="total-cartas col-2">{{album.totalCartas}}</span>
                                             </div>
                                             <br>

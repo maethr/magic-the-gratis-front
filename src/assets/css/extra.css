@@ -117,6 +117,7 @@ hr.hr-shadow {
 }
 
 .btn-light {
+    border: none !important;
     color: gray !important;
     background-color: transparent !important;
 }
@@ -128,6 +129,7 @@ hr.hr-shadow {
 .btn-light:not(:disabled):not(.disabled):active {
     color: gray !important;
 }
+
 
 /*
 .p-dropdown-panel,
