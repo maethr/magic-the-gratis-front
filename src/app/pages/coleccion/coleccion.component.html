@@ -52,7 +52,7 @@
                                                 </div>
                                                 <div *ngIf="!album.portada" class="imagen-album cover" style="background-image: url('./assets/images/album/album-cover-v2.png')">
                                                     <div class="titulo-album">
-                                                        {{album.nombre.charAt(0).toUpperCase() + album.nombre.substring(1,6)}}
+                                                        {{album.nombre.charAt(0).toUpperCase() + album.nombre.split(' ')[0].substring(1,6)}}
                                                     </div>
                                                 </div>
 
