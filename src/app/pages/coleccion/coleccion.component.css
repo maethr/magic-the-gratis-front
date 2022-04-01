@@ -35,7 +35,7 @@ ul {
 .imagen-album {
     opacity: 1;
     filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.75));
-    border-radius: 6px 12px 12px 6px;
+    border-radius: 4px 10px 12px 6px;
     position: absolute;
     top: 1px;
     left: 0;
