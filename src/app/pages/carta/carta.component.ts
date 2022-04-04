@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Carta } from 'src/app/core/models/carta';
 
@@ -42,7 +42,8 @@ export class CartaComponent implements OnInit {
     private scryfallService: ScryfallService,
     private cartaService: CartaService,
     public _gallery: Gallery,
-    public _lightbox: Lightbox
+    public _lightbox: Lightbox,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -182,12 +183,11 @@ export class CartaComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       reverseButtons: true
     }).then((result) => {
-      alert("s")
       if (result.isConfirmed) {
-        alert("b")
-        this.albumService.deleteCarta(this.carta.local_id).subscribe(() => {
-          Swal.fire('Carta añadida', `La carta ${this.carta.name} ha sido añadida al album seleccionado correctamente`, 'success');
+        this.albumService.deleteCarta(Number(this.id_carta)).subscribe(() => {
+          Swal.fire('Carta eliminada', `La carta ${this.carta.name} ha sido eliminada correctamente`, 'success');
         });
+        this.router.navigate(["/coleccion"]);
       }
     });
   }
