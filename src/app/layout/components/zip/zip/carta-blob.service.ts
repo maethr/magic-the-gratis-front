@@ -129,7 +129,7 @@ export class CartaBlobService {
     let counter = 0;
     while (!loaded) {
       counter++;
-      if (counter > 50) {
+      if (counter > 500) {
         Swal.fire({
           title: 'Alerta',
           text: 'No todas se pudieron obtener todas las cartas.',

@@ -44,6 +44,10 @@ export class EdicionComponent implements OnInit {
         
       })
     }
+
+    buscarSet() {
+      //this.router.navigate(['/buscar', 'cards', 'set:' + onclick.set.code]);
+    }
     
     generarMenuOpciones () {
       

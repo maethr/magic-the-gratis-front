@@ -1,11 +1,16 @@
 <h2>Busca por edición</h2>
 
-<div class="row">
+<div class="container">
+
+<div class="row justify-content-center">
     <div *ngFor="let edicion of listaSetsAgrupada">
         <div *ngIf="edicion[0].icon_svg_uri" class="col-1">
-
-            <img src="{{edicion[0].icon_svg_uri}}" height="35px" width="35px">
-            <!--p-menu *ngIf="edicion[0].block_code" #menu [model]="edicion"></p-menu-->
+            <button pButton class="p-button-text p-button-secondary" style="height: 1rem;" [routerLink]="['/buscar', 'cards', 'set:' + edicion[0].code]">
+                <img src="{{edicion[0].icon_svg_uri}}" height="25px" width="25px">
+                <!--p-menu *ngIf="edicion[0].block_code" #menu [model]="edicion"></p-menu-->
+            </button>
         </div>
     </div>
 </div> 
+
+</div>
