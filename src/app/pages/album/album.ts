@@ -12,6 +12,8 @@ export class Album {
   portada?: CartaWrap;
   cartas?: Carta[];
 
+  colores: string;
   totalCartas: number;
 
 }
+

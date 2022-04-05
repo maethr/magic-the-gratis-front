@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
 import { ColeccionService } from '../../core/services/data/coleccion.service';
-
-import { Carta } from 'src/app/core/models/carta';
-
 import { ChangeDetectorRef } from '@angular/core';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Edicion } from 'src/app/core/models/edicion';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
+
 
 @Component({
   selector: 'app-album',
@@ -21,6 +18,7 @@ export class AlbumComponent implements OnInit {
 
   album: Album;
   tam_fila: number = 3;
+  num_filas: number = 3;
 
   id_album: number;
   cartas: CartaWrap[];
@@ -31,6 +29,8 @@ export class AlbumComponent implements OnInit {
   cargando: boolean = true;
 
   filterForm: FormGroup;
+
+  totalCartas: number;
 
   constructor(
     private albumService: AlbumService,
@@ -72,7 +72,6 @@ export class AlbumComponent implements OnInit {
       });
 
       this.obtenerCartas(this.pagina);
-
     })
   }
 
@@ -88,13 +87,15 @@ export class AlbumComponent implements OnInit {
   }
 
   obtenerCartas(pagina: number): void {
-    this.albumService.getPaginaAlbum(this.id_album, pagina, this.tam_fila ** 2).subscribe(response => {
+    this.cargando = true;
+    this.albumService.getPaginaAlbum(this.id_album, pagina, this.tam_fila * this.num_filas).subscribe(response => {
       this.cartas = response.content as CartaWrap[];
       this.cartasFiltro = Object.assign([], this.cartas);
 
       console.log(this.cartasFiltro)
       this.paginador = response;
       this.cargando = false;
+      this.totalCartas = response.totalElements;
     })
   }
 
@@ -151,14 +152,6 @@ export class AlbumComponent implements OnInit {
             }
             break;
         }
-
-        // let cartasARetirar = this.cartasFiltro.filter((carta: Carta) => carta[key].includes(valor[key]) === false);
-        // console.log(cartasARetirar);
-        // cartasARetirar.forEach(carta => {
-        //   this.cartasFiltro.splice(this.cartasFiltro.indexOf(carta), 1);
-        // }
-        // );
-
       }
     }
   }
@@ -166,5 +159,15 @@ export class AlbumComponent implements OnInit {
   onClear() {
     this.filterForm.reset();
     this.cartasFiltro = this.cartas;
+  }
+
+  paginate(event: any) {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    this.num_filas = event.rows / this.tam_fila;
+    this.obtenerCartas(event.page);
   }
 }

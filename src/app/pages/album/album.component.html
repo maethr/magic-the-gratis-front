@@ -111,4 +111,7 @@
     </div>
     <!---PAGINADOR-->
     <app-paginador-album *ngIf="paginador" [paginador]="paginador" [album]="album"></app-paginador-album>
+
+    <p-paginator *ngIf="totalCartas" styleClass="paginator" [rows]="12" [totalRecords]="totalCartas" [rowsPerPageOptions]="[12,24,48]" (onPageChange)="paginate($event)"></p-paginator>
+
 </div>

@@ -21,6 +21,10 @@
                     &nbsp;
                 </div>
             </div> -->
+
+            <div class="col-1" *ngIf="formAlbum.dirty">
+                <button pButton role="button" icon="pi pi-save" (click)='editar()'></button>
+            </div>
         </div>
 
         <div class="cad-body text-center mx-0 alturaminima w-100">
@@ -36,10 +40,6 @@
 
                     <div class="col-8">
                         <input pInputText type="text" class="form-control" formControlName="nombre" name="nombre" placeholder="Nuevo nombre">
-                    </div>
-
-                    <div class="col-1" *ngIf="formAlbum.value.nombre != album.nombre">
-                        <button pButton role="button" icon="pi pi-save" (click)='editar()'></button>
                     </div>
                 </div>
 
@@ -57,6 +57,42 @@
                         <button pButton iconPos="right" label="{{formAlbum.value.imagen}}" class="p-button-sm p-button-secondary p-button-outlined" icon="pi pi-times" (click)='eliminarPortada()'>
                             <!-- <div style="background-image: url({{album.portada.main_image.art_crop}})"></div> -->
                         </button>
+                    </div>
+                </div>
+
+                <div class="row align-items-center justify-content-center m-4 w-75">
+
+                    <div class="col-3 text-left">
+                        <label for="nombre" class="h6" style="color:darkgray">
+                            <i class="bi bi-palette-fill pr-3" style="font-size: 1.25rem;"></i>Color
+                        </label>
+                    </div>
+
+                    <div class="col-8 d-flex portada justify-content-between">
+                        <div class="px-2">
+                            <span [innerHTML]=" '{W}' | simbolos:'22px' "></span>&nbsp;
+                            <p-checkbox name="white" [formControl]="formAlbum.get('white')" [binary]="true"></p-checkbox>
+                        </div>
+                        <div class="px-2">
+                            <span [innerHTML]=" '{G}' | simbolos:'24px' "></span>&nbsp;
+                            <p-checkbox name="green" [formControl]="formAlbum.get('green')" [binary]="true"></p-checkbox>
+                        </div>
+                        <div class="px-2">
+                            <span [innerHTML]=" '{U}' | simbolos:'24px' "></span>&nbsp;
+                            <p-checkbox name="blue" [formControl]="formAlbum.get('blue')" [binary]="true"></p-checkbox>
+                        </div>
+                        <div class="px-2">
+                            <span [innerHTML]=" '{B}' | simbolos:'24px' "></span>&nbsp;
+                            <p-checkbox name="black" [formControl]="formAlbum.get('black')" [binary]="true"></p-checkbox>
+                        </div>
+                        <div class="px-2">
+                            <span [innerHTML]=" '{R}' | simbolos:'24px' "></span>&nbsp;
+                            <p-checkbox name="red[" [formControl]="formAlbum.get('red')" [binary]="true"></p-checkbox>
+                        </div>
+                        <div class="px-2">
+                            <span [innerHTML]=" '{C}' | simbolos:'24px' "></span>&nbsp;
+                            <p-checkbox name="colorless" [formControl]="formAlbum.get('colorless')" [binary]="true"></p-checkbox>
+                        </div>
                     </div>
                 </div>
 

@@ -29,17 +29,15 @@
                 </form>
             </div>
 
-            <!-- hr class="hr-shadow" -->
             <!---Albums de la colección-->
             <div class="container mt-5">
                 <div class="row">
+
                     <div class="col-12 row mt-3 text-center d-flex justify-content-center" *ngIf="albums?.length==0 ">
                         <div class="alert alert-info col-7">
                             No hay ningún album aún, ¿a qué esperas?
                         </div>
-
                     </div>
-
 
                     <ul class="listaAlbumes" *ngIf="albums?.length>0">
                         <div class="container">
@@ -54,10 +52,11 @@
                                                     <div class="titulo-album">
                                                         {{album.nombre.charAt(0).toUpperCase() + album.nombre.split(' ')[0].substring(1,6)}}
                                                     </div>
+                                                    <div *ngFor="let color of album.colores">
+                                                        <span [innerHTML]=" '{' + color + '}' | simbolos: '24px' "></span>
+                                                    </div>
                                                 </div>
 
-                                                <!-- <div [ngStyle]="{background: 'url(' + true ? 'src/assets/images/album/ultra-pro-1.png' : album.portada.main_image.art_crop + ')' }" class="imagen-album"></div> -->
-                                                <!-- <img src="{{album.portada ? album.portada.main_image.art_crop : './assets/images/album/ultra-pro-1.png'}}" class="rounded imagen-album" width="100%"> -->
                                             </div>
                                             <div class="datos-album text-center row align-items-center justify-content-between">
                                                 <span class="col text ml-2 mr-1">{{album.nombre}}</span>
@@ -78,7 +77,5 @@
             <!---PAGINADOR-->
             <app-paginador-albumes *ngIf="paginador" [paginador]="paginador"></app-paginador-albumes>
         </div>
-
-
     </div>
 </div>

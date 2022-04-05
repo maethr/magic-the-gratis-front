@@ -65,6 +65,7 @@ import { PdfComponent } from './layout/components/pdf/pdf.component';
 
 
 
+
 registerLocaleData(localeES, 'es');
 
 const routes: Routes = [

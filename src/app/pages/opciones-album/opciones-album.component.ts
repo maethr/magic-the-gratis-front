@@ -54,7 +54,13 @@ export class OpcionesAlbumComponent implements OnInit {
           this.album = response as Album;
           this.formAlbum = this.fb.group({
             nombre: [this.album.nombre, Validators.required],
-            imagen: ['']
+            imagen: [''],
+            white: [this.album.colores.includes('w')],
+            blue: [this.album.colores.includes('u')],
+            black: [this.album.colores.includes('b')],
+            red: [this.album.colores.includes('r')],
+            green: [this.album.colores.includes('g')],
+            colorless: [this.album.colores.includes('c')]
           });
           if (response.portada) {
             this.scryfallService.fillCartaData(response.portada).subscribe(
@@ -70,7 +76,32 @@ export class OpcionesAlbumComponent implements OnInit {
   }
 
   editar(): void {
-    this.albumService.update(this.album.id, this.formAlbum.value.nombre).subscribe(
+    let album: any = {};
+    console.log(this.formAlbum.get('imagen').value)
+    let portada = (this.formAlbum.get('imagen').value == '') ? null : this.album.portada.id;
+    album.id = this.album.id;
+    album.nombre = this.formAlbum.get('nombre').value;
+    album.portada = portada;
+    album.colores = '';
+    if (this.formAlbum.get('white').value) {
+      album.colores += 'w';
+    }
+    if (this.formAlbum.get('blue').value) {
+      album.colores += 'u';
+    }
+    if (this.formAlbum.get('black').value) {
+      album.colores += 'b';
+    }
+    if (this.formAlbum.get('red').value) {
+      album.colores += 'r';
+    }
+    if (this.formAlbum.get('green').value) {
+      album.colores += 'g';
+    }
+    if (this.formAlbum.get('colorless').value) {
+      album.colores += 'c';
+    }
+    this.albumService._update(this.album.id, album).subscribe(
       response => {
         this.album = response;
         this.router.navigate(['/album', this.album.id]);

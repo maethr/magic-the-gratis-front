@@ -70,6 +70,16 @@ export class AlbumService {
     ));
   }
 
+  _update(id: string, album: Album): Observable<any>{
+    let url  =  this.url + "/editar-album";
+    let params = new HttpParams().set("id", id);
+    return this.http.put<any>(`${url}`, album, { params }).pipe( 
+      map ((response: any) => {
+        return response as Album;
+      }
+    ));
+  }
+
   getWelcomePage(q: number): Observable<any> {
     return this.http.get<any>(this.url + "/welcome/" + q);
   }
