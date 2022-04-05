@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
 import { ColeccionService } from '../../core/services/data/coleccion.service';
@@ -7,6 +7,9 @@ import { AlbumService } from 'src/app/core/services/data/album.service';
 import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
+import { map } from 'rxjs/operators';
+import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
+import { Paginator } from 'primeng/paginator';
 
 
 @Component({
@@ -21,16 +24,19 @@ export class AlbumComponent implements OnInit {
   num_filas: number = 3;
 
   id_album: number;
+
   cartas: CartaWrap[];
   cartasFiltro: CartaWrap[];
+  cartasPagina: CartaWrap[];
 
-  paginador: any;
   pagina: number;
   cargando: boolean = true;
 
   filterForm: FormGroup;
 
   totalCartas: number;
+
+  @ViewChild('p', {static: false}) paginator: Paginator;
 
   constructor(
     private albumService: AlbumService,
@@ -39,7 +45,8 @@ export class AlbumComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private router: Router,
     private formBuilder: FormBuilder,
-    private edicionService: EdicionService
+    private edicionService: EdicionService,
+    private scryfallService: ScryfallService
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +78,7 @@ export class AlbumComponent implements OnInit {
         this.onFiltro(valor);
       });
 
-      this.obtenerCartas(this.pagina);
+      this.obtenerCartas();
     })
   }
 
@@ -80,34 +87,40 @@ export class AlbumComponent implements OnInit {
     this.pagina = 0;
     localStorage.setItem('tam_fila', this.tam_fila.toString());
     this.ref.detectChanges();
-    if (num > 0 && this.paginador.last) {
+    if (num > 0) {
       this.router.navigate(['/album', this.album.id, 'page', this.pagina])
     }
-    this.obtenerCartas(this.pagina);
+    this.obtenerCartas();
   }
 
-  obtenerCartas(pagina: number): void {
+  obtenerCartas(): void {
     this.cargando = true;
-    this.albumService.getPaginaAlbum(this.id_album, pagina, this.tam_fila * this.num_filas).subscribe(response => {
-      this.cartas = response.content as CartaWrap[];
+    this.albumService.getAllCartasFromAlbum(this.id_album).pipe(
+      map((response: any) => {
+        return response.map(carta => {
+          this.scryfallService.fillCartaData(carta).subscribe(carta => {
+            this.cargando = false;
+          });
+          return carta;
+        })
+      })
+    ).subscribe(response => {
+      this.cartas = response as CartaWrap[];
       this.cartasFiltro = Object.assign([], this.cartas);
-
-      console.log(this.cartasFiltro)
-      this.paginador = response;
-      this.cargando = false;
-      this.totalCartas = response.totalElements;
-    })
+      let indice = 0;
+      this.cartasPagina = this.cartasFiltro.slice(indice, indice + this.tam_fila * this.num_filas);
+      this.totalCartas = this.cartasFiltro.length;
+    });
   }
 
   onFiltro(valor: any) {
     this.cartasFiltro = Object.assign([], this.cartas);
     for (let key in valor) {
-      console.log(key, valor[key]);
       if (valor[key].toString() != '') {
         let valor_filtro: string = valor[key].toString().toLowerCase();
         switch (key) {
           case 'color':
-            console.log('Filtrado por color');
+            console.log('Filtrado por color', valor_filtro);
             this.cartasFiltro = this.cartasFiltro.filter(carta => {
               console.log(carta.data.colors);
               for (let color of carta.data.colors) {
@@ -154,6 +167,17 @@ export class AlbumComponent implements OnInit {
         }
       }
     }
+    this.changePageToFirst();
+  }
+
+  changePageToFirst() {
+    let tam_pag = this.tam_fila * this.num_filas;
+    let indice = 0;
+    this.cartasPagina = this.cartasFiltro.slice(indice, indice + tam_pag);
+    this.totalCartas = this.cartasFiltro.length;
+    if (this.paginator && this.totalCartas > tam_pag) {
+      this.paginator.changePageToFirst(new Event('click'));
+    }
   }
 
   onClear() {
@@ -168,6 +192,7 @@ export class AlbumComponent implements OnInit {
       behavior: 'smooth'
     });
     this.num_filas = event.rows / this.tam_fila;
-    this.obtenerCartas(event.page);
+    let indice = ((event.page) * event.rows);
+    this.cartasPagina = this.cartasFiltro.slice(indice, indice + event.rows);
   }
 }

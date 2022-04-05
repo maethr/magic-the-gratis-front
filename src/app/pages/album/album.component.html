@@ -85,7 +85,7 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
-                <div class="alert alert-info mt-3" *ngIf="cartas?.length==0 && paginador!=null">
+                <div class="alert alert-info mt-3" *ngIf="cartas?.length==0">
                     <img class="album-icon" width="32" height="32" class="mr-3" src="./assets/images/emojis/guino.png"> Busca cartas para añadirlas a tu colección
                     <button type="submit" class="btn btn-primary ml-3" routerLink="/buscar">Añadir cartas</button>
                 </div>
@@ -95,10 +95,10 @@
                 </div>
             </div>
 
-            <ul class="listaCartas" *ngIf="!cargando && cartasFiltro">
+            <ul class="listaCartas" *ngIf="!cargando && cartasPagina">
                 <div class="container">
                     <div class="row">
-                        <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasFiltro">
+                        <div [ngClass]="tam_fila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina">
                             <li routerLinkActive="active">
                                 <app-carta-mini [carta]="carta" [album]="album"></app-carta-mini>
                             </li>
@@ -110,8 +110,6 @@
         </div>
     </div>
     <!---PAGINADOR-->
-    <app-paginador-album *ngIf="paginador" [paginador]="paginador" [album]="album"></app-paginador-album>
-
-    <p-paginator *ngIf="totalCartas" styleClass="paginator" [rows]="12" [totalRecords]="totalCartas" [rowsPerPageOptions]="[12,24,48]" (onPageChange)="paginate($event)"></p-paginator>
+    <p-paginator #p *ngIf="totalCartas" styleClass="paginator" [rows]="12" [totalRecords]="totalCartas" [rowsPerPageOptions]="[12,24,48]" (onPageChange)="paginate($event)"></p-paginator>
 
 </div>
