@@ -54,10 +54,9 @@ export class AlbumService {
   }
 
   deleteCarta (id: number): Observable<any> {
-    let url = this.url +  "/album";
-    alert("A");
-    let params = new HttpParams().set("carta", id.toString());
-    return this.http.delete(`${url}`, { params });
+    let url = this.url +  `/carta/${id}`;
+    // let params = new HttpParams().set("carta", id);
+    return this.http.delete(`${url}`);
   }
 
   update(id: string, nombre: string): Observable<any>{
