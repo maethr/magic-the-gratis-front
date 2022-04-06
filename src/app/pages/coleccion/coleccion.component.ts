@@ -9,6 +9,7 @@ import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
 import { Paginator } from 'primeng/paginator';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ColeccionComponent implements OnInit {
   id: string;
   usuario: Usuario;
   albums: Album[];
+  albumsFiltro: Album[];
   albumsPagina: Album[];
 
   paginador: any;
@@ -28,15 +30,17 @@ export class ColeccionComponent implements OnInit {
   numAlbumsPagina = 12;
   totalAlbums: number;
 
+  filterForm: FormGroup;
+
   @ViewChild('p', { static: false }) paginator: Paginator;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private coleccionService: ColeccionService,
     private usuarioService: UsuarioService,
-    private scryfallService: ScryfallService,
     private albumService: AlbumService,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {
     this.usuario = this.usuarioService.usuario
   }
@@ -47,6 +51,15 @@ export class ColeccionComponent implements OnInit {
       if (!pagina) {
         pagina = 0;
       }
+      
+      this.filterForm = this.formBuilder.group({
+        nombre: [''],
+        color: [''],
+      });
+
+      this.filterForm.valueChanges.subscribe(valor => {
+        this.onFiltro(valor);
+      });
 
       this.obtenerAlbumes();
     });
@@ -60,8 +73,9 @@ export class ColeccionComponent implements OnInit {
         this.albums.forEach(album => {
           this.contarCartasAlbum(album);
         });
-        this.albumsPagina = this.albums.slice(0, this.numAlbumsPagina);
-        this.totalAlbums = this.albums.length;
+        this.albumsFiltro = Object.assign([], this.albums);
+        this.albumsPagina = this.albumsFiltro.slice(0, this.numAlbumsPagina);
+        this.totalAlbums = this.albumsFiltro.length;
       }
     );
   }
@@ -73,7 +87,8 @@ export class ColeccionComponent implements OnInit {
       behavior: 'smooth'
     });
     let indice = ((event.page) * event.rows);
-    this.albumsPagina = this.albums.slice(indice, indice + event.rows);
+    this.numAlbumsPagina = event.rows;
+    this.albumsPagina = this.albumsFiltro.slice(indice, indice + event.rows);
   }
 
   contarCartasAlbum(album: Album) {
@@ -112,5 +127,43 @@ export class ColeccionComponent implements OnInit {
           });
       }
     });
+  }
+
+  onFiltro(valor: any) {
+    this.albumsFiltro = Object.assign([], this.albums);
+    for (let key in valor) {
+      if (valor[key].toString() != '') {
+        let valor_filtro: string = valor[key].toString().toLowerCase();
+        switch (key) {
+          case 'color':
+            console.log('Filtrado por color', valor_filtro);
+            this.albumsFiltro = this.albumsFiltro.filter(album => {
+              console.log(album.colores);
+              for (let color of album.colores.split('')) {
+                if (valor_filtro.includes(color.toLowerCase())) {
+                  return true;
+                }
+              }
+              return false;
+            });
+            break;
+
+          case 'nombre':
+            console.log('Filtrado por nombre');
+            this.albumsFiltro = this.albumsFiltro.filter(album => album.nombre.toLowerCase().includes(valor_filtro));
+            break;
+        }
+      }
+    }
+    this.changePageToFirst();
+  }
+
+  changePageToFirst() {
+    let indice = 0;
+    this.albumsPagina = this.albumsFiltro.slice(indice, indice + this.numAlbumsPagina);
+    this.totalAlbums = this.albumsFiltro.length;
+    if (this.paginator && this.totalAlbums > this.numAlbumsPagina) {
+      this.paginator.changePageToFirst(new Event('click'));
+    }
   }
 }

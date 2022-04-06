@@ -1,33 +1,45 @@
 <div class="container">
-    <div class="row">
 
-        <div class="col-12">
-            <div class="container card rounded-3 shadow">
-                <!---LISTADOR-->
-                <div class="row justify-content-between">
-                    <div class="col-4">
+    <!---Buscador-->
+    <div class="row justify-content-center">
+
+        <div class="card shadow-md py-3 col-8" style="border-radius: 12px; margin-bottom: 1rem; padding-left: 20px; padding-right: 18px;">
+
+            <!-- Menú -->
+            <div class="row px-3 d-flex align-items-center">
+                <div class="col d-flex flex-nowrap align-items-center">
+                    <!---Título Album-->
+
+                    <div class="h4 mb-0 titulo">
                         <p class="h3" style="color:dimgray">Mis &Aacute;lbumes</p>
-                    </div>
-                    <div class="col-6"></div>
-                    <div class="col-2">
-
-                        <button class="btn btn-primary" type="button" name="button" (click)="crearAlbum()">
-                        <i class="bi bi-search"></i>
-                        Nuevo Album
-                    </button>
                     </div>
                 </div>
 
-                <!---BUSCADOR-->
-                <form class="row justify-content-between form-inline md-form form-sm my-3" *ngIf="albums.length > 8">
-                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Busca tu album" aria-label="Search" mdbInput>
-                    <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-search"></i>
-                    <span class="fa fa-search"></span>
-                    Buscar
-                    </button>
-                </form>
+                <div class="col text-right">
+                    <button pButton class="" label="Nuevo album" icon="pi pi-plus" (click)="crearAlbum()"></button>
+                </div>
+
+
             </div>
+
+            <hr class="ml-2 mr-3">
+
+            <div [formGroup]="filterForm" class="row og-toolbar">
+                <!-- <i class="pi pi-filter"></i> -->
+                <div class="col d-flex align-items-center justify-content-between">
+                    <input type="text" pInputText class="col" placeholder="Nombre" formControlName="nombre" />
+                </div>
+                <div class="col d-flex align-items-center">
+                    <input type="text" pInputText class="col" placeholder="Color" formControlName="color" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-12">
 
             <!---Albums de la colección-->
             <div class="container mt-5">
