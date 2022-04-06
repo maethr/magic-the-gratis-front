@@ -107,14 +107,25 @@ ul {
 }
 
 ::ng-deep .album .iconos-mana img {
-    filter: drop-shadow(0 0 2px black);
+    filter: invert(75%) sepia(5) saturate(177%) hue-rotate(180deg) brightness(60%) drop-shadow(0 0 2px black);
     opacity: 0.6;
 }
 
 ::ng-deep .link-album:hover>.album .iconos-mana img {
-    filter: drop-shadow(0 0 3px #6fa9ff);
+    filter: invert(0) sepia(0) saturate(1) hue-rotate(0) brightness(1) drop-shadow(0 0 2px black);
     opacity: 1;
-    transition: all 0.5s;
+    transition: all 0.3s;
+}
+
+.link-album:hover>.album .iconos-mana>* {
+    animation: spin 0.4s ease-in-out;
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
 }
 
 .link-album:hover>.album {
