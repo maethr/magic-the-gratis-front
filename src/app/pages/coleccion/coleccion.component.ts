@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from '../album/album';
 import { ColeccionService } from '../../core/services/data/coleccion.service';
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import { AlbumService } from 'src/app/core/services/data/album.service';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
+import { Paginator } from 'primeng/paginator';
 
 
 @Component({
@@ -20,7 +21,14 @@ export class ColeccionComponent implements OnInit {
   id: string;
   usuario: Usuario;
   albums: Album[];
+  albumsPagina: Album[];
+
   paginador: any;
+
+  numAlbumsPagina = 12;
+  totalAlbums: number;
+
+  @ViewChild('p', { static: false }) paginator: Paginator;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,35 +48,45 @@ export class ColeccionComponent implements OnInit {
         pagina = 0;
       }
 
-      this.obtenerAlbumes(pagina);
+      this.obtenerAlbumes();
     });
   }
 
-  obtenerAlbumes(pagina: number) {
-    this.coleccionService.getAlbumes(this.usuario.username, pagina.toString()).subscribe(
-      response => {
-        this.albums = response.content as Album[];
-        this.paginador = response;
-
-        //Obtenemos el total de cartas de cada album.
+  obtenerAlbumes() {
+    this.coleccionService.getAllAlbumes(this.usuario.username).subscribe(
+      (response) => {
+        console.log(response);
+        this.albums = response as Album[];
         this.albums.forEach(album => {
           this.contarCartasAlbum(album);
-        })
-        
-      });
+        });
+        this.albumsPagina = this.albums.slice(0, this.numAlbumsPagina);
+        this.totalAlbums = this.albums.length;
+      }
+    );
   }
 
-  contarCartasAlbum(album: Album){
+  paginate(event: any) {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    let indice = ((event.page) * event.rows);
+    this.albumsPagina = this.albums.slice(indice, indice + event.rows);
+  }
+
+  contarCartasAlbum(album: Album) {
     this.albumService.countCartasAlbum(Number(album.id)).subscribe(
-      response =>{
+      response => {
         album.totalCartas = response as number;
         console.log(album);
-        console.log("RESPONSE: "+response);
+        console.log("RESPONSE: " + response);
       }
     )
   }
 
-  crearAlbum () {
+  crearAlbum() {
     Swal.fire({
       title: "Nuevo album",
       text: "Ponle un título a tu album",
@@ -84,15 +102,15 @@ export class ColeccionComponent implements OnInit {
           }
         });
       }
-  }).then((result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
         this.coleccionService.createAlbum(result.value, this.usuario.username).subscribe(
           (response) => {
             this.router.navigate(['album', response.id]);
             Swal.fire('Album creado', `El album ${result.value} ha sido creado`, 'success');
-          
-        });
+
+          });
       }
-  });
+    });
   }
 }

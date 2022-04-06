@@ -39,28 +39,30 @@
                         </div>
                     </div>
 
-                    <ul class="listaAlbumes" *ngIf="albums?.length>0">
+                    <ul class="listaAlbumes" *ngIf="albumsPagina?.length>0">
                         <div class="container">
                             <div class="row">
-                                <div class="col-3" *ngFor="let album of albums">
+                                <div class="col-3" *ngFor="let album of albumsPagina">
                                     <li routerLinkActive="active">
                                         <a class="link-album" routerLink="/album/{{album.id}}">
                                             <div class="album">
-                                                <div *ngIf="album.portada" class="imagen-album portada" style="background-image: url({{album.portada.main_image.art_crop}})">
+                                                <div *ngIf="album.portada?.main_image" class="imagen-album portada" style="background-image: url({{album.portada.main_image.art_crop}}) ">
                                                 </div>
-                                                <div *ngIf="!album.portada" class="imagen-album cover" style="background-image: url('./assets/images/album/album-cover-v2.png')">
-                                                    <div class="titulo-album">
+                                                <div *ngIf="!album.portada " class="imagen-album cover" style="background-image: url( './assets/images/album/album-cover-v2.png') ">
+                                                    <div class="titulo-album ">
                                                         {{album.nombre.charAt(0).toUpperCase() + album.nombre.split(' ')[0].substring(1,6)}}
                                                     </div>
-                                                    <div *ngFor="let color of album.colores">
-                                                        <span [innerHTML]=" '{' + color + '}' | simbolos: '24px' "></span>
+                                                    <div class="iconos-mana">
+                                                        <div *ngFor="let color of album.colores.split('') ">
+                                                            <span [innerHTML]=" '{' + color.toUpperCase() + '}' | simbolos: '26px' "></span>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <div class="datos-album text-center row align-items-center justify-content-between">
-                                                <span class="col text ml-2 mr-1">{{album.nombre}}</span>
-                                                <span *ngIf="album.totalCartas !== undefined" class="total-cartas col-2">{{album.totalCartas}}</span>
+                                            <div class="datos-album text-center row align-items-center justify-content-between ">
+                                                <span class="col text ml-2 mr-1 ">{{album.nombre}}</span>
+                                                <span *ngIf="album.totalCartas !==u ndefined " class="total-cartas col-2 ">{{album.totalCartas}}</span>
                                             </div>
                                             <br>
                                         </a>
@@ -75,7 +77,8 @@
             </div>
 
             <!---PAGINADOR-->
-            <app-paginador-albumes *ngIf="paginador" [paginador]="paginador"></app-paginador-albumes>
+            <p-paginator #p *ngIf="totalAlbums " styleClass="paginator " [rows]="numAlbumsPagina " [totalRecords]="totalAlbums " [rowsPerPageOptions]="[6,12,24,48]" (onPageChange)="paginate($event) "></p-paginator>
+
         </div>
     </div>
 </div>

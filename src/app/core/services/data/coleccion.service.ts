@@ -35,10 +35,14 @@ export class ColeccionService {
     let url = this.url + "/user";
     return this.http.get(`${url}/${username}/albums/all`).pipe(
       map((response: any) => {
-        
+        response.map((album: Album) => {
+          if (album.portada) {
+            this.scryfallService.fillCartaData(album.portada).subscribe();
+          }
+          return album;
+        });
         return response as Album[];
-      }
-      )
+      })
     );
   }
 
