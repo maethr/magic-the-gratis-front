@@ -79,7 +79,8 @@ ul {
 .imagen-album .titulo-album {
     display: flex;
     justify-content: center;
-    margin-top: 23%;
+    margin-top: 17%;
+    padding-top: 6%;
     margin-left: 2px;
     font-size: 3rem;
     font-weight: bold;
@@ -94,7 +95,8 @@ ul {
     filter: brightness(1.4) contrast(1.3);
     background-clip: text;
     background-image: url('src/assets/images/album/album-texture-v2.png');
-    /* filter: drop-shadow(0 0 0 white); */
+    background-repeat: repeat;
+    background-size: auto;
 }
 
 .album .iconos-mana-wrap {
@@ -106,16 +108,27 @@ ul {
     justify-content: center;
 }
 
+.album .portada .titulo-album {
+    filter: grayscale(800%), brightness(200);
+}
+
+.album .portada-wrap {
+    margin: 0 19px;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-repeat: repeat;
+    background-size: 91px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
+    outline: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
 .album .iconos-mana {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 55px;
-    left: 3px;
     flex-wrap: wrap;
     width: 100%;
-    padding: 0 17%;
+    padding: 20% 17%;
 }
 
 .album .iconos-mana>* {
@@ -123,9 +136,14 @@ ul {
     width: 33%;
 }
 
-::ng-deep .album .iconos-mana img {
-    filter: invert(75%) sepia(5) saturate(177%) hue-rotate(180deg) brightness(60%) drop-shadow(0 0 2px black);
+::ng-deep .album .cover .iconos-mana img {
+    filter: invert(75%) sepia(5) saturate(177%) hue-rotate(190deg) brightness(60%) drop-shadow(0 0 2px black);
     opacity: 0.6;
+}
+
+::ng-deep .album .portada .iconos-mana img {
+    filter: invert(75%) sepia(5) saturate(177%) hue-rotate(190deg) brightness(60%) drop-shadow(0 0 2px black);
+    opacity: 0.8;
 }
 
 ::ng-deep .link-album:hover>.album .iconos-mana img {
@@ -150,10 +168,17 @@ ul {
     transition: transform .2s;
 }
 
-.link-album:hover>.album>.cover>.titulo-album {
-    /* transform: scaleY(1.05); */
+.link-album:hover>.album .cover .titulo-album {
+    transform: scaleY(1.05);
     transform-origin: 2rem 2rem;
     filter: brightness(1.8) contrast(1.5);
+    transition: transform .2s ease-in-out, filter .3s;
+}
+
+.link-album:hover>.album .portada .titulo-album {
+    transform: scaleY(1.05);
+    transform-origin: 2rem 2rem;
+    filter: brightness(1.5) invert(1) contrast(4) saturate(1) grayscale(0.75) hue-rotate(150deg) drop-shadow(0 3px 3px black);
     transition: transform .2s ease-in-out, filter .3s;
 }
 

@@ -59,6 +59,19 @@
                                         <a class="link-album" routerLink="/album/{{album.id}}">
                                             <div class="album">
                                                 <div *ngIf="album.portada?.main_image" class="imagen-album portada" style="background-image: url({{album.portada.main_image.art_crop}}) ">
+                                                    <div class="portada-wrap">
+                                                        <div class="titulo-album ">
+                                                            {{album.nombre.charAt(0).toUpperCase() + album.nombre.split(' ')[0].substring(1,6)}}
+                                                        </div>
+                                                        <div class="iconos-mana-wrap">
+                                                            <div class="iconos-mana">
+                                                                <div *ngFor="let color of album.colores.split('')">
+                                                                    <span [innerHTML]=" '{' + color.toUpperCase() + '}' | simbolos: '28px' "></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div *ngIf="!album.portada " class="imagen-album cover" style="background-image: url( './assets/images/album/album-cover-v2.png') ">
                                                     <div class="titulo-album ">
