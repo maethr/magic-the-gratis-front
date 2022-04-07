@@ -53,7 +53,7 @@
 
                     <ul class="listaAlbumes" *ngIf="albumsPagina?.length>0">
                         <div class="container">
-                            <div class="row">
+                            <div class="row justify-content-center">
                                 <div class="col-3" *ngFor="let album of albumsPagina">
                                     <li routerLinkActive="active">
                                         <a class="link-album" routerLink="/album/{{album.id}}">

@@ -121,23 +121,7 @@
                     <app-pdf [album]="album "></app-pdf>
                 </div>
                 <div class="col-lg-4 col-md-12 ">
-                    <div class="card shadow-sm ">
-                        <div class="row justify-content-center align-items-center " style="color: #64748B ">
-                            <span class="bi bi-file-earmark-text " style="font-size:1.5rem; "></span>
-                            <span class="pl-2 " style="color: #64748B ">TXT</span>
-                        </div>
-
-                        <div class="row align-items-center text-left ">
-                            <div class="col-12 ">Formato</div>
-                            <div class="col-12 ">
-                                <p-dropdown name="imagenes " class="w-100 " styleClass="w-100 " placeholder="MTG Arena ">
-                                </p-dropdown>
-                            </div>
-                        </div>
-                        <div class="p-4 ">
-                            <button pButton icon="pi pi-download " class="p-button-secondary w-100 " label="Exportar en Texto "></button>
-                        </div>
-                    </div>
+                    <app-texto [album]="album"></app-texto>
                 </div>
 
             </div>

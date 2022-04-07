@@ -62,6 +62,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { EdicionComponent } from './pages/edicion/edicion.component';
 import { MenuModule } from 'primeng/menu';
 import { PdfComponent } from './layout/components/pdf/pdf.component';
+import { TextoComponent } from './layout/components/texto/texto.component';
 
 
 
@@ -136,7 +137,8 @@ export function initializeApp(simbolosService: SimbolosService): Function {
     WelcomeComponent,
     ZipComponent,
     EdicionComponent,
-    PdfComponent
+    PdfComponent,
+    TextoComponent
   ],
   imports: [
     BrowserModule,
