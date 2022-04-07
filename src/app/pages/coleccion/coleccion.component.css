@@ -134,15 +134,16 @@ ul {
 .album .iconos-mana>* {
     /* margin: 0 0px; */
     width: 33%;
+    padding: 3px;
 }
 
 ::ng-deep .album .cover .iconos-mana img {
-    filter: invert(75%) sepia(5) saturate(177%) hue-rotate(190deg) brightness(60%) drop-shadow(0 0 2px black);
+    filter: invert(78%) sepia(5) saturate(177%) hue-rotate(190deg) brightness(60%) drop-shadow(0 0 2px black);
     opacity: 0.6;
 }
 
 ::ng-deep .album .portada .iconos-mana img {
-    filter: invert(75%) sepia(5) saturate(177%) hue-rotate(190deg) brightness(60%) drop-shadow(0 0 2px black);
+    filter: invert(26%) sepia(5) saturate(177%) hue-rotate(190deg) brightness(60%) drop-shadow(0 0 2px black);
     opacity: 0.8;
 }
 
