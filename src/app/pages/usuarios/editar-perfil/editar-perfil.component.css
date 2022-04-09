@@ -19,6 +19,7 @@ input:focus::placeholder {
 .titulofiltros {
     color: #0066A1;
     font-size: 19px;
+    padding: 0;
 }
 
 .botonesfiltros {

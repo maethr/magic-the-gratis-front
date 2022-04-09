@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center p-fileupload-buttonbar">
         <div class="col-11">
             <p-fileUpload styleClass="shadow-md" name="demo[]" customUpload="true" maxFileSize="1000000" fileLimit="1" (uploadHandler)="onUpload($event)" (onClear)="onCancel()" chooseLabel="Browse">
                 <ng-template pTemplate="toolbar">
@@ -8,6 +8,7 @@
                         <button pButton label="Crear album" icon="pi pi-plus" class="p-button-success" (click)="crearAlbum()"></button>
                     </div>
                 </ng-template>
+                
                 <ng-template let-file pTemplate="file">
                     <div class="row justify-content-center">
                         <div class="col-9">

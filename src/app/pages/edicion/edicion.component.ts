@@ -49,8 +49,12 @@ export class EdicionComponent implements OnInit {
       //this.router.navigate(['/buscar', 'cards', 'set:' + onclick.set.code]);
     }
     
-    generarMenuOpciones () {
-      
+    generarMenuOpcion (ediciones: Edicion[]) {
+      let textoBusqueda: string = 'set:';
+      ediciones.forEach(edicion => {
+        textoBusqueda += edicion.code + '+';
+      });
+      return textoBusqueda.slice(0, -1);
     }
   }
   

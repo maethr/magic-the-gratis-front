@@ -1,8 +1,6 @@
 .card {
     margin-top: 2em;
-    border: solid 2px #0066A1;
     border-radius: 7px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .card-header {
