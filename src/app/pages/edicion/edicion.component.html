@@ -1,16 +1,14 @@
-<h2>Busca por edición</h2>
 
-<div class="container">
-
-<div class="row justify-content-center">
-    <div *ngFor="let ediciones of listaSetsAgrupada">
-        <div *ngIf="ediciones[0].icon_svg_uri" class="col-1">
-            <button pButton class="p-button-text p-button-secondary edicion" style="height: 1rem;" [routerLink]="['/buscar', 'cards', generarMenuOpcion(ediciones)]">
-                <img src="{{ediciones[0].icon_svg_uri}}" height="25px" width="25px">
-                <!--p-menu *ngIf="edicion[0].block_code" #menu [model]="edicion"></p-menu-->
-            </button>
+<div class="container card py-3 mt-5">
+    <h2 class="row justify-content-center">Busca por edición</h2><hr>
+    <div class="row justify-content-center">
+        <div *ngFor="let ediciones of listaSetsAgrupada">
+            <div *ngIf="ediciones[0].icon_svg_uri" class="col py-1">
+                <button pButton class="p-button-text p-button-secondary edicion" style="height: 1rem;" [routerLink]="['/buscar', 'cards', generarMenuOpcion(ediciones)]">
+                    <img src="{{ediciones[0].icon_svg_uri}}" height="22px" width="22px">
+                    <!--p-menu *ngIf="edicion[0].block_code" #menu [model]="edicion"></p-menu-->
+                </button>
+            </div>
         </div>
-    </div>
-</div> 
-
+    </div> 
 </div>

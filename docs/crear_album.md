@@ -1,7 +1,7 @@
 **Crear Album**
 =====
 
-Lo primero que de debemos hacer para crearnos un album es dirigirnos a nuestra colección, para ello pulsaremos el botón ubicado en la barra superior.
+Lo primero que de debemos hacer es dirigirnos a nuestra colección, para ello pulsaremos el botón ubicado en la barra superior.
 
 
 
@@ -11,4 +11,7 @@ Ahora que ya te has creado un nuevo usuario, lo primero que deberías hacer es, 
 
 
 ![](/assets/images/tux.png)
+
+![The San Juan Mountains are beautiful!](/assets/images/san-juan-mountains.jpg "San Juan Mountains")
+
 

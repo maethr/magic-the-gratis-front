@@ -56,5 +56,6 @@ export class EdicionComponent implements OnInit {
       });
       return textoBusqueda.slice(0, -1);
     }
+
   }
   
