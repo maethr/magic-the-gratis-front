@@ -17,15 +17,15 @@ export class AlbumService {
   }
 
   getAlbumsFromUserPaged(user: string, page: number) {
-    return this.http.get<Album[]>(Endpoints.GET_ALBUMS_FROM_USER_PAGED.replace('{user}', user).replace('{page}', page.toString()));
+    return this.http.get<Album[]>(Endpoints.GET_ALBUMS_FROM_USUARIO_PAGED.replace('{user}', user).replace('{page}', page.toString()));
   }
 
   getAllAlbumsFromUser(user: string) {
-    return this.http.get<Album[]>(Endpoints.GET_ALL_ALBUMS_FROM_USER.replace('{user}', user));
+    return this.http.get<Album[]>(Endpoints.GET_ALL_ALBUMS_FROM_USUARIO.replace('{user}', user));
   }
 
   countAlbumsFromUser(user: string) {
-    return this.http.get<number>(Endpoints.COUNT_ALBUMS_FROM_USER.replace('{user}', user));
+    return this.http.get<number>(Endpoints.COUNT_ALBUMS_FROM_USUARIO.replace('{user}', user));
   }
 
   createAlbum(nombre: string, user: string) {
