@@ -10,6 +10,7 @@ import { AlbumService } from 'src/app/core/services/data/album.service';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
 import { Paginator } from 'primeng/paginator';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CartaDataService } from 'src/app/core/services/fill/carta-data.service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class ColeccionComponent implements OnInit {
     private usuarioService: UsuarioService,
     private albumService: AlbumService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cartaDataService: CartaDataService
   ) {
     this.usuario = this.usuarioService.usuario
   }
@@ -66,18 +68,12 @@ export class ColeccionComponent implements OnInit {
   }
 
   obtenerAlbumes() {
-    this.coleccionService.getAllAlbumes(this.usuario.username).subscribe(
-      (response) => {
-        console.log(response);
-        this.albums = response as Album[];
-        this.albums.forEach(album => {
-          this.contarCartasAlbum(album);
-        });
-        this.albumsFiltro = Object.assign([], this.albums);
-        this.albumsPagina = this.albumsFiltro.slice(0, this.numAlbumsPagina);
-        this.totalAlbums = this.albumsFiltro.length;
-      }
-    );
+    this.cartaDataService.getAllAlbumesFromUser(this.usuario.username, (albumes: Album[]) => {
+      this.albums = albumes;
+      this.albumsFiltro = Object.assign([], this.albums);
+      this.albumsPagina = this.albumsFiltro.slice(0, this.numAlbumsPagina);
+      this.totalAlbums = this.albumsFiltro.length;
+    });
   }
 
   paginate(event: any) {
@@ -89,16 +85,6 @@ export class ColeccionComponent implements OnInit {
     let indice = ((event.page) * event.rows);
     this.numAlbumsPagina = event.rows;
     this.albumsPagina = this.albumsFiltro.slice(indice, indice + event.rows);
-  }
-
-  contarCartasAlbum(album: Album) {
-    this.albumService.countCartasAlbum(Number(album.id)).subscribe(
-      response => {
-        album.totalCartas = response as number;
-        console.log(album);
-        console.log("RESPONSE: " + response);
-      }
-    )
   }
 
   crearAlbum() {
