@@ -53,7 +53,7 @@ export class ColeccionComponent implements OnInit {
       if (!pagina) {
         pagina = 0;
       }
-      
+
       this.filterForm = this.formBuilder.group({
         nombre: [''],
         color: [''],
@@ -73,7 +73,7 @@ export class ColeccionComponent implements OnInit {
       this.albumsFiltro = Object.assign([], this.albums);
       this.albumsPagina = this.albumsFiltro.slice(0, this.numAlbumsPagina);
       this.totalAlbums = this.albumsFiltro.length;
-    });
+    }).subscribe();
   }
 
   paginate(event: any) {
