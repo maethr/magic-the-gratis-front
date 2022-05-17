@@ -286,7 +286,7 @@ export class BuscadorComponent implements OnInit {
       case 'desc':
         return 'De mayor a menor';
       default:
-        return null;
+        return "Sentido del orden";
     }
   }
 
