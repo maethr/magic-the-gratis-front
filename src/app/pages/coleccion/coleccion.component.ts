@@ -119,7 +119,7 @@ export class ColeccionComponent implements OnInit {
     this.albumsFiltro = Object.assign([], this.albums);
     for (let key in valor) {
       if (valor[key].toString() != '') {
-        let valor_filtro: string = valor[key].toString().toLowerCase();
+        let valor_filtro: string = valor[key].toString().toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").trim();
         switch (key) {
           case 'color':
             console.log('Filtrado por color', valor_filtro);
@@ -136,7 +136,9 @@ export class ColeccionComponent implements OnInit {
 
           case 'nombre':
             console.log('Filtrado por nombre');
-            this.albumsFiltro = this.albumsFiltro.filter(album => album.nombre.toLowerCase().includes(valor_filtro));
+            this.albumsFiltro = this.albumsFiltro.filter(album => 
+              album.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim()
+                .includes(valor_filtro));
             break;
         }
       }
