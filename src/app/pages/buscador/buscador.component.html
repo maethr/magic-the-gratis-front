@@ -3,43 +3,6 @@
     <div class="row justify-content-center">
         <div class="card shadow-md pt-3 col-11" style="border-radius: 12px; margin-bottom: 2.5rem; padding-left: 20px; padding-right: 18px;">
 
-            <!---LISTADOR -->
-
-            <!-- <div class="row align-items-center">
-                        <div class="col text-secondary" style="font-size: 1.5rem;">
-                            <i class="pi pi-search pl-1" style="font-size: 1.5rem;"></i>
-                            <span class="pl-3">Buscador</span>
-                        </div>
-
-                        <div class="col-2 d-flex justify-content-end" style="padding-top: 1px;">
-                            <div class="number-input align-items-center">
-                                <button class="btn" (click)="recargar(-1)" [disabled]="tamFila <= 3 || cartasBusqueda.length == 0"></button>
-                                <div class="txt-select"><b>{{tamFila}}</b></div>
-                                <button class="btn btn-secondary" class="btn plus" [disabled]="tamFila >= 4 || cartasBusqueda.length == 0" (click)="recargar(1)"></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr> -->
-
-            <!-- p-toolbar>
-                        <div class="p-toolbar-group-left" [formGroup]="searchForm">
-                            <div class="ml-1">
-                                <i class="pi pi-th-large mr-2" style="color:gray; font-size: 1.2rem; vertical-align: middle;"></i>
-                                <p-dropdown class="ml-1" [options]="paramValues.uniqueValues" placeholder="Agrupar por..." formControlName="unique" optionLabel="name" optionValue="code"></p-dropdown>
-                            </div>
-                            <div class="ml-2">
-                                <button pButton class="ml-2 sort-button p-button-rounded p-button-text" [icon]="'pi '+ getSortIconCss()" (click)="changeAscParam()"></button>
-                                <p-dropdown [options]="paramValues.orderValues" placeholder="Ordenar por..." formControlName="order" optionLabel="name" optionValue="code"></p-dropdown>
-                            </div>
-                            <div class="ml-4">
-                                <p-checkbox class="ml-2" name="ext" value="ext1" label="Extras" [formControl]="searchForm.controls['extras']"></p-checkbox>
-                                <p-checkbox class="ml-2" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
-                                <p-checkbox class="ml-2" name="lan" value="lan1" label="Todos los idiomas" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
-                            </div>
-                        </div>
-                    </p-toolbar -->
-
             <div class="row og-toolbar" [formGroup]="searchForm">
                 <div class="col-md-6 col-lg-3 d-flex align-items-center justify-content-between py-1 px-3">
                     <!-- <i class="d-none d-md-block col-2 px-2 text-center pi pi-sliders-v" style="color:gray; font-size: 1.2rem; padding-left: 5px;"></i> -->
@@ -105,7 +68,7 @@
         </div>
 
         <ul *ngIf="!cargando" class="listaCartas">
-            <div class="container">
+            <div class="container" style="padding-left: 4.2%; padding-right: 4.2%;">
                 <div class="row justify-content-center">
                     <!-- <div [ngClass]="tamFila <= 3 ? 'col-4' : 'col-3'" *ngFor="let carta of cartasPagina"> -->
                     <div class="col-md-3 col-sm-4 col-4" *ngFor="let carta of cartasPagina">
