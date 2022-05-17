@@ -278,6 +278,18 @@ export class BuscadorComponent implements OnInit {
     this.searchForm.controls.dir.setValue(newDir);
   }
 
+  getAscParam() {
+    let dir = this.searchForm.value.dir;
+    switch (dir) {
+      case 'asc':
+        return 'De menor a mayor';
+      case 'desc':
+        return 'De mayor a menor';
+      default:
+        return "Sentido del orden";
+    }
+  }
+
   getSortIconCss() {
     let dir = this.searchForm.value.dir;
     if (dir === 'desc') {

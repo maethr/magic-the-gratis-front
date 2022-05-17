@@ -1,6 +1,5 @@
 
 export class Endpoints {
-
     private static SERVER_URL = "http://localhost:8080";
 
     public static GET_ALBUM_BY_ID				= Endpoints.SERVER_URL + "/collector/album/n/{id}"
