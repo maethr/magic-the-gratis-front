@@ -3,13 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Album } from './album';
 import { ColeccionService } from '../../core/services/data/coleccion.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { AlbumService } from 'src/app/core/services/data/album.service';
+import { AlbumService } from 'src/app/core/services/primitive/album.service';
 import { EdicionService } from '../../core/services/scryfall/edicion.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CartaWrap } from 'src/app/core/models/carta-wrap';
 import { map } from 'rxjs/operators';
 import { ScryfallService } from 'src/app/core/services/scryfall/scryfall.service';
 import { Paginator } from 'primeng/paginator';
+import { CartaDataService } from 'src/app/core/services/fill/carta-data.service';
 
 
 @Component({
@@ -39,14 +40,14 @@ export class AlbumComponent implements OnInit {
   @ViewChild('p', {static: false}) paginator: Paginator;
 
   constructor(
-    private albumService: AlbumService,
-    private albumesService: ColeccionService,
     private activatedRoute: ActivatedRoute,
     private ref: ChangeDetectorRef,
     private router: Router,
     private formBuilder: FormBuilder,
     private edicionService: EdicionService,
-    private scryfallService: ScryfallService
+    private scryfallService: ScryfallService,
+    private cartaDataService: CartaDataService,
+    private albumService: AlbumService
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +62,8 @@ export class AlbumComponent implements OnInit {
       }
 
       this.id_album = +params.get('id');
-      this.albumesService.getAlbum(this.id_album).subscribe(response => {
+
+      this.albumService.getAlbumById(this.id_album).subscribe(response => {
         this.album = response as Album;
       });
 
@@ -95,22 +97,14 @@ export class AlbumComponent implements OnInit {
 
   obtenerCartas(): void {
     this.cargando = true;
-    this.albumService.getAllCartasFromAlbum(this.id_album).pipe(
-      map((response: any) => {
-        return response.map(carta => {
-          this.scryfallService.fillCartaData(carta).subscribe(carta => {
-            this.cargando = false;
-          });
-          return carta;
-        })
-      })
-    ).subscribe(response => {
-      this.cartas = response as CartaWrap[];
+    this.cartaDataService.getAllCartasFromAlbum(this.id_album, (cartas: CartaWrap[]) => {
+      this.cartas = cartas;
       this.cartasFiltro = Object.assign([], this.cartas);
       let indice = 0;
       this.cartasPagina = this.cartasFiltro.slice(indice, indice + this.tam_fila * this.num_filas);
       this.totalCartas = this.cartasFiltro.length;
-    });
+      this.cargando = false;
+    }).subscribe();
   }
 
   onFiltro(valor: any) {
