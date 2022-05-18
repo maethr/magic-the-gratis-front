@@ -39,7 +39,7 @@
 
             <form class="form-inline md-form form-sm mb-4 row px-1 py-1 align-items-center" [formGroup]="searchForm">
 
-                <div *ngIf="cartasBusqueda.length > 0 && !cargando" class="d-none d-xl-flex pl-2" style="width: 6%;">
+                <div *ngIf="cartasBusqueda.length > 0 && !cargando" class="d-none d-xl-flex pl-2" style="width: 5%;">
                     <button pButton [pTooltip]="(zoom_out?'Aumentar':'Disminuir') + ' zoom'" tooltipPosition="bottom" class="sort-button p-button-outlined p-button-rounded" [icon]="zoom_out?'pi pi-search-plus':'pi pi-search-minus'" (click)="zoom_out = !zoom_out">
                     </button>
                 </div>
