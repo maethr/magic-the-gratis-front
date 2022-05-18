@@ -19,7 +19,7 @@
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton label="Buscar" class="nav-link p-button-link" icon="pi pi-search" routerLink="/buscar"></button>
+                    <button pButton label="Buscador" class="nav-link p-button-link" icon="pi pi-search" routerLink="/buscador"></button>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
@@ -54,7 +54,7 @@
                 </li>
 
                 <li class="nav-item" routerLinkActive="active" *ngIf="logueado">
-                    <button pButton icon="pi pi-sign-out" class="nav-link nav-button p-button-outlined p-button-rounded" (click)="logOut()"></button>
+                    <button pButton pTooltip="Log-out" tooltipPosition="bottom" icon="pi pi-sign-out" class="nav-link nav-button p-button-outlined p-button-rounded" (click)="logOut()"></button>
 
                 </li>
             </ul>

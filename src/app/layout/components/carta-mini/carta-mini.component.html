@@ -33,7 +33,7 @@
         </div>
 
         <!-- DATOS DE LA CARTA -->
-        <div *ngIf="carta && carta.data && carta.data.id" class="datos-carta">
+        <div *ngIf="carta && carta.data && carta.data.id" class="datos-carta d-none d-md-block">
             <div class="d-flex">
                 <div class="titulo text-overflow" [ngClass]="{'col-10':carta.amount && carta.amount > 1}" [title]="carta.data.name" [routerLink]="carta.data.id ? ['/carta', carta.data.id, carta.id ] : ['/carta', carta.data.id ]">
                     {{carta.data.name}}
@@ -48,7 +48,9 @@
 
             <div class="d-flex justify-content-between my-1">
                 <div class="d-block d-md-none col-1"></div>
-                <span class="text-overflow d-none d-md-block">Coste de maná:</span>
+                <span class="text-overflow d-none d-md-block">
+                    Coste:
+                </span>
                 <div class="coste-mana">
                     <span *ngIf="carta.data.mana_cost" [innerHTML]="carta.data.mana_cost | simbolos:'20px'"></span>
                     <span *ngIf="!carta.data.mana_cost && carta.data.card_faces" [innerHTML]="carta.data.card_faces[0].mana_cost | simbolos:'20px'"></span>
@@ -59,13 +61,13 @@
                 <span>Edición:</span>
                 <!-- <span [routerLink]="['/buscar', 'cards', 'set:' + carta.data.set ]" role='button' [innerHTML]="carta.data.set | edicion:'26px' | async"></span> -->
 
-                <button pButton class="p-button-text p-button-secondary" style="height: 1rem;" [routerLink]="['/buscar', 'cards', 'set:' + carta.data.set ]">
+                <button pButton class="p-button-text p-button-secondary" style="height: 1rem;" [routerLink]="['/buscador', 'cards', 'set:' + carta.data.set ]">
                 <span [innerHTML]="carta.data.set | edicion:'26px' | async"></span>
             </button>
 
                 <!-- <span class="pi pi-plus pt-1 pr-1" label="Otras ediciones de {{carta.data.name}}" role='button' [routerLink]="['/buscar', 'prints', carta.data.name ]"></span> -->
                 <span>
-                <button pButton style="height: 1rem;" class="p-button-text p-button-secondary" icon="pi pi-angle-double-right" [routerLink]="['/buscar', 'prints', carta.data.name ]" title="Todas las ediciones de {{carta.data.name}}"></button>
+                <button pButton style="height: 1rem;" class="p-button-text p-button-secondary" icon="pi pi-angle-double-right" [routerLink]="['/buscador', 'prints', carta.data.name ]" title="Todas las ediciones de {{carta.data.name}}"></button>
             </span>
             </div>
         </div>

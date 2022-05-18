@@ -50,14 +50,14 @@ export class CartaMiniComponent implements OnInit {
         label: 'Otras versiones',
         icon: 'pi pi-fw pi-search-plus',
         command: () => {
-          this.router.navigate(['/buscar', 'prints', this.carta.data.name]);
+          this.router.navigate(['/buscador', 'prints', this.carta.data.name]);
         }
       },
       {
         label: 'Ver edición',
         icon: 'pi pi-fw pi-search-plus',
         command: () => {
-          this.router.navigate(['/buscar', 'cards', 'set:' + this.carta.data.set]);
+          this.router.navigate(['/buscador', 'cards', 'set:' + this.carta.data.set]);
         }
       }
     ];

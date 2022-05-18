@@ -36,6 +36,8 @@ export class BuscadorComponent implements OnInit {
   indicePagScry = 0;
   totalCartasBusqueda: number;
 
+  zoom_out: boolean = false;
+
   cargando: boolean = false;
 
   searchForm: FormGroup;
