@@ -22,7 +22,7 @@
                             </div>
                             <p-checkbox class="ml-3" name="ext" value="ext1" label="Tokens" [formControl]="searchForm.controls['extras']"></p-checkbox>
                             <p-checkbox class="ml-3" name="var" value="var1" label="Variaciones" [formControl]="searchForm.controls['variations']"></p-checkbox>
-                            <p-checkbox class="mx-3" name="lan" value="lan1" icon="pi pi-globe" label="En español" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
+                            <p-checkbox class="mx-3" name="lan" value="lan1" icon="pi pi-globe" label="Multi-lenguaje" [formControl]="searchForm.controls['multilingual']"></p-checkbox>
                             <div class="d-none d-sm-block col-1"></div>
                         </div>
                     </div>
@@ -38,8 +38,8 @@
 
             <form class="form-inline md-form form-sm row px-1 py-1 align-items-center" [formGroup]="searchForm">
 
-                <div *ngIf="cartasBusqueda.length > 0 && !cargando" class="d-none d-xl-flex pl-2" style="width: 5%;">
-                    <button pButton [pTooltip]="(zoom_out?'Aumentar':'Disminuir') + ' zoom'" tooltipPosition="bottom" class="sort-button p-button-outlined p-button-rounded" [icon]="zoom_out?'pi pi-search-plus':'pi pi-search-minus'" (click)="zoom_out = !zoom_out">
+                <div *ngIf="cartasBusqueda.length > 0" class="d-none d-xl-flex pl-2" style="width: 5%;">
+                    <button pButton [pTooltip]="(zoom_out?'Aumentar':'Disminuir') + ' zoom'" type="button" tooltipPosition="bottom" class="sort-button p-button-outlined p-button-rounded" [icon]="zoom_out?'pi pi-search-plus':'pi pi-search-minus'" (click)="changeZoom()">
                     </button>
                 </div>
 

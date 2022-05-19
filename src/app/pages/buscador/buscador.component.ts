@@ -83,6 +83,9 @@ export class BuscadorComponent implements OnInit {
         this.getPaginaByPagScry();
       }
     });
+
+    this.zoom_out = localStorage.getItem('zoom_out') == 'true';
+
     if (localStorage.getItem('tam_fila') != null) {
       this.tamFila = +localStorage.getItem('tam_fila');
     }
@@ -98,6 +101,11 @@ export class BuscadorComponent implements OnInit {
       this.getPaginaByPagScry();
       this.pagScry = 1;
     }
+  }
+
+  changeZoom () {
+    this.zoom_out = !this.zoom_out;
+    localStorage.setItem('zoom_out', this.zoom_out.toString());
   }
 
   recargar(num: number) {
